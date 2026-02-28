@@ -1,0 +1,236 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[utf8]{inputenc} 
+\usepackage{amsmath}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage[citecolor=blue]{hyperref}       % Para enlaces en el documento
+\usepackage{fancyhdr}
+\usepackage{circuitikz}
+\usepackage{amssymb}
+\usepackage{animate}
+\usepackage{float}
+\usepackage{multirow}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage[a4paper, margin=1in]{geometry}
+\usepackage{gensymb}
+\usepackage{siunitx}
+\usepackage{booktabs}
+\usepackage{listings}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows, positioning}
+
+% Ajuste de la altura del encabezado
+\setlength{\headheight}{76.27646pt}
+\addtolength{\topmargin}{-34.27646pt}
+
+\lstdefinestyle{mystyle}{
+    language=Matlab,
+    inputencoding=utf8,
+    backgroundcolor=\color{black!5},
+    commentstyle=\color{green!60!black},
+    keywordstyle=\color{blue},
+    numberstyle=\tiny\color{gray},
+    stringstyle=\color{purple},
+    basicstyle=\footnotesize\ttfamily,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showstringspaces=false,
+}
+\lstset{style=mystyle}
+
+\setlength{\parindent}{0pt}
+
+% Crear la portada manualmente
+\begin{document}
+
+% Desactivar la numeración de página para la portada
+\thispagestyle{empty}
+
+% Colocar las imágenes en las esquinas superiores
+\begin{minipage}[t]{0.4\textwidth}
+    \raggedright
+    \includegraphics[width=2cm]{image/der.png}
+\end{minipage}%
+\begin{minipage}[t]{0.5\textwidth}
+    \raggedleft
+    \includegraphics[width=2cm]{image/izq.png}
+\end{minipage}
+
+\vspace{1cm}
+
+\begin{center}
+    \Huge{\textbf{Previo 3. Diseño de un sistema de cableado estructurado.}} \\
+    \vspace{2cm}
+    \Large{\textbf{Universidad Nacional Autónoma de México.}}\\
+    \Large{\textbf{Facultad de Ingeniería.}}\\
+    \vspace{1cm}
+    \Large{Laboratorio de Redes de datos seguras.} \\
+    \vspace{0.5cm}
+    \LARGE{\textbf{Profesora:}}
+    \LARGE{\textit{MTRA. MARIA EUGENIA BAUTISTA GONZALEZ.}}\\
+    \vspace{0.5cm}
+    \Large{\textbf{Grupo:} 2} \\
+    \vspace{0.5cm}
+    \LARGE{\textbf{Alumno:}}\\
+    \Large{320060829} \\
+    \vspace{3cm}
+    \Large{\textbf{Fecha de Entrega:}}\\
+    \vspace{0.5cm}
+    \large{{Febrero 26, 2026}}
+\end{center} 
+
+
+\newpage
+
+% Configuración del encabezado y pie de página
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\includegraphics[width=1.5cm]{image/izq.png}}
+\fancyhead[R]{\includegraphics[width=1.5cm]{image/der.png}}
+\fancyfoot[C]{\thepage}  % Coloca el número de página en el centro del pie de página
+
+% Línea horizontal en el pie de página
+\renewcommand{\footrulewidth}{0.4pt}  % Define el grosor de la línea en el pie de página
+
+% Empezar numeración de páginas desde 1 en la segunda página
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+%\maketitle
+\tableofcontents
+
+
+\newpage
+
+\section{¿Cuáles son los medios para canalizaciones admitidos por el estándar ANSI/EIA/TIA 569?}
+
+El estándar ANSI/TIA/EIA-569 proporciona las especificaciones de ingeniería definitivas para el diseño y la construcción de vías y espacios de telecomunicaciones dentro y entre edificios comerciales. El objetivo fundamental de esta norma es establecer una metodología estandarizada para el enrutamiento de cables que evite inherentemente la interferencia electromagnética (EMI), minimice la tensión mecánica en los medios de transmisión y garantice el cumplimiento estricto de las normas de seguridad. 
+
+Para entornos de campus o complejos corporativos que abarcan múltiples estructuras, las vías de red troncal externa (backbone) están diseñadas para interconectar las instalaciones. El marco reconoce varias tipologías principales: las canalizaciones subterráneas, que consisten en sistemas de ductos rígidos entrelazados con cámaras de inspección; las canalizaciones directamente enterradas, donde el cable cuenta con protección física especial; las vías aéreas, que suspenden los medios entre soportes estructurales; y las canalizaciones en túneles de servicios públicos.
+
+Dentro de los límites de una sola estructura, las vías se clasifican en canalizaciones de backbone interno y canalizaciones horizontales. Las internas utilizan mangas de conductos verticales, bandejas de cables o escalerillas portacables para vincular verticalmente las salas de equipos. Por su parte, las canalizaciones horizontales dispersan el cableado desde el cuarto de telecomunicaciones hacia las salidas del área de trabajo, incluyendo sistemas bajo el piso, arquitecturas de piso celular, vías en huecos de techos suspendidos y vías perimetrales o canaletas superficiales.
+
+\section{¿Qué es una escalerilla por techo? Indique sus características y objetivos}
+
+Una escalerilla por techo o bandeja portacables es una estructura tipo puente de ingeniería diseñada para suspender, enrutar y proteger altos volúmenes de medios de telecomunicaciones y de energía a través de los techos o debajo de pisos elevados en un edificio. Estructuralmente, se compone de rieles laterales longitudinales conectados mediante travesaños o peldaños perforados, los cuales proporcionan puntos de anclaje para los cables sin violar su radio de curvatura mínimo.
+
+Sus características principales radican en los materiales de fabricación, siendo la aleación de aluminio la más destacada por su excelente relación resistencia-peso y su inmunidad a la corrosión. Además, el aluminio posee una alta conductividad eléctrica, lo que permite que toda la estructura funcione como un excelente medio de puesta a tierra para disipar ruidos electromagnéticos. El objetivo primordial de este diseño abierto es permitir un flujo de aire ambiental sin restricciones. Esta ventilación natural es crítica para disipar el calor generado por grandes haces de cables, especialmente aquellos que transportan corriente eléctrica continua mediante la tecnología PoE (Power over Ethernet).
+
+\section{¿Qué componentes se encuentran en un cuarto de telecomunicaciones?}
+
+El cuarto de telecomunicaciones (TR) es un área exclusiva utilizada para albergar los equipos y las terminaciones de cableado asociados con el sistema de telecomunicaciones de un edificio, funcionando como el punto de cruce entre el cableado vertical (backbone) y el horizontal. De acuerdo con las normativas ANSI/TIA-569, dentro de estos cuartos se instalan principalmente los bastidores (racks) o gabinetes, los cuales sostienen componentes pasivos como paneles de parcheo (patch panels), bloques de terminación y organizadores de cables.
+
+A nivel de equipos activos, el cuarto alberga los conmutadores (switches) de acceso, enrutadores de sucursal y equipos de provisión de red. Asimismo, para asegurar un funcionamiento ininterrumpido, es mandatorio contar con Sistemas de Alimentación Ininterrumpida (UPS) y supresores de picos. El cuarto en sí mismo cuenta con componentes estructurales y de soporte vitales: sistemas de control ambiental (HVAC) para mantener la temperatura entre 18°C y 24°C, sistemas de iluminación de al menos 500 lux, puertas de apertura hacia afuera sin obstáculos y una Barra de Tierra de Telecomunicaciones (TGB) conectada al sistema de puesta a tierra independiente del edificio.
+
+\section{¿Qué topología usa un sistema de cableado estructurado?}
+
+De acuerdo con las directrices establecidas por el estándar ANSI/EIA/TIA 568, el sistema de cableado estructurado horizontal debe implementar una topología física de estrella. En esta arquitectura, cada toma de telecomunicaciones o conector ubicado en el área de trabajo del usuario final se conecta mediante un cable directo, continuo y dedicado hacia un punto central de interconexión (patch panel) situado en el cuarto de telecomunicaciones.
+
+La principal ventaja de la topología de estrella es el aislamiento de fallas. Si un enlace individual sufre daño mecánico o desconexión, la interrupción del servicio afecta única y exclusivamente a esa estación de trabajo específica, permitiendo que el resto de la red corporativa continúe operando sin problemas. Esta centralización física también agiliza exponencialmente las tareas de administración, resolución de problemas y reconfiguración de puertos por parte de los administradores de la red.
+
+\newpage
+
+\section{¿Cuáles son las características principales de los 6 subsistemas del cableado estructurado? Indíquelas}
+
+Para estandarizar el diseño a gran escala, la infraestructura de telecomunicaciones se divide en seis subsistemas interconectados. El primer subsistema es el de las Instalaciones de Entrada (Entrance Facilities), el cual representa el punto de demarcación donde el cableado exterior del proveedor de servicios de telecomunicaciones ingresa al edificio, integrando equipos de protección contra sobretensiones y hardware de transición de medios.
+
+El segundo es la Sala de Equipos (Equipment Room), un espacio centralizado, de alta seguridad y climatizado, diseñado para alojar los equipos de red más complejos y críticos del edificio, tales como los conmutadores de núcleo (core switches), servidores centrales y centrales telefónicas. El tercer subsistema corresponde al Cableado de la Espina Dorsal o Backbone, que consiste en los medios de transmisión de alta capacidad (usualmente fibra óptica o cobre multipar) que interconectan la sala de equipos con los distintos cuartos de telecomunicaciones distribuidos vertical u horizontalmente.
+
+El cuarto subsistema es el Cuarto de Telecomunicaciones (Telecommunications Room), que actúa como nodo intermedio proporcionando el punto de transición física donde el backbone de alta velocidad se divide y conecta mediante equipos de acceso hacia las terminales de los usuarios. El quinto es el Cableado Horizontal (Horizontal Cabling), que abarca todo el trayecto de cableado oculto (con un límite máximo de 90 metros) desde el cuarto de telecomunicaciones hasta la placa de pared del usuario. Finalmente, el sexto subsistema es el Área de Trabajo (Work Area), que incluye la roseta de pared, los cordones de parcheo flexibles (patch cords) y los dispositivos finales como computadoras o teléfonos.
+
+\section{Realice un dibujo donde identifique claramente los 6 subsistemas del cableado estructurado en un edificio}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{image/image1.png}
+    \caption{Diagrama esquemático de los 6 subsistemas del cableado estructurado en un edificio.}
+\end{figure}
+
+\section{¿Qué es un equipo activo? Liste ejemplos}
+
+Un equipo activo se define como cualquier dispositivo dentro de la red de telecomunicaciones que requiere una fuente de alimentación eléctrica externa para energizar sus componentes electrónicos internos, como microprocesadores y compuertas lógicas, con el fin de manipular, procesar o enrutar datos. Estos equipos poseen la inteligencia computacional necesaria para analizar las señales que reciben, regenerarlas y tomar decisiones de direccionamiento lógico a través de la topología de la red, operando usualmente desde la Capa 2 hasta la Capa 7 del modelo OSI.
+
+Entre los ejemplos más representativos de equipos activos se encuentran los conmutadores (switches), encargados de enrutar datos dentro de una red local basados en direcciones MAC; los enrutadores (routers), que interconectan redes distintas mediante direcciones IP; y los cortafuegos (firewalls), que filtran activamente el tráfico por seguridad. También se incluyen los puntos de acceso inalámbrico (Access Points), que modulan datos en ondas de radio, y los transceptores ópticos, que convierten fotones en pulsos eléctricos.
+
+\section{¿Qué es un equipo pasivo? Liste ejemplos}
+
+En contraste directo con la electrónica activa, un equipo pasivo se define como aquel componente físico de la infraestructura que no requiere suministro de energía eléctrica para llevar a cabo su función, la cual consiste exclusivamente en transportar pasivamente la señal (eléctrica, óptica o de radiofrecuencia). Estos elementos operan estrictamente en la Capa Física (Capa 1) del modelo OSI y no realizan ningún tipo de procesamiento lógico ni alteración en el contenido de los paquetes de datos.
+
+Ejemplos clásicos de equipos pasivos son los cables de red en sí mismos, ya sean de par trenzado de cobre (UTP, STP) o hilos de fibra óptica. Otros componentes cruciales son los paneles de parcheo (patch panels) utilizados para la organización de los cables en los racks, así como los conectores RJ-45, rosetas de pared (faceplates) y los mismos armarios, gabinetes y canaletas que protegen y dan soporte mecánico al cableado a lo largo del edificio.
+
+\newpage
+
+\section{¿Qué tipos de canaletas existen? Realice una tabla indicando tipo, características y costos}
+
+En el mercado enfocado a instalaciones de telecomunicaciones comerciales, las canaletas superficiales se utilizan para extender la red por los muros sin realizar obras civiles pesadas. Predominan las canaletas rígidas de Cloruro de Polivinilo (PVC) con propiedades autoextinguibles, aunque también existen canaletas metálicas o de aluminio para entornos industriales o para lograr una mitigación superior de ruido electromagnético. La norma exige que las canaletas de canales múltiples posean divisiones físicas si transportan simultáneamente voz/datos y energía eléctrica.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|p{3.5cm}|p{7.5cm}|p{3cm}|}
+\hline
+\textbf{Tipo / Marca} & \textbf{Características Principales} & \textbf{Costo Promedio (MXN)} \\ \hline
+Canaleta Sólida de Superficie (PVC) & Dimensiones 22x10 mm. PVC Blanco con cinta adhesiva industrial. Longitud de 2 metros. Retardante de llama. Ideal para oficinas. & \$123.00 \\ \hline
+Canaleta Sólida con Retenedor (PVC) & Dimensiones 20x20 mm. PVC Blanco con retenedor interno de cables para facilitar la instalación en pared, tramo de 2m. & \$135.00 \\ \hline
+Accesorio Esquinero (Curva Interna) & Accesorio modular para canaleta de 20x20 mm. Mantiene el radio de curvatura y evita doblar el cable UTP. & \$135.00 \\ \hline
+Accesorio de Derivación en T & Derivador en forma de T de plástico rígido. Permite ramificar los cables en diferentes ejes sin exponerlos. & \$70.00 \\ \hline
+Unión Recta / Tapa Final & Elementos de acoplamiento estético que ocultan cortes entre segmentos y sellan los extremos del ducto. & \$57.00 - \$80.00 \\ \hline
+\end{tabular}
+\caption{Tipos de canaletas perimetrales, características y costos de mercado estimados.}
+\end{table}
+
+\newpage
+
+\section{Investigue cuál es la fórmula que permite calcular la cantidad de cables que puede albergar una canaleta}
+
+El cálculo de la capacidad de alojamiento de cables dentro de una canalización cerrada está regulado estrictamente por la norma ANSI/TIA-569 y los Códigos Eléctricos. Estas normativas introducen el concepto de "tasa de llenado del conducto" o "factor de espacio", que dicta el área transversal máxima que pueden ocupar los cables combinados.
+
+En primer lugar, es necesario calcular el área transversal disponible del conducto o canaleta ($A_{conduit}$) utilizando su diámetro interno ($d$):
+$$A_{conduit} = \frac{\pi \cdot d^2}{4}$$
+
+Para instalaciones donde se agrupan tres o más cables de telecomunicaciones, la regla exige matemáticamente que la suma total del área transversal de todos los cables individuales no supere el 40\% del área interior de la canaleta. Esta restricción previene el daño por fricción mecánica al momento de jalar los cables y evita la acumulación de calor peligroso en el núcleo del mazo. La fórmula final se expresa como:
+$$\sum A_{cable} \le \left( \frac{\pi \cdot d_{conduit}^2}{4} \right) \times 0.4$$
+
+\section{¿A qué se hace referencia cuando se menciona la regla 5-4-3?}
+
+La regla 5-4-3 es un parámetro de diseño histórico en la ingeniería de telecomunicaciones asociado a las primeras topologías de redes locales Ethernet sobre medios compartidos (como el cable coaxial en topología de bus). Su propósito principal era garantizar que las señales eléctricas no excedieran el límite de tiempo requerido para que la red pudiera detectar colisiones de datos correctamente, bajo el protocolo CSMA/CD.
+
+La regla establecía estrictamente que, entre dos computadoras o nodos cualesquiera situados en los extremos más lejanos de la red, la ruta de comunicación podía consistir en un máximo de cinco (5) segmentos de cable continuos. Estos segmentos debían estar interconectados por no más de cuatro (4) repetidores o concentradores (hubs) activos. Además, de esos cinco segmentos, solamente tres (3) podían estar poblados, es decir, tener equipos de usuarios finales conectados a ellos; los dos segmentos restantes debían servir exclusivamente para extender la distancia geográfica entre los repetidores, formando todo esto un único y gran dominio de colisión. Aunque la tecnología de los switches modernos ha vuelto esta regla obsoleta en la práctica, sigue siendo un concepto teórico fundamental para entender la latencia en redes.
+
+\newpage
+
+\begin{thebibliography}{9}
+
+    \bibitem{tia569a}
+    ANSI/TIA/EIA. (1998). \textit{Commercial Building Standard for Telecommunications Pathways and Spaces (TIA/EIA-569-A)}. Telecommunications Industry Association.
+
+    \bibitem{tia568b}
+    ANSI/TIA/EIA. (2001). \textit{Commercial Building Telecommunications Cabling Standard (TIA/EIA-568-B)}. Telecommunications Industry Association.
+
+    \bibitem{bicsi}
+    BICSI. (s.f.). \textit{Standards Frequently Asked Questions - The Number of Cables that Can be Placed Inside a Conduit}. Recuperado de \url{https://www.bicsi.org/standards/bicsi-standards/resources/standards-frequently-asked-questions}
+    
+    \bibitem{homedepot_dexson_1}
+    The Home Depot México. (2026). \textit{Dexson Canaleta 22 x 10 mm blanco con adhesivo}. Recuperado de \url{https://www.homedepot.com.mx/p/dexson-canaleta-22-x-10-mm-blanco-con-adhesivo-dexson-schneider-electric-dxn10461-131030}
+
+    \bibitem{homedepot_dexson_2}
+    The Home Depot México. (2026). \textit{Dexson Canaleta 20 x 20 mm blanco con adhesivo y retenedor}. Recuperado de \url{https://www.homedepot.com.mx/p/dexson-canaleta-20-x-20-mm-blanco-con-adhesivo-y-retenedor-2-piezas-de-11-m-dxn10441-112015}
+
+    \bibitem{mercadolibre_panduit}
+    Mercado Libre México. (2026). \textit{Accesorios para Canaleta LD10 Panduit}. Recuperado de \url{https://listado.mercadolibre.com.mx/canaleta-ld10-panduit}
+
+    \bibitem{anixter_6_subsystems}
+    Anixter. (s.f.). \textit{The Six Subsystems of a Structured Cabling System}. Recuperado de \url{https://www.anixter.com/en_mx/resources/literature/techbriefs/the-six-subsystems-of-a-structured-cabling-system.html}
+
+    \bibitem{hts_alu}
+    HTS-ALU. (s.f.). \textit{Escalera de aluminio para cables}. Recuperado de \url{https://hts-alu.com/es/cable-ladder-aluminum-profile/}
+
+    \bibitem{regla_543}
+    Universidad de Alicante. (2010). \textit{5,4,3,2,1 – Administración e Instalación de Redes de Computadores}. Recuperado de \url{https://blogs.ua.es/airc/2010/10/21/54321/}
+
+\end{thebibliography}
+
+\end{document}

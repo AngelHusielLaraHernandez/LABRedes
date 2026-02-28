@@ -1,0 +1,304 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{siunitx}
+\usepackage[utf8]{inputenc} 
+\usepackage{amsmath}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage[citecolor=blue]{hyperref}       % Para enlaces en el documento
+\usepackage{fancyhdr}
+\usepackage{circuitikz}
+\usepackage{amssymb}
+\usepackage{animate}
+\usepackage{float}
+\usepackage{multirow}
+\usepackage{pgfplots}
+\usepackage[a4paper, margin=1in]{geometry}
+\usepackage{gensymb}
+\usepackage{booktabs}
+\usepackage{listings}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows, positioning}
+
+% Ajuste de la altura del encabezado
+\setlength{\headheight}{76.27646pt}
+\addtolength{\topmargin}{-34.27646pt}
+
+\lstdefinestyle{mystyle}{
+    language=Matlab,
+    inputencoding=utf8,
+    backgroundcolor=\color{black!5},
+    commentstyle=\color{green!60!black},
+    keywordstyle=\color{blue},
+    numberstyle=\tiny\color{gray},
+    stringstyle=\color{purple},
+    basicstyle=\footnotesize\ttfamily,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showstringspaces=false,
+}
+\lstset{style=mystyle}
+
+\setlength{\parindent}{0pt}
+
+% Crear la portada manualmente
+\begin{document}
+
+% Desactivar la numeración de página para la portada
+\thispagestyle{empty}
+
+% Colocar las imágenes en las esquinas superiores
+\begin{minipage}[t]{0.4\textwidth}
+    \raggedright
+    \includegraphics[width=2cm]{image/der.png}
+\end{minipage}%
+\begin{minipage}[t]{0.5\textwidth}
+    \raggedleft
+    \includegraphics[width=2cm]{image/izq.png}
+\end{minipage}
+
+\vspace{1cm}
+
+\begin{center}
+    \Huge{\textbf{Previo 2. Componentes del cableado estructurado Norma ANSI/EIA/TIA 568}} \\
+    \vspace{2cm}
+    \Large{\textbf{Universidad Nacional Autónoma de México.}}\\
+    \Large{\textbf{Facultad de Ingeniería.}}\\
+    \vspace{1cm}
+    \Large{Laboratorio de Redes de datos seguras.} \\
+    \vspace{0.5cm}
+    \LARGE{\textbf{Profesora:}}
+    \LARGE{\textit{MTRA. MARIA EUGENIA BAUTISTA GONZALEZ.}}\\
+    \vspace{0.5cm}
+    \Large{\textbf{Grupo:} 2} \\
+    \vspace{0.5cm}
+    \LARGE{\textbf{Alumno:}}\\
+    \Large{320060829} \\
+    \vspace{3cm}
+    \Large{\textbf{Fecha de Entrega:}}\\
+    \vspace{0.5cm}
+    \large{{Febrero 19, 2026}}
+\end{center} 
+
+
+\newpage
+
+% Configuración del encabezado y pie de página
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\includegraphics[width=1.5cm]{image/izq.png}}
+\fancyhead[R]{\includegraphics[width=1.5cm]{image/der.png}}
+\fancyfoot[C]{\thepage}  % Coloca el número de página en el centro del pie de página
+
+% Línea horizontal en el pie de página
+\renewcommand{\footrulewidth}{0.4pt}  % Define el grosor de la línea en el pie de página
+
+% Empezar numeración de páginas desde 1 en la segunda página
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+%\maketitle
+\tableofcontents
+
+\newpage
+
+\section{¿Cuál es la función de las siguientes organizaciones: ANSI, EIA y TIA?}
+
+El desarrollo de las telecomunicaciones modernas y la implementación de redes de datos seguras dependen de un marco normativo riguroso que garantice la interoperabilidad entre fabricantes y la seguridad de las infraestructuras. En este contexto, ANSI, EIA y TIA forman la tríada fundamental que estructura los estándares globales y norteamericanos \cite{ansi_tia}.
+
+\subsection{ANSI (American National Standards Institute)}
+El Instituto Nacional Estadounidense de Estándares (ANSI) no desarrolla estándares por sí mismo, sino que funge como el organismo coordinador y acreditador principal en los Estados Unidos. Su función primordial es supervisar el proceso de creación de normas para asegurar que sean desarrolladas mediante un consenso abierto, equitativo y sin dominio de intereses particulares. En el ámbito del cableado estructurado, ANSI valida y adopta las normas técnicas desarrolladas por organizaciones como la TIA, otorgándoles el estatus de "Estándar Nacional Americano". Esto asegura que documentos como el ANSI/TIA-568 tengan peso legal y contractual en licitaciones y proyectos de ingeniería \cite{secproo}.
+
+\subsection{EIA (Electronic Industries Alliance)}
+La Alianza de Industrias Electrónicas (EIA) fue una organización comercial que representaba a los fabricantes de productos electrónicos. Históricamente, la EIA colaboró estrechamente con la TIA en la redacción de estándares de telecomunicaciones, razón por la cual muchas normas antiguas aún se conocen popularmente como "TIA/EIA". Su función específica se centraba en la estandarización de interfaces eléctricas y mecánicas (como el puerto serial RS-232). Aunque la EIA cesó sus operaciones en 2011 y transfirió sus responsabilidades a la TIA y otras entidades, su legado permanece en la nomenclatura técnica y en la definición de parámetros físicos de componentes electrónicos \cite{tabasco}.
+
+\subsection{TIA (Telecommunications Industry Association)}
+La Asociación de la Industria de Telecomunicaciones (TIA) es la entidad técnica y comercial que desarrolla los estándares para productos de tecnologías de la información y la comunicación (TIC). A través de sus comités de ingeniería, como el TR-42, la TIA define las especificaciones técnicas críticas para el cableado estructurado, incluyendo parámetros de rendimiento (pérdida de inserción, diafonía, retorno), topologías de red y procedimientos de prueba. Su función es crear un lenguaje común que permita que un cable de un fabricante funcione perfectamente con un conector de otro, garantizando la inversión del usuario final y la escalabilidad de la red a largo plazo \cite{ansi_tia, udenar}.
+
+\newpage
+
+\section{Mencione las características de los seis subsistemas funcionales que conforman el cableado estructurado.}
+
+La norma ANSI/TIA-568 define una arquitectura abierta dividida en seis subsistemas funcionales. Esta estructura modular permite diseñar, instalar y administrar redes complejas de manera eficiente y escalable \cite{sysracks}.
+
+\subsection{Instalación de Entrada (Entrance Facility - EF)}
+Este subsistema constituye el punto de demarcación física y eléctrica entre la red del proveedor de servicios (ISP, compañía telefónica) y la red privada del edificio.
+\begin{itemize}
+    \item \textbf{Características:} Incluye los cables de entrada del servicio externo, dispositivos de protección eléctrica (supresores de sobretensión), hardware de conexión y la puesta a tierra principal. Es crítico para la seguridad, ya que evita que descargas atmosféricas o fallas eléctricas externas ingresen a la red interna \cite{tabasco}.
+\end{itemize}
+
+\subsection{Cuarto de Equipos (Equipment Room - ER)}
+Es el espacio centralizado, generalmente climatizado y con control de acceso, que aloja los equipos de telecomunicaciones principales.
+\begin{itemize}
+    \item \textbf{Características:} Alberga servidores, conmutadores centrales (Core Switches), centrales telefónicas (PBX) y las conexiones cruzadas principales (Main Cross-Connect). Se considera el "corazón" de la red y suele ser el punto de mayor complejidad y densidad de cableado. Debe cumplir con estándares ambientales estrictos (temperatura y humedad controladas) \cite{secproo}.
+\end{itemize}
+
+\subsection{Cableado Vertebral o Troncal (Backbone Cabling)}
+Proporciona la interconexión entre los cuartos de telecomunicaciones, los cuartos de equipos y la instalación de entrada.
+\begin{itemize}
+    \item \textbf{Características:} Maneja el tráfico agregado de la red, por lo que requiere medios de alta velocidad. Típicamente utiliza fibra óptica (multimodo OM3/OM4/OM5 o monomodo OS2) para enlaces entre pisos (verticales) o entre edificios, aunque puede usar par trenzado (Cat 6A) para distancias menores a 90 metros. Su topología es de estrella jerárquica \cite{commscope}.
+\end{itemize}
+
+\subsection{Cuarto de Telecomunicaciones (Telecommunications Room - TR)}
+Es el punto de transición entre el cableado backbone y el cableado horizontal.
+\begin{itemize}
+    \item \textbf{Características:} Debe haber al menos uno por piso. Aloja los paneles de parcheo (patch panels), equipos activos de distribución (Switches de acceso) y las terminaciones mecánicas. Su función es concentrar las conexiones de las áreas de trabajo de una planta específica \cite{udenar}.
+\end{itemize}
+
+\subsection{Cableado Horizontal (Horizontal Cabling)}
+Se extiende desde la salida de telecomunicaciones en el área de trabajo hasta el cuarto de telecomunicaciones (TR).
+\begin{itemize}
+    \item \textbf{Características:} Incluye el cable físico (usualmente UTP sólido), la salida/conector en el área de trabajo, la terminación mecánica en el patch panel y los patch cords. La norma establece una distancia máxima rígida de 90 metros para el enlace permanente, más 10 metros combinados para cables de parcheo, sumando un canal máximo de 100 metros \cite{ansi_tia}.
+\end{itemize}
+
+\subsection{Área de Trabajo (Work Area - WA)}
+Es el espacio donde el usuario final interactúa con los dispositivos de la red.
+\begin{itemize}
+    \item \textbf{Características:} Comprende desde la placa de pared (faceplate) hasta los equipos terminales (computadoras, teléfonos IP, impresoras). Incluye los patch cords de usuario y adaptadores. Se recomienda un mínimo de dos salidas de telecomunicaciones por cada área de trabajo individual \cite{sysracks}.
+\end{itemize}
+
+\section{¿Qué es un panel de parcheo?}
+
+Un panel de parcheo, o \textit{patch panel}, es un componente pasivo fundamental montado en bastidores (racks) dentro del cuarto de telecomunicaciones. Funciona como un concentrador estático de terminaciones de cableado.
+
+Técnicamente, un patch panel presenta dos interfaces distintas:
+\begin{enumerate}
+    \item \textbf{Parte posterior (IDC):} Contiene bloques de conexión por desplazamiento de aislamiento (IDC), donde se insertan y "ponchan" los cables sólidos del cableado horizontal de manera permanente. Esto protege el cableado estructurado fijo de la manipulación constante.
+    \item \textbf{Parte frontal (Puertos modulares):} Ofrece una matriz de puertos RJ45 (o conectores de fibra) que corresponden eléctricamente a las terminaciones traseras.
+\end{enumerate}
+
+Su utilidad principal radica en la administración y flexibilidad de la red (Capapa 1 del modelo OSI). Permite realizar cambios, movimientos y adiciones (MACs) conectando y desconectando cables cortos (\textit{patch cords}) en el frente, sin necesidad de tocar el cableado sensible que viaja por las paredes y techos. Esto preserva la integridad de los contactos y facilita el diagnóstico de fallas \cite{sysracks_patch}.
+
+\section{¿Qué es un \textit{rack}?}
+
+Un \textit{rack} (o bastidor) es una estructura metálica estandarizada diseñada para alojar, organizar y proteger los equipos de telecomunicaciones, servidores y componentes de cableado.
+
+Las características técnicas más relevantes definidas por la norma EIA-310-D son:
+\begin{itemize}
+    \item \textbf{Ancho estándar:} La distancia entre los rieles de montaje es de 19 pulgadas (48.26 cm), lo que asegura que equipos de cualquier fabricante (Cisco, HP, Panduit) encajen perfectamente.
+    \item \textbf{Unidades de Rack (U):} La altura se mide en unidades "U", donde 1U equivale a 1.75 pulgadas (4.445 cm). Los racks típicos de piso tienen alturas de 42U o 45U.
+\end{itemize}
+
+Existen dos tipos principales: los \textbf{racks abiertos} (de 2 o 4 postes), que facilitan el acceso y la ventilación para el cableado estructurado, y los \textbf{gabinetes cerrados}, que ofrecen mayor seguridad física y control del flujo de aire para equipos activos sensibles como servidores \cite{mercadolibre}.
+
+\section{¿Qué es un \textit{jack}?}
+
+En el contexto del cableado estructurado, un \textit{jack} (o módulo Keystone) es el receptáculo o conector hembra que sirve como punto de terminación para el cable de par trenzado en el extremo del usuario (área de trabajo) y, frecuentemente, en el panel de parcheo modular.
+
+Técnicamente, es un dispositivo electromecánico que debe cumplir con rigurosas especificaciones de transmisión (Categoría 5e, 6 o 6A). Sus componentes clave incluyen:
+\begin{itemize}
+    \item \textbf{Contactos frontales:} Generalmente recubiertos con 50 micropulgadas de oro para garantizar la conductividad y resistir la corrosión a lo largo de cientos de ciclos de inserción.
+    \item \textbf{Torres IDC traseras:} Donde se realiza la conexión física con los conductores del cable UTP.
+    \item \textbf{Compensación interna:} Circuitos impresos (PCB) internos diseñados para minimizar la diafonía (NEXT) y mantener la impedancia característica de 100 ohmios \cite{udenar}.
+\end{itemize}
+
+\section{¿Qué es una roseta?}
+
+Una roseta es una caja de montaje superficial diseñada para alojar uno o más jacks de telecomunicaciones. A diferencia de las placas de pared que se instalan al ras sobre cajas empotradas, la roseta sobresale de la superficie de la pared.
+
+Su utilidad técnica es vital en escenarios donde no es posible realizar ranuras o canalizaciones internas en los muros, como en:
+\begin{itemize}
+    \item Paredes de concreto sólido o ladrillo estructural.
+    \item Muebles modulares de oficina.
+    \item Instalaciones temporales o históricas donde se prohíbe alterar la estructura.
+\end{itemize}
+La roseta protege mecánicamente la terminación del cable y mantiene el radio de curvatura adecuado del cable UTP al entrar en el conector, evitando degradación de la señal por estrés mecánico \cite{mercadolibre}.
+
+\section{¿Qué es una placa de pared y cuál es su utilidad?}
+
+Una placa de pared, comúnmente llamada \textit{faceplate}, es una cubierta plana, generalmente de plástico resistente (ABS) o metal, que se instala sobre una caja de registro empotrada en la pared del área de trabajo.
+
+\textbf{Utilidad y características:}
+\begin{itemize}
+    \item \textbf{Soporte mecánico:} Proporciona la estructura para fijar los jacks RJ45 (tipo Keystone) de manera segura, evitando que se hundan o muevan al conectar los equipos.
+    \item \textbf{Protección:} Sella la caja de conexiones, protegiendo el cableado interno del polvo, insectos y manipulación accidental.
+    \item \textbf{Identificación:} Según la norma TIA-606-B, los faceplates deben incluir espacios para etiquetas que identifiquen el número de puerto y el cuarto de telecomunicaciones de origen, facilitando la administración de la red.
+    \item \textbf{Estética:} Ofrece un acabado limpio y profesional en oficinas y residencias \cite{sysracks}.
+\end{itemize}
+
+\section{¿Qué es un patch cord y cuál es su objetivo principal?}
+
+Un \textit{patch cord}, o latiguillo de parcheo, es un tramo de cable de par trenzado flexible, terminado en ambos extremos con conectores machos (plugs RJ45). A diferencia del cableado horizontal sólido, el patch cord está fabricado con conductores de cobre \textit{multifilar} (stranded), lo que le otorga flexibilidad y resistencia a la fatiga por movimiento.
+
+\textbf{Objetivo principal:}
+Su función es proporcionar la interconexión final y móvil entre el cableado estructurado fijo y los equipos activos.
+\begin{itemize}
+    \item En el \textbf{Área de Trabajo}, conecta la PC o teléfono a la salida de pared (jack).
+    \item En el \textbf{Cuarto de Telecomunicaciones}, conecta el puerto del patch panel al puerto del switch (o entre equipos).
+\end{itemize}
+Es un elemento crítico del "Canal" de comunicaciones; un patch cord de baja calidad puede degradar el rendimiento de todo el enlace, introduciendo pérdidas de retorno y errores de transmisión, por lo que se recomienda usar cables certificados de fábrica \cite{beststore, leviton}.
+
+\newpage
+
+\section{Investigue costos de patch panels, placas de pared y pinzas de impacto}
+
+Para el análisis de costos de infraestructura de red, se realizó un levantamiento de precios en tres de los principales distribuidores de tecnología en México: Mercado Libre, Amazon y Steren. La investigación se centró en componentes de Categoría 6 (Cat 6) por ser el estándar actual recomendado. Como se observa en la Tabla \ref{tab:costos}, existe una notable disparidad de precios influenciada principalmente por la marca y la certificación del producto. Mientras que plataformas como Mercado Libre y Amazon ofrecen una amplia gama de opciones genéricas y de marcas intermedias (como Enson o Intellinet) con precios accesibles para patch panels y herramientas, Steren se posiciona como una opción competitiva y de fácil acceso para accesorios pasivos individuales, ofreciendo el costo más bajo en placas de pared, aunque sus equipos de montaje en rack tienden a tener un costo más elevado o disponibilidad limitada en tiendas minoristas.
+
+\begin{table}[h]
+    \centering
+    \caption{Comparativa de costos promedio en pesos mexicanos (MXN)}
+    \label{tab:costos}
+    \begin{tabular}{|l|c|c|c|}
+        \hline
+        \textbf{Componente} & \textbf{Mercado Libre} & \textbf{Amazon México} & \textbf{Steren} \\ \hline
+        Patch Panel (24 puertos, Cat 6) & \$550 - \$1,200 & \$700 - \$1,500 & \$1,720 (aprox.) \\ \hline
+        Placa de pared (2 puertos) & \$40 - \$85 & \$50 - \$110 & \$29 \\ \hline
+        Pinzas de impacto (Punch down) & \$180 - \$350 & \$250 - \$550 & \$495 \\ \hline
+    \end{tabular}
+\end{table}
+
+\section{Realice un diagrama mostrando la trayectoria de conexiones desde el equipo de cómputo en el área de trabajo hasta el equipo activo ubicado en el cuarto de telecomunicaciones.}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.7\textwidth]{image/image1.png}
+    \caption{Esquema de conexion desde el área de trabajo hasta el cuarto de telecomunicaciones.}
+    \label{fig:conexion_trayectoria}
+\end{figure}
+
+\newpage
+
+% Bibliografía en formato APA 6 usando bibitem
+\begin{thebibliography}{99}
+
+\bibitem{ansi_tia}
+American National Standards Institute (ANSI) \& Telecommunications Industry Association (TIA). (2018). \textit{ANSI/TIA-568.1-D: Commercial Building Telecommunications Cabling Standard}. Arlington, VA: TIA Standards.
+
+\bibitem{commscope}
+CommScope. (2025). \textit{Structured Cabling Solutions for Enterprise Networks}. Recuperado de \url{https://www.commscope.com}
+
+\bibitem{secproo}
+Secproo. (2024). \textit{Normas de cableado estructurado y estándares ANSI/TIA}. Recuperado de \url{https://secproo.com/normas-de-cableado-estructurado-estandares/}
+
+\bibitem{tabasco}
+Gobierno de Tabasco. (s.f.). \textit{Manual para aplicar la norma TIA/EIA para Cableado Estructurado}. Recuperado de \url{https://tabasco.gob.mx/sites/default/files/Manual-para-aplicar-la-norma-TIA-EIA-para-Cableado-Estructurado.pdf}
+
+\bibitem{udenar}
+Universidad de Nariño. (2018). \textit{Anexo Especificaciones Técnicas de Cableado Estructurado}. Recuperado de \url{https://www.udenar.edu.co/recursos/wp-content/uploads/2018/08/ANEXO-ESPECIFICACIONES-TECNICAS.pdf}
+
+\bibitem{sysracks}
+Sysracks. (2024). \textit{Sistema de cableado estructurado y sus subsistemas}. Recuperado de \url{https://sysracks.com/es/blog-es/sistema-de-cableado-estructurado/}
+
+\bibitem{sysracks_patch}
+Sysracks. (2024). \textit{¿Qué es un patch panel y para qué sirve?}. Recuperado de \url{https://sysracks.com/es/blog-es/que-es-un-patch-panel-y-para-que-sirve/}
+
+\bibitem{beststore}
+Best Store. (2023). \textit{¿Qué es un Patch Cord y para qué sirve?}. Recuperado de \url{https://www.beststore.cl/smartblog/12\_patch-cord.html}
+
+\bibitem{leviton}
+Leviton Network Solutions. (2024). \textit{Understanding Patch Cords: Types and Uses}. Recuperado de \url{https://es.leviton.com/support/literature/blogs/what-is-a-patch-cord}
+
+\bibitem{mercadolibre}
+MercadoLibre México. (2026). \textit{Listado de precios de componentes de redes y telecomunicaciones}. Recuperado de \url{https://computacion.mercadolibre.com.mx/redes-inalambricas-patch-panels/}
+
+\bibitem{syscom_cables}
+Syscom. (2026). \textit{Catálogo de Cableado Estructurado y Herramientas}. Recuperado de \url{https://www.syscom.mx/productos/cableado-estructurado}
+
+\bibitem{steren_cat}
+Steren. (2026). \textit{Componentes de Red y Herramientas de Impacto}. Recuperado de \url{https://www.steren.com.mx/computacion/redes}
+
+\end{thebibliography}
+
+\end{document}
