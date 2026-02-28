@@ -1,0 +1,32 @@
+# .gitignore para LaTeX
+# Ignorar todos los archivos generados por la compilación de LaTeX
+
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.glg
+*.glo
+*.gls
+*.idx
+*.ilg
+*.ind
+*.lof
+*.log
+*.lot
+*.nav
+*.out
+*.run.xml
+*.snm
+*.synctex.gz
+*.toc
+
+# Opcional: ignorar pdfs generados por el compilador, 
+# descomenta la siguiente línea si no quieres subir los PDFs creados
+# *.pdf
+
+# Ignorar archivos del OS
+.DS_Store
+Thumbs.db
