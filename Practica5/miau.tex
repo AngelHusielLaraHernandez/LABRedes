@@ -1,0 +1,381 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[utf8]{inputenc} 
+\usepackage{amsmath}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage[citecolor=blue]{hyperref}       % Para enlaces en el documento
+\usepackage{fancyhdr}
+\usepackage{circuitikz}
+\usepackage{amssymb}
+\usepackage{animate}
+\usepackage{float}
+\usepackage{multirow}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage[a4paper, margin=1in]{geometry}
+\usepackage{gensymb}
+\usepackage{siunitx}
+\usepackage{booktabs}
+\usepackage{listings}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows, positioning}
+
+% Ajuste de la altura del encabezado
+\setlength{\headheight}{76.27646pt}
+\addtolength{\topmargin}{-34.27646pt}
+
+\lstdefinestyle{mystyle}{
+    language=Matlab,
+    inputencoding=utf8,
+    backgroundcolor=\color{black!5},
+    commentstyle=\color{green!60!black},
+    keywordstyle=\color{blue},
+    numberstyle=\tiny\color{gray},
+    stringstyle=\color{purple},
+    basicstyle=\footnotesize\ttfamily,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showstringspaces=false,
+}
+\lstset{style=mystyle}
+
+\setlength{\parindent}{0pt}
+
+% Crear la portada manualmente
+\begin{document}
+
+% Desactivar la numeración de página para la portada
+\thispagestyle{empty}
+
+% Colocar las imágenes en las esquinas superiores
+\begin{minipage}[t]{0.4\textwidth}
+    \raggedright
+    \includegraphics[width=2cm]{image/der.png}
+\end{minipage}%
+\begin{minipage}[t]{0.5\textwidth}
+    \raggedleft
+    \includegraphics[width=2cm]{image/izq.png}
+\end{minipage}
+
+\vspace{1cm}
+
+\begin{center}
+    \Huge{\textbf{PRÁCTICA 5}} \\
+    \vspace{0.5cm}
+    \LARGE{\textbf{Instalación de una red básica en las plataformas: Windows de Microsoft y Linux distribución Debian}} \\
+    \vspace{0.5cm}
+    \Large{\textbf{Cuestionario Previo}} \\
+    \vspace{1cm}
+    \Large{\textbf{Universidad Nacional Autónoma de México.}}\\
+    \Large{\textbf{Facultad de Ingeniería.}}\\
+    \vspace{1cm}
+    \Large{Laboratorio de Redes de datos seguras.} \\
+    \vspace{0.5cm}
+    \LARGE{\textbf{Profesora:}}
+    \LARGE{\textit{MTRA. MARÍA EUGENIA BAUTISTA GONZÁLEZ.}}\\
+    \vspace{0.5cm}
+    \Large{\textbf{Grupo:} 08} \\
+    \vspace{0.5cm}
+    \LARGE{\textbf{Alumno:}}\\
+    \Large{320060829} \\
+    \vspace{3cm}
+    \Large{\textbf{Fecha de Entrega:}}\\
+    \vspace{0.5cm}
+    \large{{12 de Marzo de 2026}}
+\end{center} 
+
+
+\newpage
+
+% Configuración del encabezado y pie de página
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\includegraphics[width=1.5cm]{image/izq.png}}
+\fancyhead[R]{\includegraphics[width=1.5cm]{image/der.png}}
+\fancyfoot[C]{\thepage}  % Coloca el número de página en el centro del pie de página
+
+% Línea horizontal en el pie de página
+\renewcommand{\footrulewidth}{0.4pt}  % Define el grosor de la línea en el pie de página
+
+% Empezar numeración de páginas desde 1 en la segunda página
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+%\maketitle
+\tableofcontents
+
+
+\newpage
+
+\section{¿Qué es un cliente, protocolo, adaptador y servicio en una red?}
+En la arquitectura de redes de telecomunicaciones modernas, la interacción entre múltiples componentes de hardware y software es esencial para establecer canales de comunicación eficientes y seguros. El primer elemento crítico en esta topología es el \textbf{cliente}. En un modelo de red cliente-servidor, un cliente se define como una entidad lógica (una aplicación de software) o física (un ordenador de punto final o \textit{endpoint}) que inicia una solicitud de comunicación para acceder a recursos, datos o funcionalidades alojadas en un sistema remoto o servidor \cite{ref1}. Los clientes operan típicamente solicitando código de programa actualizado, resolviendo nombres de dominio a través de un servidor de nombres, o enviando y extrayendo datos para la actualización de registros en servidores de bases de datos. 
+
+El vehículo que hace posible esta comunicación es el \textbf{protocolo de red}. Un protocolo constituye un conjunto riguroso y estandarizado de normativas semánticas, sintácticas y de sincronización que dictan cómo los paquetes de datos deben ser formateados, transmitidos, enrutados y recibidos a través del medio físico \cite{ref2}. Los protocolos operan en una arquitectura de capas, donde protocolos como TCP e IP aseguran el transporte y el enrutamiento, mientras que protocolos de seguridad encapsulan los datos para garantizar confidencialidad e integridad.
+
+Para que la infraestructura de software logre interactuar con el medio físico, se requiere un \textbf{adaptador de red}, comúnmente denominado Tarjeta de Interfaz de Red (NIC). El adaptador es el componente de hardware esencial que procesa las señales analógicas o digitales entrantes y las transforma en tramas de datos comprensibles por el sistema operativo \cite{ref5}. Este posee un microcontrolador y una dirección MAC grabada físicamente en su memoria ROM.
+
+Finalmente, el \textbf{servicio} en el contexto de redes de datos se refiere a un proceso de software o demonio (\textit{daemon}) que se ejecuta ininterrumpidamente en segundo plano, escuchando peticiones entrantes a través de puertos de red específicos \cite{ref2}. Ejemplos críticos incluyen el servicio de asignación dinámica de direcciones (DHCP), la resolución de nombres de dominio (DNS) y la sincronización de relojes mediante NTP \cite{ref6}.
+
+\section{En el ámbito de las redes existen dos tipos de direcciones: físicas y lógicas. Describa las características de cada una.}
+
+En el ámbito de la interconexión de redes, los mecanismos de direccionamiento se dividen en dos categorías fundamentales que operan en diferentes capas del modelo de referencia OSI \cite{ref7}.
+
+\textbf{Dirección Física (Dirección MAC):}
+\begin{itemize}
+    \item Universalmente conocida como Dirección MAC (Media Access Control), es un identificador binario que está intrínsecamente ligado al hardware \cite{ref5, ref7}.
+    \item Es inmutable en teoría, ya que es grabada en la memoria de solo lectura (ROM) del adaptador de red (NIC) durante su manufactura.
+    \item Estructuralmente, consta de 48 bits (representados habitualmente como seis pares de dígitos hexadecimales, por ejemplo, \texttt{08:00:27:e2:80:18}).
+    \item Opera de manera exclusiva en la Capa 2 (Capa de Enlace de Datos) del modelo OSI, por lo que solo tiene validez operativa dentro del segmento de red de área local (LAN).
+\end{itemize}
+
+\textbf{Dirección Lógica (Dirección IP):}
+\begin{itemize}
+    \item Representada por la Dirección IP (Internet Protocol), es una construcción abstracta basada enteramente en software y configurada por el sistema operativo \cite{ref7}.
+    \item Su característica principal es que no está atada al hardware; cambia en función de la red específica a la que el dispositivo se conecte.
+    \item En su versión IPv4 consiste en un número de 32 bits dividido en cuatro octetos decimales, y opera en la Capa 3 (Capa de Red) proporcionando una topología de enrutamiento jerárquico.
+    \item Permite que los enrutadores (\textit{routers}) a nivel mundial determinen el trayecto más eficiente para que un paquete viaje superando las limitaciones físicas locales.
+\end{itemize}
+
+\section{Investigue las clases de direcciones lógicas.}
+
+Para gestionar de forma estructurada los miles de millones de direcciones teóricas de IPv4, originalmente se implementó un sistema de direccionamiento ``con clases'' (\textit{Classful Addressing}). Este método segmentaba el espacio de direcciones IP en cinco clases bien definidas (A, B, C, D y E) basándose en los bits iniciales del primer octeto \cite{ref12}.
+
+\begin{table}[H]
+\centering
+\resizebox{\textwidth}{!}{
+\begin{tabular}{|c|c|c|c|c|p{5cm}|}
+\toprule
+\textbf{Clase} & \textbf{Bits Iniciales} & \textbf{Rango (1er Octeto)} & \textbf{Máscara} & \textbf{Max Hosts por Red} & \textbf{Propósito} \\
+\midrule
+\textbf{A} & \texttt{0} & 1 a 126 & 255.0.0.0 & 16,777,214 & Grandes corporaciones y entidades gubernamentales. \\
+\textbf{B} & \texttt{10} & 128 a 191 & 255.255.0.0 & 65,534 & Grandes organizaciones comerciales y universidades. \\
+\textbf{C} & \texttt{110} & 192 a 223 & 255.255.255.0 & 254 & Redes de área local (LAN) comerciales y domésticas. \\
+\textbf{D} & \texttt{1110} & 224 a 239 & No aplicable & N/A & Reservada para grupos de Multidifusión (Multicast). \\
+\textbf{E} & \texttt{1111} & 240 a 255 & No aplicable & N/A & Retenida con fines experimentales y de investigación. \\
+\bottomrule
+\end{tabular}
+}
+\end{table}
+
+El cálculo de la cantidad de hosts disponibles por red se rige siempre por la fórmula matemática $H = 2^n - 2$, donde $n$ representa la cantidad de bits disponibles para el host \cite{ref13}. Se restan dos direcciones: la primera para identificar la propia red, y la última reservada para la dirección de transmisión amplia o \textit{broadcast}.
+
+\section{¿Qué es y qué funciones realiza una máscara de red?}
+
+En la arquitectura del protocolo IPv4, una dirección IP por sí sola es ambigua, ya que no proporciona información para determinar el alcance local. Una \textbf{máscara de red} (\textit{subnet mask}) es un número de 32 bits que funciona en perfecta sincronía con la dirección IP con el objetivo de ``enmascarar'' la porción de host y discriminar qué bits pertenecen al identificador de la red y cuáles a los nodos \cite{ref13}.
+
+Sus funciones principales incluyen:
+\begin{itemize}
+    \item \textbf{Cálculo Computacional (Bitwise AND):} Realiza una conjunción lógica a nivel procesador entre la IP y la máscara. Los bits en ``1'' continuo declaran el perímetro de la red, y donde cambian a ``0'' comienza el espacio para dispositivos \cite{ref13}.
+    \item \textbf{Proceso de Decisión de Enrutamiento:} Permite a un equipo evaluar si la dirección IP de destino de un paquete pertenece a su subred local (enviando directo al switch) o si pertenece a una subred foránea (requiriendo envío al \textit{router}) \cite{ref13}.
+    \item \textbf{División en Subredes (Subnetting):} Altera de manera deliberada la máscara para segmentar una gran red congestionada en múltiples subredes pequeñas, lo cual mejora el ancho de banda y aísla problemas de seguridad.
+\end{itemize}
+
+\section{Explique el funcionamiento de: a. Un DNS b. Una puerta de enlace c. Un servidor DHCP}
+
+\subsection*{a. Un DNS (Domain Name System)}
+El DNS es una inmensa base de datos jerárquica y distribuida a nivel global que actúa como la libreta de direcciones de Internet, resolviendo y traduciendo nombres de dominio mnemotécnicos (por ejemplo, \texttt{google.com}) en las correspondientes direcciones IP enrutables (por ejemplo, \texttt{142.250.190.46}) \cite{ref3}. Cuando un usuario introduce una URL, el cliente de red emite una consulta DNS, habitualmente utilizando UDP a través del puerto 53. Si el servidor local no tiene la caché, inicia un proceso recursivo consultando servidores raíz para obtener la respuesta.
+
+\subsection*{b. Una puerta de enlace (Gateway)}
+Una puerta de enlace es el componente neurálgico (típicamente un enrutador físico) que sirve como punto de tránsito entre la red de área local interna y el exterior no confiable (Internet). Su funcionamiento se basa en tablas de enrutamiento; cuando un paquete no pertenece a la subred local, la computadora lo reenvía hacia la IP y MAC de la puerta de enlace, quien lo envía al siguiente salto \cite{ref3}. Además, realiza NAT (Network Address Translation) para traducir IPs privadas a IPs públicas.
+
+\subsection*{c. Un servidor DHCP (Dynamic Host Configuration Protocol)}
+Es una arquitectura cliente-servidor vital para automatizar y gestionar la distribución de direcciones IP y parámetros de red \cite{ref6}. Opera bajo el proceso transaccional DORA \cite{ref3}:
+\begin{enumerate}
+    \item \textbf{Discover:} El cliente envía un broadcast buscando servidores DHCP.
+    \item \textbf{Offer:} Los servidores responden ofreciendo una IP libre del \textit{pool}.
+    \item \textbf{Request:} El cliente solicita oficialmente la asignación de la IP ofrecida.
+    \item \textbf{Acknowledgment:} El servidor confirma, asigna el tiempo de contrato (\textit{Lease Time}) y entrega información avanzada (máscara, DNS, puerta de enlace).
+\end{enumerate}
+
+\section{Investigue cómo se configura una tarjeta de red en modo gráfico en Linux Distribución Debian}
+
+En distribuciones modernas como Debian 12 (Bookworm) con entorno GNOME, la gestión topológica de red es orquestada casi en su totalidad por el demonio \textbf{NetworkManager} \cite{ref26}. Para configurarla gráficamente, el administrador debe ejecutar los siguientes pasos:
+
+\begin{enumerate}
+    \item \textbf{Apertura del Panel de Control:} Acceder a la interfaz de \textbf{Configuración} (\textit{Settings}) general del sistema operativo.
+    \item \textbf{Módulo de Conectividad:} Seleccionar el apartado de \textbf{Red} (\textit{Network}) en el panel lateral, el cual lista los adaptadores detectados por el kernel.
+    \item \textbf{Propiedades Activas:} Pulsar el ícono de engranaje (ajustes) contiguo a la conexión Ethernet o Wi-Fi activa para abrir las propiedades de capa 2 y capa 3.
+    \item \textbf{Pestaña IPv4:} Navegar a esta sección. Por defecto está en estado Automático (DHCP). Para establecer una configuración estática, se debe cambiar a modo \textbf{Manual} \cite{ref26}.
+    \item \textbf{Inyección de Parámetros:} Llenar los campos requeridos con la Dirección IP deseada, la Máscara de Red (usualmente usando notación CIDR, ej. \texttt{24}), y la IP de la Puerta de Enlace.
+    \item \textbf{Aplicar y Reiniciar Enlace:} Apagar el interruptor de DNS automático para ingresar DNS manuales (ej. \texttt{8.8.8.8}), presionar el botón \textbf{Aplicar} y luego reiniciar lógicamente la conexión utilizando el botón de conmutación principal del panel para que el sistema procese la nueva dirección estática.
+\end{enumerate}
+
+\section{Investigue el objetivo, funcionamiento y al menos 3 parámetros del comando ping}
+
+\textbf{Objetivo y Funcionamiento:}
+El mandato \texttt{ping} es el instrumento forense por excelencia para diagnosticar problemas de conectividad e infraestructura en redes bajo el modelo TCP/IP \cite{ref35}. Funciona acoplándose al Protocolo de Mensajes de Control de Internet (ICMP). El proceso empaqueta y transmite un datagrama ICMP ``Echo Request'' (Tipo 8). Si atraviesa exitosamente el enrutamiento hasta el servidor destino, su sistema operativo responde con un mensaje ICMP ``Echo Reply'' (Tipo 0), deteniendo el reloj transaccional para computar la latencia (RTT) o pérdida de paquetes.
+
+\textbf{Parámetros Analíticos Clave en Linux:}
+\begin{itemize}
+    \item \textbf{Parámetro \texttt{-c} (Count):} Obliga a terminar el bucle dictando un umbral absoluto de terminación. Por ejemplo, \texttt{ping -c 4 <IP>} transmite solo 4 peticiones antes de detener el utilitario \cite{ref35}.
+    \item \textbf{Parámetro \texttt{-i} (Interval):} Proporciona control sobre el reloj de emisión. Cambia el retardo predeterminado de 1 segundo a valores sub-segundos (ej. \texttt{-i 0.2}) para realizar pruebas de estrés en la red \cite{ref35}.
+    \item \textbf{Parámetro \texttt{-s} (Size):} Interviene e infla de manera intencional la estructura interna (payload) del paquete ICMP más allá de sus 56 bytes por defecto. Resulta crucial para descubrir problemas de fragmentación sobre la MTU de los enrutadores \cite{ref35}.
+\end{itemize}
+
+\section{¿Para qué se usa el comando apt-get install ifconfig o apt install ifconfig?}
+
+La introducción del comando \texttt{sudo apt-get install net-tools} (o buscando el paquete para ifconfig) representa un intento de instalar herramientas obsoletas debido a una decisión arquitectónica en distribuciones modernas (como Debian 12) \cite{ref26}. 
+
+Durante más de dos décadas, \texttt{ifconfig} fue la herramienta universal para inspeccionar configuraciones IP. Sin embargo, los desarrolladores de Linux declararon \textbf{obsoleto} (deprecated) el paquete original \texttt{net-tools} por falta de mantenimiento y deficiencias al procesar IPv6. En Debian actual, al invocarlo aparecerá el error \texttt{-bash: ifconfig: command not found}. 
+
+El comando \texttt{apt install} en este contexto contacta los repositorios de paquetes para forzar la descarga y restitución de esa biblioteca \textit{legacy}. No obstante, a nivel de buenas prácticas, se desaconseja rotundamente su uso; es preferible adoptar universalmente su sucesor moderno: la suite \texttt{iproute2}.
+
+\section{¿Para qué se usa el comando ip addr y cuál es la sintaxis para usarlo?}
+
+El comando unitario \texttt{ip}, perteneciente a la poderosa suite \textbf{iproute2}, es el paradigma actual para la inspección, diagnóstico de enrutamiento y control del hardware de red en Linux \cite{ref46}.
+
+\textbf{Sintaxis:} \texttt{ip OBJECT \{COMMAND | help\}} \cite{ref46}.
+\begin{itemize}
+    \item \textbf{OPTIONS:} Banderas como \texttt{-4} para mostrar solo IPv4, o \texttt{-c} para colorear la salida.
+    \item \textbf{OBJECT:} En este caso \texttt{addr} (o \texttt{a}), es el objeto que le indica a la herramienta centrarse en los parámetros e identificadores de direcciones IP.
+    \item \textbf{COMMAND:} Si se omite, asume por defecto \texttt{show} (mostrar). Para agregar una IP estática sería \texttt{ip addr add}.
+\end{itemize}
+
+Al ejecutarse simplemente como \texttt{ip addr}, despliega la pared de datos con todas las tarjetas de red del sistema, mostrando las banderas de conectividad de capa 1 (como \texttt{LOWER\_UP}), la dirección MAC y finalmente los parámetros IP nativos utilizando notación CIDR (\texttt{inet 192.168.1.15/24}).
+
+\section{¿Con qué otros nombres se puede identificar a la NIC además de eth0?}
+
+Durante mucho tiempo, la convención de nomenclatura simplista de UNIX utilizaba \texttt{eth0}, \texttt{eth1} basándose en la primera interfaz descubierta en el arranque. Debido a problemas críticos de consistencia (donde los nombres cambiaban accidentalmente de orden), \texttt{systemd} introdujo el paradigma de \textbf{Nombres de Interfaces Predecibles de Red} (\textit{Predictable Network Interface Names}) \cite{ref52}. Estos esquemas incluyen:
+
+\begin{itemize}
+    \item \textbf{Identificación Embebida (\texttt{eno1}):} Nomenclatura extraída de los identificadores del Firmware/BIOS para chips incrustados en la Placa Base (\textit{on-board}).
+    \item \textbf{Identificación Hotplug (\texttt{ens1}):} Índice emitido exclusivamente para las ranuras de intercambio en caliente PCI Express.
+    \item \textbf{Identificación Geográfica (\texttt{enp2s0}):} Explica la trayectoria estricta del bus: \texttt{en} (Ethernet), \texttt{p2} (Bus Path 2), \texttt{s0} (Slot 0).
+    \item \textbf{Identificación por MAC (\texttt{enx78e7d1ea46da}):} Una técnica absoluta donde el nombre integra el identificador de silicio MAC universal \cite{ref52}.
+\end{itemize}
+
+\section{¿Para qué sirve el protocolo TCP/IP?}
+
+El conjunto de protocolos TCP/IP (Protocolo de Control de Transmisión / Protocolo de Internet) es el estándar arquitectónico que sustenta el flujo global de datos comerciales en línea y redes computacionales \cite{ref55}. Fue diseñado primordialmente para el ruteo indestructible de información a través de infraestructuras dispersas.
+
+El propósito central radica en su dicotomía simbiótica:
+\begin{itemize}
+    \item \textbf{El Protocolo Internet (IP):} Opera ciegamente proveyendo identificadores lógicos (direcciones) y reglas de salto de enrutamiento para que el paquete alcance el destino. No verifica si el paquete se perdió o destruyó.
+    \item \textbf{El Protocolo de Control de Transmisión (TCP):} Aporta la fiabilidad extrema al proceso. Realiza el \textit{handshake} tripartito, trocea grandes ficheros, controla la llegada matemática y ordena el reensamblaje de la carga útil garantizando que ningún dato llegó corrupto. En caso de pérdida, exige implacablemente retransmisiones hasta que el envío esté completo.
+\end{itemize}
+
+\section{¿Cuál es el significado e importancia de WINS?}
+
+\textbf{WINS (Windows Internet Name Service)} fue un componente arquitectónico central en las eras incipientes de redes de computadoras bajo ecosistemas de Microsoft. Originalmente, Windows resolvía identidades utilizando nombres locales ``NetBIOS'', el cual dependía destructivamente de tormentas de peticiones tipo \textit{broadcast} \cite{ref60}.
+
+Su \textbf{importancia histórica} recayó en que el tráfico \textit{broadcast} está estrictamente prohibido y es bloqueado por los \textit{routers} a la salida de las subredes LAN, lo que causaba que la comunicación NetBIOS no pudiera viajar entre distintos departamentos separados por enrutadores. WINS solucionó esto operando como un servidor central unificado. En lugar de transmitir ruido ciego, los nodos enviaban solicitudes UDP directamente a la base de datos WINS para mapear el nombre netBIOS hacia su dirección IP enrutada \cite{ref60}. Hoy en día, este protocolo ha sido reemplazado enteramente por los sistemas avanzados de DNS y Active Directory.
+
+\section{¿Por qué es importante conocer el modelo del chipset de la NIC?}
+
+Un adaptador de red no es solo un enchufe, sino que incorpora un microcontrolador o procesador base propio llamado \textbf{Chipset} \cite{ref5}. Conocer su modelo (tales como series de Intel, Broadcom o Realtek) es de suprema relevancia técnica por tres pilares:
+
+\begin{enumerate}
+    \item \textbf{Compatibilidad Orgánica del Controlador (Driver):} Especialmente en distribuciones Open Source como Linux o appliances de firewall basados en FreeBSD, ciertos chips de fabricantes privativos se niegan a otorgar especificaciones abiertas. Ignorar el chipset provoca pánicos del núcleo o adaptadores completamente ciegos e inoperables \cite{ref5}.
+    \item \textbf{Descarga Lógica de Hardware (TCP Offloading):} Un chipset premium moderno cuenta con matrices algorítmicas que asumen de forma autónoma el cálculo pesado de protocolos TCP (ej. \textit{Checksum Offloading}), aliviando sustancialmente a la CPU de la placa base de tareas tediosas e incrementando el desempeño de la red.
+    \item \textbf{Capacidades Forenses (Modo Promiscuo):} Para realizar capturas de red (usando software como Wireshark o sensores Snort), el chipset debe tolerar ser conmutado a ``Modo Promiscuo'', dejando de triturar paquetes ajenos y enviando copias exactas a la herramienta analítica para la ciberseguridad corporativa.
+\end{enumerate}
+
+\section{¿Qué significan cada uno de los parámetros en la versión del kernel (ejemplo: kernel 2.6.7.3)? Explique los 4 parámetros para las versiones actuales.}
+
+Bajo el modelo heredado \textit{clásico} (como el 2.6.7.3), el ``2'' era la versión mayor, el ``6'' demostraba que era un núcleo congelado y estable apto para servidores comerciales (los números impares eran radiactivos e inestables experimentales), y el ``7.3'' indicaban parches de revisiones menores de controladores de hardware. 
+
+En el \textbf{modelo contemporáneo moderno} (como \texttt{6.1.0-18-amd64} proyectado en Debian 12 Bookworm), la topología se estandariza en 4 parámetros fijos:
+
+\begin{enumerate}
+    \item \textbf{Versión Mayor (\texttt{6}):} Denota un hito numérico masivo de avance estructural temporal en el repositorio madre del creador Linus Torvalds.
+    \item \textbf{Versión Menor (\texttt{1}):} Indica orgánicamente el despliegue periódico de características integradas, soportando nuevos subsistemas e inyección de drivers.
+    \item \textbf{Nivel de Parche o Revisión (\texttt{0}):} Refleja las revisiones correctivas de seguridad y mitigaciones de vulnerabilidades subyacentes descubiertas (parches de estabilización o CVEs).
+    \item \textbf{Compilador ABI / Arquitectura (\texttt{-18-amd64}):} El sufijo final indica la revisión empaquetada de la interfaz binaria nativa (ej. la versión 18 interna de Debian) unificada imperativamente con la familia del procesador hardware atado (\texttt{amd64} asumiendo x86\_64 bits de 64 bits a diferencia de topologías \texttt{arm64}).
+\end{enumerate}
+
+\section{¿Cómo se desactiva un firewall en el sistema operativo Linux?}
+
+En sistemas modernos basados en Debian 12, el muro subyacente lógico opera por defecto bajo la arquitectura robusta del subsistema y framework denominado \textbf{nftables} (el cual sustituyó a las antiguas bibliotecas iptables) \cite{ref70}. Para inyectar órdenes destructivas sobre él, se requiere poseer permisos de raíz absolutos (\texttt{sudo}) invocando al orquestador \texttt{systemctl} \cite{ref70}.
+
+\begin{itemize}
+    \item Para suspender instantáneamente su protección de forma temporal en la sesión activa:
+    \begin{lstlisting}
+sudo systemctl stop nftables
+    \end{lstlisting}
+    \item Para inhabilitarlo permanentemente impidiendo que el demonio resucite en los próximos reinicios físicos de la computadora:
+    \begin{lstlisting}
+sudo systemctl disable nftables
+    \end{lstlisting}
+\end{itemize}
+Si el administrador emplea interfaces de consola alternas y simplificadas de alto nivel como UFW, la orden requerida será invocar \texttt{sudo ufw disable}.
+
+\section{¿Cómo se desactiva un firewall en el sistema operativo Windows?}
+
+El sistema operativo Windows 10/11 implementa de forma monolítica su protección perimetral categorizando el entorno de la red que detecta en tres perfiles independientes (Dominio, Privada y Pública) bajo el módulo de la \textit{Seguridad de Windows}.
+
+Para desactivarlo gráficamente:
+\begin{enumerate}
+    \item Navegar desde el menú a la \textbf{Configuración} y acceder a \textit{Privacidad y Seguridad}.
+    \item Ingresar a \textit{Seguridad de Windows} y luego al módulo de \textbf{Firewall y protección de red}.
+    \item Seleccionar el perfil de red que proyecte la leyenda "Activo".
+    \item Deslizar el interruptor del componente \textit{Microsoft Defender Firewall} a la posición \textbf{Desactivado} (autorizando la acción con permisos elevados UAC).
+\end{enumerate}
+
+Para administradores informáticos de terminal, existe un comando poderoso a través del intérprete avanzado (Símbolo del sistema con privilegios administrativos) llamado Network Shell (\texttt{netsh}):
+\begin{lstlisting}
+netsh advfirewall set allprofiles state off
+\end{lstlisting}
+
+\section{Investigar los pasos para instalar el controlador de tarjeta de red en Windows}
+
+Cuando Windows carece del registro original del controlador lógico de una tarjeta (como un chipset oscuro Qualcomm o Realtek), la conexión Ethernet figura inutilizada y muerta. El administrador soluciona esto a través del sistema de administración nativo:
+
+\begin{enumerate}
+    \item \textbf{Abrir Administrador de Dispositivos:} Presionar \texttt{Windows + X} y seleccionar \textit{Administrador de dispositivos} (o invocar \texttt{devmgmt.msc}).
+    \item \textbf{Exploración:} Desplegar la sección \textit{Adaptadores de red}. Si el dispositivo es completamente ciego, aparecerá etiquetado en un apartado marginal denominado \textit{Otros dispositivos}.
+    \item \textbf{Invocar Actualización:} Hacer clic derecho orgánicamente sobre la pieza de hardware anómala y seleccionar la opción \textbf{Actualizar controlador}.
+    \item \textbf{Elección Manual:} Ya que la PC carece de salida a Internet por el fallo, descartar la búsqueda automática y seleccionar \textbf{Examinar mi PC en busca de controladores}.
+    \item \textbf{Carga del Firmware:} Apuntar el directorio explorador hacia la ruta interna (ej. USB Pendrive) donde descansa el archivo desempaquetado de firmware nativo provisto (archivo \texttt{.inf} y \texttt{.sys}) descargado en otro ordenador. Al dar "Siguiente", Windows validará la firma de software del fabricante e instalará biológicamente el chip en el núcleo.
+\end{enumerate}
+
+\section{En el administrador de dispositivos investigue los diferentes íconos que señalan los problemas en los dispositivos y su significado (Figura No. A)}
+
+Windows abstrae analíticamente fallos técnicos superponiendo iconos distintivos de color y geometría en la lista de recursos \cite{ref83}:
+
+\begin{itemize}
+    \item \textbf{Triángulo Amarillo con Signo de Exclamación:} Declara que la plataforma detecta un hardware originario pero que actualmente se encuentra en ``Estado Problemático'' \cite{ref83}. Está ligado comúnmente a fallas severas de asignación (Códigos de Error 10 o 43), controladores ausentes o que dos procesadores colisionan por la misma solicitud de memoria IRQ.
+    \item \textbf{Círculo Rojo / Cruz Roja:} Evidencia un fallo letal de hardware ocluyendo que el sistema está ``Deshabilitado de forma abrupta'' u operando con un daño crítico que causó pánico por corrupción inestable al integrarse \cite{ref83}.
+    \item \textbf{Flecha Apuntando hacia Abajo:} Revela un estado intencional humano de ``Inhabilitación Voluntaria'' \cite{ref83}. Significa que el administrador de red, provisto de los correspondientes permisos, decidió apagar forzosamente el dispositivo. No hay daño mecánico real en el silicio.
+    \item \textbf{Signo de Interrogación Amarillo:} Aparece como un dispositivo en el ``Limbo'' que Windows reporta como ``Dispositivo Desconocido'' \cite{ref83}. Ocurre cuando el núcleo detectó el componente insertado y extrajo un Hardware ID de voltaje primario, pero en toda su inmensa biblioteca precompilada en línea, no fue capaz de emparejarlo e identificar ni siquiera remotamente su firma de manufacturador ni propósito funcional.
+\end{itemize}
+
+\begin{thebibliography}{15}
+
+\bibitem{ref1} IBM. (2020). \textit{Conceptos de red y comunicación en AIX 7.2.0: Cliente, servidor y protocolos}. Recuperado de \url{https://www.ibm.com/docs/es/aix/7.2.0?topic=concepts-network-systems}
+
+\bibitem{ref2} Netwrix. (s.f.). \textit{Definición de dispositivos de red: Router, conmutador, adaptador y protocolo}. Recuperado de \url{https://netwrix.com/es/resources/blog/network-devices-explained/}
+
+\bibitem{ref3} IBM Think. (s.f.). \textit{DHCP frente a DNS: Funcionamiento transaccional DORA y traducción de nombres}. Recuperado de \url{https://www.ibm.com/mx-es/think/insights/dhcp-vs-dns}
+
+\bibitem{ref5} MAC Address Lookup. (s.f.). \textit{Tarjeta de Interfaz de Red (NIC): Definición, propósitos, MAC y chipset}. Recuperado de \url{https://macaddresslookup.io/es/blogs/what-is-network-interface-card-nic-definition-purposes-functions-types}
+
+\bibitem{ref6} RedesZone. (2023). \textit{Qué es el protocolo DHCP, funcionamiento y configuración}. Recuperado de \url{https://www.redeszone.net/tutoriales/internet/que-es-protocolo-dhcp/}
+
+\bibitem{ref7} IBM PowerHA. (2021). \textit{Diferenciación estructural entre redes físicas y lógicas}. Recuperado de \url{https://www.ibm.com/docs/es/powerha-aix/7.2.x?topic=networks-physical-logical}
+
+\bibitem{ref12} Wikipedia, la enciclopedia libre. (2024). \textit{Dirección IP y esquema de direccionamiento (Clases A, B, C, D)}. Recuperado de \url{https://es.wikipedia.org/wiki/Direcci\%C3\%B3n_IP}
+
+\bibitem{ref13} TruGemTech. (s.f.). \textit{Qué es la máscara de red y notación CIDR binaria}. Recuperado de \url{https://www.trugemtech.com/es/que-es-la-mascara-de-red/}
+
+\bibitem{ref26} Debian Wiki. (2023). \textit{NetworkManager, GNOME y configuraciones visuales base /etc/network/interfaces}. Recuperado de \url{https://wiki.debian.org/NetworkManager}
+
+\bibitem{ref35} Unix \& Linux man pages. (s.f.). \textit{Ping command Linux man page parameters: -c, -i, -s}. Recuperado de \url{https://www.unix.com/man_page/hpux/1m/ping/}
+
+\bibitem{ref46} GeeksforGeeks. (2023). \textit{Linux / Unix: El comando ip con ejemplos analíticos y sintaxis}. Recuperado de \url{https://www.geeksforgeeks.org/linux-unix/ip-command-in-linux-with-examples/}
+
+\bibitem{ref52} FreeDesktop.org. (s.f.). \textit{Predictable Network Interface Names: Udev systemd}. Recuperado de \url{https://www.freedesktop.org/wiki/Software/systemd/PredictableNetworkInterfaceNames/}
+
+\bibitem{ref55} Fortinet. (2024). \textit{Propósito del protocolo TCP/IP, resumen y capas base}. Recuperado de \url{https://www.fortinet.com/lat/resources/cyberglossary/tcp-ip}
+
+\bibitem{ref60} Universidad de Valencia. (s.f.). \textit{Qué significa WINS en red de computadoras NetBIOS}. Recuperado de \url{https://www.uv.es/barthe/windows/wins.html}
+
+\bibitem{ref70} Datadog Security. (s.f.). \textit{Disable firewall in Debian 12 (nftables systemctl)}. Recuperado de \url{https://docs.datadoghq.com/security/default_rules/def-000-ji0/}
+
+\bibitem{ref83} Lenovo Support. (2023). \textit{Significado iconos Administrador de Dispositivos Windows (signo de interrogación, admiración, cruz roja)}. Recuperado de \url{https://support.lenovo.com/mg/es/solutions/ht117588}
+
+\end{thebibliography}
+
+\end{document}
