@@ -4,7 +4,7 @@
 ![Redes](https://img.shields.io/badge/Networking-005571?style=for-the-badge&logo=cisco&logoColor=white)
 ![Estado](https://img.shields.io/badge/Estado-En_Progreso-blue?style=for-the-badge)
 
-¡Bienvenido al repositorio de las prácticas del **Laboratorio de Redes**! 💻📡 
+
 Aquí encontrarás todos los reportes y documentos desarrollados durante el semestre. Todo el contenido está redactado y maquetado de forma profesional utilizando **LaTeX**.
 
 ---
