@@ -233,30 +233,73 @@ Desde la perspectiva de las redes de datos seguras, el protocolo ARP arrastra un
 
 En un ataque de envenenamiento ARP, un actor malicioso inyecta deliberadamente un torrente continuo de respuestas ARP falsificadas en la red local. Estos paquetes espurios asocian maliciosamente la dirección MAC del equipo del atacante con la dirección IP de un objetivo de alto valor, frecuentemente el router de la red (default gateway). Consecuentemente, los dispositivos legítimos de la red corporativa sobrescriben sus tablas ARP internas de manera errónea, lo que provoca que, al intentar navegar por Internet, todo el tráfico de datos sea canalizado y reenviado subrepticiamente hacia el adaptador de red del atacante en lugar de al router genuino. Esto facilita ataques severos de intercepción pasiva (Man-in-the-Middle), alteración de comunicaciones en tiempo real, robo de credenciales en texto plano o denegación de servicio paralizante. Para mitigar esta fragilidad técnica del protocolo, las arquitecturas seguras exigen la implementación en los switches locales de funcionalidades avanzadas como la Inspección ARP Dinámica (Dynamic ARP Inspection o DAI), la cual cruza la información de los paquetes ARP con tablas seguras generadas por mecanismos de Snooping DHCP para bloquear matemáticamente los intentos de falsificación y aislar los puertos infractores a nivel de hardware.
 
+\newpage
+
 \section{Descargue el software NeoTrace (o equivalente) y visualice en el modo Node View el camino que siguen los paquetes hacia un servidor...}
 
-En la práctica del diagnóstico avanzado de redes, el entendimiento de la ruteabilidad y la latencia es indispensable. La herramienta estándar global para auditar el encaminamiento topológico de origen a destino es la utilidad de línea de comandos \texttt{traceroute} (implementada como \texttt{tracert} en los sistemas Microsoft Windows). El principio funcional de esta herramienta subyace en la explotación ingeniosa del campo Tiempo de Vida (TTL) de la cabecera IPv4 y el protocolo de control ICMP. Al enviar una secuencia iterativa de paquetes de datos (probetas) incrementando progresivamente el valor TTL desde 1 en adelante, la herramienta fuerza intencionalmente a que cada enrutador sucesivo en la ruta descarte el paquete al agotar su contador de vida útil, obligándolos a devolver al origen un mensaje de error ICMP de "Tiempo Excedido en Tránsito". Mediante la captura y lectura de las direcciones IP de origen de estos mensajes de error ICMP devueltos, el software es capaz de identificar secuencialmente la IP de todos los saltos (routers) intermedios, proporcionando paralelamente la latencia de ida y vuelta (Round-Trip Time o RTT) en milisegundos para cada nodo.
-
-Las herramientas con interfaz gráfica, como el extinto software comercial NeoTrace Pro, elevaron este análisis basando su plataforma en el mismo motor iterativo, pero añadiendo una rica capa de correlación de datos de la red. NeoTrace ejecutaba los sondeos hacia el destino e inmediatamente cotejaba las direcciones IP resueltas de los routers intermedios contra las bases de datos de registro global de nombres de dominio e IP (servidores WhoIs), obteniendo la asignación geográfica, la entidad de telecomunicaciones propietaria del nodo y visualizando esta cadena mediante una proyección interactiva superpuesta en un mapamundi (modo \textit{Node View}). Aunque herramientas modernas equivalentes han tomado su lugar, el análisis teórico del enrutamiento de paquetes desde un punto de origen situado en infraestructuras de banda ancha residencial o corporativa en México hacia diversos destinos en Internet evidencia patrones fascinantes sobre la optimización de los proveedores de servicios (ISP) nacionales y las interconexiones globales contemporáneas.
+Para esta práctica se utilizó la herramienta \textbf{Open Visual Trace Route} (alternativa moderna a NeoTrace) que permite trazar la ruta de los paquetes y visualizar geográficamente los saltos en un mapa 3D interactivo. A continuación, se presentan los resultados analizados con base en las capturas de red obtenidas para cada uno de los servidores solicitados:
 
 \begin{enumerate}
-    \item \textbf{Destino: www.google.com y www.youtube.com}
+    \item \textbf{Destino: www.google.com}
     
-    El análisis del encaminamiento topológico hacia los dominios e infraestructura propiedad de Alphabet Inc. revela una latencia sorprendentemente reducida y un conteo de saltos excepcionalmente bajo. Esto se debe a la topología y despliegue del Sistema Autónomo principal de Google (AS15169). Google no centraliza sus servidores exclusivamente en ubicaciones remotas; en su lugar, ha realizado una inversión masiva en la construcción de redes de entrega de contenido (CDN) situadas en el borde o periferia (Edge Computing). Típicamente, el tráfico originado en redes corporativas en la Ciudad de México, Monterrey o Guadalajara, no requiere atravesar la frontera hacia los Estados Unidos. Los ISP mexicanos más relevantes mantienen acuerdos de interconexión directa (Peering Privado) o participan en Puntos de Intercambio de Internet (IXP) locales donde se alojan directamente nodos de la caché perimetral de Google (Google Global Cache). 
-    
-    Consecuentemente, el rastreo de ruta evidenciaría que el paquete abandona el enrutador local de la organización (salto 1 o 2), atraviesa dos o tres nodos agregadores dentro de la red troncal del proveedor mexicano, y es entregado casi de inmediato al servidor de destino regional de Google en menos de 5 a 8 saltos totales. Los tiempos de respuesta (RTT) reflejados para cada nodo en esta conexión sumamente optimizada promedian entre los asombrosos rangos de \textbf{8 ms a 20 ms}. 
+    Al realizar el rastreo hacia el dominio de Google (resolviendo a la IP destino 142.251.154.119), se observa una conexión altamente optimizada. El paquete alcanza su destino final de manera muy expedita en apenas 6 saltos totales, cubriendo una distancia de ruta de 2,050 kms. El rastreo se completó en tan solo 0.743 segundos, con una latencia máxima de 68 ms. Como se aprecia en la captura, los primeros saltos ocurren dentro de la infraestructura local en México (pasando por el gateway \texttt{192.168.0.1}) antes de ser entregado directamente a los servidores perimetrales en Estados Unidos.
 
-    \item \textbf{Destino: wikipedia.com (wikipedia.org)}
+    \begin{figure}[H]
+        \centering
+        % --- INSTRUCCIÓN PARA EL USUARIO ---
+        % Para visualizar la imagen al compilar localmente, borra la línea de \framebox y descomenta la siguiente línea:
+        \includegraphics[width=0.9\textwidth]{image/imagen1Google.png}
+        \caption{Rastreo de ruta hacia www.google.com (6 saltos, 0.743s).}
+        \label{fig:google}
+    \end{figure}
 
-    Por el contrario, el trayecto de los paquetes hacia el destino principal de la Fundación Wikimedia exhibe una estructura de red dramáticamente diferente. Wikimedia, siendo una organización sin fines de lucro, no opera nodos de caché ubicuos de borde integrados profundamente en cada pequeña ciudad del mundo, sino que consolida su infraestructura central y confía en el enrutamiento de tránsito internacional proporcionado a través de centros de datos principales, o a través de redes asociadas que a menudo dirigen el tráfico a clústeres importantes localizados estratégicamente en territorio estadounidense (frecuentemente en clústeres densos de telecomunicaciones como Ashburn, Virginia, o zonas centrales de Texas o California).
+    \item \textbf{Destino: www.youtube.com}
 
-    El rastreo topográfico del paquete comenzaría de manera idéntica al caso anterior, navegando por el bucle local de agregación del proveedor de servicios de internet mexicano durante los primeros cuatro a seis saltos. Sin embargo, posteriormente, las salidas visuales del \textit{Node View} indicarían cómo el paquete cruza enlaces transfronterizos (backbone internacional de fibra óptica) administrados por portadores globales de Tránsito IP Nivel 1 (Tier 1 carriers), escalando a través de enrutadores masivos interconectados geográficamente. Al depender del enrutamiento BGP exterior convencional para cruzar la vasta distancia física, la latencia sufre el inevitable impacto de la refracción de la luz sobre la fibra continental, provocando que los tiempos totales de ida y vuelta para alcanzar a Wikipedia en un análisis limpio fluctúen consistentemente en la franja de \textbf{45 ms a 80 ms}, resultando en un trayecto de aproximadamente 11 a 16 saltos de red consecutivos. 
+    El ruteo hacia YouTube (resolviendo a la IP destino 192.178.56.174) muestra un comportamiento similar, predecible dado que también forma parte de la infraestructura masiva de Alphabet Inc. El trazado se completó con éxito en 10 saltos y un tiempo total de 0.668 segundos para una ruta de 2,050 kms. Aunque toma algunos saltos adicionales de enrutamiento en servidores intermedios de EE. UU. (como la IP \texttt{172.253.50.252}), la latencia final se mantiene excelente (43 ms), canalizando el tráfico de manera eficiente.
 
-    \item \textbf{Destino local alternativo: Universidad Nacional Autónoma de México (unam.mx)}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.9\textwidth]{image/imagen2youtube.png}
+        \caption{Rastreo de ruta hacia www.youtube.com (10 saltos, 0.668s).}
+        \label{fig:youtube}
+    \end{figure}
 
-    El ruteo hacia una infraestructura alojada estrictamente en centros de datos nacionales dentro de México, como los bloques de red universitarios (pertenecientes históricamente a redes robustas bajo convenios como el de la Corporación Universitaria para el Desarrollo de Internet o CUDI), proporciona una lección técnica vital sobre deficiencias topológicas, un fenómeno conocido en el argot de ingeniería de redes como el "efecto trombón" o enrutamiento en forma de trompeta. 
+    \item \textbf{Destino: wikipedia.com}
 
-    En un ecosistema interconectado nacionalmente perfecto, el tráfico de un proveedor mexicano hacia una universidad mexicana debería intercambiarse en el IXP de la Ciudad de México de manera lateral, alcanzando su destino final en 4 o 5 saltos y reportando latencias menores a \textbf{15 ms}. No obstante, los análisis de diagnóstico han demostrado repetitivamente a lo largo del tiempo que, debido a la resistencia de ciertos ISP hegemónicos a intercambiar libremente ancho de banda a nivel doméstico y su preferencia por priorizar enlaces troncales mayoristas más baratos y ya amortizados en EE. UU., los paquetes de datos destinados a un servidor al otro lado de la misma ciudad mexicana son forzados a enrutarse físicamente miles de kilómetros hacia el norte. El ruteo mostrará cómo el paquete es lanzado, por ejemplo, hasta NAP de las Américas en Miami, Florida, o infraestructuras troncales de Dallas, Texas, donde las redes mexicanas se intercambian el tráfico en suelo extranjero, para luego forzar a los datagramas a retornar miles de kilómetros hacia el sur hasta el servidor final en la Universidad. Este ineficiente desvío geográfico duplica la penalización física del retraso de propagación, resultando irónicamente en RTTs en el rango inflado de \textbf{65 ms a 95 ms} a través de más de 12 saltos, penalizando las comunicaciones académicas debido a configuraciones de las políticas comerciales de enrutamiento exterior BGP.
+    El análisis hacia Wikipedia revela una topología donde el tráfico es enrutado a través de enlaces internacionales de mayor distancia. En el salto 6, el paquete llega a Dallas, Texas (IP \texttt{4.36.175.161}, perteneciente a redes de tránsito) y posteriormente al salto 7 (\texttt{4.69.210.137}). A partir del salto 8, el software marca la ruta con tiempos de espera hasta alcanzar el límite máximo de 50 saltos (``Trace route incomplete''). Este es un comportamiento común provocado por cortafuegos (firewalls) perimetrales que bloquean silenciosamente los paquetes de sondeo ICMP.
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.9\textwidth]{image/imagen3wikipedia.png}
+        \caption{Rastreo de ruta hacia wikipedia.com mostrando los primeros saltos hacia Dallas.}
+        \label{fig:wiki1}
+    \end{figure}
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.9\textwidth]{image/imagen4wikipedia2.png}
+        \caption{Continuación del rastreo hacia wikipedia.com (Límite de 50 saltos alcanzado).}
+        \label{fig:wiki2}
+    \end{figure}
+
+    \item \textbf{Destino alternativo: seguridad.fi-b.unam.mx/Lab/index.php}
+
+    Como enlace de preferencia se analizó un servidor alojado en la red de la Universidad Nacional Autónoma de México. El mapa 3D dibuja un recorrido que salta por nodos de proveedores nacionales: inicia en Gustavo A. Madero, pasa por Taxco (salto 5, \texttt{187.228.21.253}), Tijuana (salto 6, \texttt{189.204.203.101}) y Coyoacán (salto 9, \texttt{132.248.133.22}) antes de registrar actividad en la red de la UNAM (salto 10, IP \texttt{132.247.237.102}). A partir del salto 11, se registran tiempos de espera continuos hasta el salto 50, evidenciando las estrictas políticas de Listas de Control de Acceso (ACLs) perimetrales de la Facultad de Ingeniería.
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.9\textwidth]{image/imgen5labredes1.png}
+        \caption{Rastreo de ruta hacia el servidor del Laboratorio de Redes Seguras.}
+        \label{fig:unam1}
+    \end{figure}
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.9\textwidth]{image/imagen6labredes2.png}
+        \caption{Continuación del rastreo hacia la UNAM mostrando políticas de bloqueo ICMP.}
+        \label{fig:unam2}
+    \end{figure}
+
 \end{enumerate}
 
 
