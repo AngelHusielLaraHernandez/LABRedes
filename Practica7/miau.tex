@@ -1,0 +1,240 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[utf8]{inputenc} 
+\usepackage{amsmath}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage[citecolor=blue]{hyperref}       % Para enlaces en el documento
+\usepackage{fancyhdr}
+\usepackage{circuitikz}
+\usepackage{amssymb}
+\usepackage{animate}
+\usepackage{float}
+\usepackage{multirow}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage[a4paper, margin=1in]{geometry}
+\usepackage{gensymb}
+\usepackage{siunitx}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{listings}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows, positioning}
+
+% Ajuste de la altura del encabezado
+\setlength{\headheight}{76.27646pt}
+\addtolength{\topmargin}{-34.27646pt}
+
+\lstdefinestyle{mystyle}{
+    language=Matlab,
+    inputencoding=utf8,
+    backgroundcolor=\color{black!5},
+    commentstyle=\color{green!60!black},
+    keywordstyle=\color{blue},
+    numberstyle=\tiny\color{gray},
+    stringstyle=\color{purple},
+    basicstyle=\footnotesize\ttfamily,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showstringspaces=false,
+}
+\lstset{style=mystyle}
+
+\setlength{\parindent}{0pt}
+
+% Crear la portada manualmente
+\begin{document}
+
+% Desactivar la numeración de página para la portada
+\thispagestyle{empty}
+
+% Colocar las imágenes en las esquinas superiores
+\begin{minipage}[t]{0.4\textwidth}
+    \raggedright
+    \includegraphics[width=2cm]{image/der.png}
+\end{minipage}%
+\begin{minipage}[t]{0.5\textwidth}
+    \raggedleft
+    \includegraphics[width=2cm]{image/izq.png}
+\end{minipage}
+
+\vspace{1cm}
+
+\begin{center}
+    \Huge{\textbf{Previo 7}} \\
+    \vspace{0.5cm}
+    \LARGE{\textbf{Configuración básica del router.}} \\
+    \vspace{0.5cm}
+    \Large{\textbf{Cuestionario Previo}} \\
+    \vspace{1cm}
+    \Large{\textbf{Universidad Nacional Autónoma de México.}}\\
+    \Large{\textbf{Facultad de Ingeniería.}}\\
+    \vspace{1cm}
+    \Large{Laboratorio de Redes de datos seguras.} \\
+    \vspace{0.5cm}
+    \LARGE{\textbf{Profesora:}}
+    \LARGE{\textit{MTRA. MARÍA EUGENIA BAUTISTA GONZÁLEZ.}}\\
+    \vspace{0.5cm}
+    \Large{\textbf{Grupo:} 08} \\
+    \vspace{0.5cm}
+    \LARGE{\textbf{Alumno:}}\\
+    \Large{320060829} \\
+    \vspace{3cm}
+    \Large{\textbf{Fecha de Entrega:}}\\
+    \vspace{0.5cm}
+    \large{{26 de Marzo de 2026}}
+\end{center} 
+
+
+\newpage
+
+% Configuración del encabezado y pie de página
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\includegraphics[width=1.5cm]{image/der.png}}
+\fancyhead[R]{\includegraphics[width=1.5cm]{image/izq.png}}
+\fancyfoot[C]{\thepage}  % Coloca el número de página en el centro del pie de página
+
+% Línea horizontal en el pie de página
+\renewcommand{\footrulewidth}{0.4pt}  % Define el grosor de la línea en el pie de página
+
+% Empezar numeración de páginas desde 1 en la segunda página
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+%\maketitle
+\tableofcontents
+
+
+\newpage
+
+\section{Investigue las siguientes 3 funciones de la capa de red: a. Determinación del camino, b. Encaminamiento, c. Establecimiento de la llamada}
+
+La capa de red, correspondiente a la capa 3 del modelo OSI, es la responsable principal de mover los paquetes de datos desde un host de origen hasta un host de destino a través de una red de múltiples saltos. La primera función clave es la determinación del camino (routing), la cual consiste en utilizar algoritmos matemáticos especializados (como OSPF o BGP) para evaluar la topología de la red y calcular la ruta más eficiente y óptima que un paquete debe seguir desde su origen hasta su destino final.
+
+La segunda función, el encaminamiento (forwarding o reenvío), es una acción de nivel local que ocurre dentro de cada router. Cuando un paquete llega a un enlace de entrada de un router, este debe inspeccionar la dirección IP de destino, consultar su tabla de enrutamiento previamente calculada y conmutar físicamente el paquete hacia el enlace de salida adecuado para que continúe su viaje.
+
+Finalmente, el establecimiento de la llamada es una función específica de ciertas arquitecturas de red orientadas a conexión, como ATM (Asynchronous Transfer Mode) o Frame Relay. En estas redes, antes de que los datos puedan fluir, los routers a lo largo del camino deben coordinarse para establecer un circuito virtual fijo, reservando recursos y definiendo el estado de la conexión de extremo a extremo, aunque cabe destacar que el protocolo IP tradicional (Internet Protocol) es no orientado a conexión y no requiere este paso.
+
+\section{¿Qué es un router y cuál es su funcionamiento?}
+
+Un router es un dispositivo de hardware especializado o un ordenador de propósito específico que opera en la capa de red (Capa 3) del modelo OSI. Su función primordial es interconectar múltiples redes informáticas distintas, permitiendo que los dispositivos de una red local se comuniquen con dispositivos en redes externas o en Internet. A diferencia de un switch que opera utilizando direcciones MAC en una red local, el router toma decisiones basadas en direcciones lógicas (direcciones IP).
+
+El funcionamiento de un router se basa en el procesamiento de paquetes de datos entrantes. Cuando un paquete llega a una de sus interfaces, el router examina el encabezado del paquete para extraer la dirección IP de destino. Inmediatamente después, consulta su tabla de enrutamiento interna, la cual contiene un mapa lógico de las redes conocidas y la mejor ruta hacia ellas. Al encontrar una coincidencia (mediante el principio del prefijo más largo), el router encapsula nuevamente el paquete y lo expulsa por la interfaz de salida correspondiente hacia el siguiente salto, repitiéndose este proceso de nodo en nodo hasta alcanzar el destino final.
+
+\section{¿Cuáles son los modos de configuración que maneja el router? Indique sus privilegios}
+
+El sistema operativo Cisco IOS utiliza una estructura jerárquica de modos de comandos para proporcionar seguridad y prevenir modificaciones accidentales por parte de personal no autorizado. El nivel más básico es el Modo EXEC de Usuario (User EXEC Mode), identificado por el símbolo \texttt{>}. Este modo tiene privilegios sumamente restrictivos, permitiendo únicamente ejecutar comandos básicos de monitoreo y pruebas de diagnóstico simples como \texttt{ping}, sin posibilidad de alterar la configuración del equipo.
+
+El siguiente nivel es el Modo EXEC Privilegiado (Privileged EXEC Mode), identificado por el símbolo \texttt{\#}. Para acceder a este modo desde el nivel de usuario, se requiere ingresar el comando \texttt{enable} y una contraseña de alta seguridad. Este nivel otorga privilegios administrativos totales para visualizar el estado operativo del router (comandos \texttt{show}), reiniciar el dispositivo y gestionar archivos en la memoria, sirviendo además como puerta de enlace a los modos de edición.
+
+A partir del modo privilegiado, se accede al Modo de Configuración Global (Global Configuration Mode), identificado por el prompt \texttt{(config)\#}. Los comandos introducidos aquí tienen el privilegio de alterar parámetros que afectan al sistema en su totalidad, como el nombre del host o contraseñas globales. De este modo se desprenden los submodos de configuración específicos, como el Modo de Configuración de Interfaz (para asignar direcciones IP a puertos físicos) y el Modo de Configuración de Línea (para gestionar el acceso remoto y contraseñas de terminal), los cuales tienen privilegios granulares enfocados exclusivamente en el componente que se está editando.
+
+\section{Investigue las formas de acceso a un router CISCO}
+
+Para administrar y configurar un router Cisco, existen múltiples métodos de acceso que se adaptan a la situación física y al estado de la red. La forma de acceso principal y más crítica es a través del Puerto de Consola (Console Port). Este es un método de acceso fuera de banda que requiere conectar físicamente un cable transpuesto (rollover) desde el puerto serial de una computadora directamente al puerto de consola del router. Es el único método garantizado cuando un router es nuevo (sin IP asignada) o cuando ha sufrido una caída total de red.
+
+Otra vía de acceso es el método en banda a través de la red de datos utilizando Terminales Virtuales (líneas VTY). Esto permite a los administradores gestionar el router remotamente desde cualquier parte del mundo. Históricamente se utilizaba el protocolo Telnet, pero debido a que transmite la información en texto plano, la industria exige actualmente el uso exclusivo de SSH (Secure Shell), el cual emplea cifrado fuerte para proteger las credenciales y los datos de configuración.
+
+Finalmente, los routers Cisco suelen incluir un Puerto Auxiliar (AUX), el cual es otro método fuera de banda diseñado para conectarse a un módem analógico. Aunque es una tecnología en desuso en la actualidad, su propósito era permitir a los ingenieros realizar una llamada telefónica directa al router para recuperar el control en caso de que los enlaces principales de fibra óptica o Internet estuvieran caídos.
+
+\section{¿Qué son los servicios ADSL y POTS?}
+
+POTS (Plain Old Telephone Service) se refiere al servicio telefónico analógico tradicional. Es la red de telecomunicaciones básica que se construyó originalmente mediante cables de cobre de par trenzado para transmitir la voz humana. Este sistema está diseñado para operar en una banda de frecuencias muy baja y estrecha, típicamente limitando la transmisión entre los 0 y los 4 kHz, lo cual es suficiente para entender una conversación, pero deja un inmenso espectro del cable de cobre sin utilizar.
+
+Por su parte, ADSL (Asymmetric Digital Subscriber Line) es una tecnología de acceso a Internet de banda ancha que aprovecha precisamente ese espectro no utilizado de la infraestructura de cobre POTS existente. ADSL transmite datos digitales de alta velocidad utilizando frecuencias significativamente más altas (usualmente por encima de los 20 kHz hasta varios MHz), lo que permite que la voz y el tráfico de Internet coexistan simultáneamente en la misma línea telefónica sin interferir entre sí. La palabra "asimétrica" indica que la tecnología asigna un mayor ancho de banda para la descarga de datos que para la subida. Para evitar ruidos e interferencias físicas entre los equipos telefónicos y el módem, se instalan filtros divisores de señal (splitters) en las instalaciones del usuario.
+
+\section{¿Qué es una tabla de encaminamiento?}
+
+Una tabla de encaminamiento es una estructura de datos residente en la memoria RAM de un router que actúa como el mapa central de la red. Su propósito es almacenar la información topológica sobre cómo alcanzar distintas subredes de destino. Sin esta tabla, un router sería incapaz de tomar decisiones de reenvío y simplemente descartaría los paquetes que no estén dirigidos a sus propias redes directamente conectadas.
+
+Cada entrada en la tabla de enrutamiento se compone de parámetros específicos: la dirección de red de destino junto con su máscara de subred, el "siguiente salto" (Next-Hop) que indica la dirección IP del router vecino adyacente que recibirá el paquete, y la interfaz física local de salida por la cual se debe transmitir la trama. Además, la tabla almacena valores de desempate, como la métrica (el costo para llegar al destino) y la Distancia Administrativa (el nivel de confiabilidad de la fuente de la ruta), asegurando que solo el mejor y más eficiente camino permanezca activo en la memoria del dispositivo.
+
+\section{Explique las características principales del encaminamiento estático}
+
+El encaminamiento estático es un paradigma en el cual las rutas son configuradas e introducidas manualmente en el router por el administrador de la red. Una de sus características principales es que no genera sobrecarga en el hardware del equipo; al no depender de algoritmos complejos para el cálculo de rutas, no consume ciclos de CPU ni ocupa memoria RAM significativa, y tampoco gasta ancho de banda de los enlaces transmitiendo actualizaciones a otros routers.
+
+Otra característica destacada es su alto nivel de seguridad y predictibilidad. Dado que el router no acepta anuncios de rutas de fuentes externas, es inmune a ataques de suplantación de protocolos de enrutamiento. El tráfico fluye exactamente por donde el ingeniero lo ha diseñado. Sin embargo, su principal desventaja es la nula adaptabilidad frente a fallos (no es tolerante a errores); si un enlace físico se cae, la ruta estática permanece en la tabla obligando al tráfico a ir a un punto muerto, requiriendo intervención humana obligatoria para reconfigurar la red, lo que lo hace inviable en redes empresariales grandes.
+
+\section{Explique las características principales del encaminamiento dinámico}
+
+El encaminamiento dinámico se caracteriza por el uso de protocolos de software (como OSPF o BGP) que permiten a los routers descubrir automáticamente las redes, calcular rutas y compartir información topológica entre sí. Su característica fundamental es la resiliencia y convergencia automática; si ocurre un corte en un cable de fibra óptica o un router vecino falla, el protocolo dinámico detecta el evento y recalcula matemáticamente una ruta alternativa en milisegundos, redirigiendo el tráfico sin intervención humana.
+
+Además de su escalabilidad para soportar miles de redes interconectadas, el enrutamiento dinámico permite el balanceo de carga, dividiendo el tráfico equitativamente entre múltiples enlaces si estos tienen el mismo costo. En contraste con el método estático, la principal limitación del enrutamiento dinámico es el costo de recursos; exige que la CPU del router procese constantemente paquetes de saludo y algoritmos matemáticos, demanda grandes porciones de memoria RAM para mantener bases de datos topológicas, y consume ancho de banda de la red para intercambiar los mensajes de actualización.
+
+\section{¿Cómo funcionan los protocolos por vector-distancia? Menciona dos ejemplos}
+
+Los protocolos de enrutamiento por vector-distancia calculan la mejor ruta basándose matemáticamente en dos factores: la "distancia" (generalmente medida en número de saltos o métricas compuestas) y el "vector" (la interfaz de salida y la dirección del router de siguiente salto). Utilizan el algoritmo de Bellman-Ford y operan bajo un principio conocido como "enrutamiento por rumor". Esto significa que el router no tiene una visión completa de la red; solo confía en la información que sus vecinos directamente conectados le comparten.
+
+Su funcionamiento mecánico consiste en enviar el contenido completo de su tabla de enrutamiento a todos sus vecinos de forma periódica (por ejemplo, cada 30 segundos), independientemente de si han ocurrido cambios en la red. Esta característica provoca tiempos de convergencia lentos ante caídas de red y consume un ancho de banda considerable. Dos de los ejemplos más representativos de esta categoría son el protocolo RIP (Routing Information Protocol), que utiliza el recuento de saltos como métrica, y el protocolo propietario de Cisco EIGRP (Enhanced Interior Gateway Routing Protocol), que es una versión avanzada o híbrida del vector-distancia que utiliza el algoritmo DUAL.
+
+\section{¿Cómo funcionan los protocolos por estado-enlace? Menciona dos ejemplos}
+
+Los protocolos de estado-enlace (Link-State) funcionan mediante un paradigma proactivo y un conocimiento global de la topología. En lugar de compartir rutas por rumor, cada router utiliza el algoritmo de Dijkstra (Shortest Path First) para construir un mapa completo, idéntico y detallado de toda la interred dentro de una estructura en memoria llamada Base de Datos de Estado de Enlace (LSDB). Esto se logra intercambiando pequeñas piezas de información llamadas Anuncios de Estado de Enlace (LSA), las cuales detallan las interfaces directamente conectadas de cada router y sus respectivos costos.
+
+A diferencia del vector-distancia, los protocolos de estado-enlace no envían actualizaciones periódicas de tablas completas. Solo envían pequeñas actualizaciones desencadenadas (triggered updates) de forma inmediata a través de direcciones Multicast cuando ocurre un cambio físico real, como la caída de un enlace. Esto permite una convergencia extremadamente rápida y conserva el ancho de banda, a expensas de requerir mucha más memoria RAM y procesamiento de CPU para ejecutar el árbol matemático de Dijkstra. Dos ejemplos clásicos son el protocolo OSPF (Open Shortest Path First) e IS-IS (Intermediate System to Intermediate System).
+
+\section{Investigue la sintaxis de los comandos para configurar una ruta de encaminamiento estática en un router CISCO}
+
+La configuración de una ruta estática en un router Cisco requiere acceder al modo de configuración global de la línea de comandos. La instrucción exige especificar la red destino, la máscara que define el tamaño del bloque, y la dirección IP del salto adyacente o la interfaz física por la cual enviar el paquete.
+
+La sintaxis genérica y estandarizada es:
+\texttt{Router(config)\# ip route [dirección-red-destino][máscara-subred][dirección-IP-siguiente-salto | interfaz-de-salida]}
+
+Por ejemplo, si un administrador necesita que los paquetes destinados a la red 192.168.20.0 con una máscara de 24 bits sean reenviados a través del router vecino cuya dirección IP es 10.0.0.2, el comando exacto a ejecutar sería:
+\texttt{Router(config)\# ip route 192.168.20.0 255.255.255.0 10.0.0.2}
+
+\section{Investigue los componentes internos de un router y descríbalos a continuación}
+
+La arquitectura de hardware de un router se asemeja a la de una computadora de alta especialización y depende de cuatro módulos de memoria críticos para operar:
+\begin{itemize}
+\item \textbf{RAM (Memoria de Acceso Aleatorio):} Es una memoria sumamente rápida pero volátil (pierde su información si se interrumpe la energía). Es el área de trabajo del router, donde se aloja el Sistema Operativo IOS en ejecución, el archivo de configuración activo (running-config), las tablas de enrutamiento y los búferes de los paquetes en tránsito.
+\item \textbf{NVRAM (RAM No Volátil):} Es una pequeña porción de memoria que retiene la información incluso sin energía eléctrica. Su función exclusiva y crítica es almacenar de forma permanente el archivo de configuración de inicio (startup-config) que el router carga automáticamente en la RAM durante la secuencia de arranque.
+\item \textbf{Flash:} Actúa como el disco duro de estado sólido del router. Es una memoria no volátil reprogramable que contiene el archivo de imagen completa (binario) del sistema operativo Cisco IOS. En caso de actualización, los archivos se escriben en este chip.
+\item \textbf{ROM (Memoria de Solo Lectura):} Contiene el firmware básico quemado desde fábrica. Alberga el programa de diagnóstico de encendido (POST), el programa de arranque (Bootstrap) encargado de buscar la imagen del IOS, y un sistema operativo en miniatura llamado ROMMON utilizado para recuperación de desastres.
+\end{itemize}
+
+\section{Investigue a qué se refieren cada uno de los componentes de la instrucción \texttt{line vty 0 4}}
+
+El comando \texttt{line vty 0 4} es utilizado en los routers y switches Cisco para ingresar al submodo de configuración que permite gestionar la seguridad y el acceso lógico de las conexiones remotas que entran a través de la red de datos.
+
+Se descompone de la siguiente manera:
+\begin{itemize}
+\item \texttt{line}: Es la directiva de la interfaz de línea de comandos (CLI) que le indica al sistema operativo que se desea pasar del modo de configuración global al modo de configuración específico de una línea o puerto de comunicación.
+\item \texttt{vty}: Es el acrónimo de "Virtual Teletype" (Terminal Virtual). Indica que no se está configurando un puerto físico real (como un conector serial), sino un demonio de software lógico que se mantiene a la escucha de conexiones de administración remotas entrantes a través de protocolos de red como SSH o Telnet.
+\item \texttt{0 4}: Representa el rango numérico secuencial de líneas virtuales que se configurarán simultáneamente. Al indicar desde la línea "0" hasta la línea "4", el administrador está habilitando y aplicando las directivas de contraseñas sobre exactamente cinco sesiones remotas concurrentes (0, 1, 2, 3 y 4) permitiendo que múltiples administradores operen el equipo a la vez.
+\end{itemize}
+
+\section{Investigue los comandos correspondientes que deben emplearse en el router para configurar el encaminamiento dinámico}
+
+La habilitación del encaminamiento dinámico en Cisco IOS es un proceso de dos fases que se ejecuta desde el modo de configuración global. Primero, se debe instanciar y encender el motor del protocolo específico utilizando el comando \texttt{router} seguido del nombre del protocolo y su identificador de proceso local o sistema autónomo. Por ejemplo, para iniciar OSPF, la sintaxis sería:
+\texttt{Router(config)\# router ospf 1}
+
+Una vez dentro del submodo de configuración del router (\texttt{config-router}), la segunda fase consiste en indicar qué interfaces físicas del dispositivo van a participar en la emisión y recepción de actualizaciones de enrutamiento. Esto se logra mediante el comando \texttt{network}, el cual asocia una red conectada, su máscara de bits inversos (wildcard) y el área de diseño a la que pertenece (en el caso de OSPF). La sintaxis genérica es:
+\texttt{Router(config-router)\# network [dirección-red][máscara-wildcard] area [número-área]}
+Por ejemplo, para anunciar la red local en el proceso OSPF activado anteriormente: \texttt{Router(config-router)\# network 192.168.10.0 0.0.0.255 area 0}.
+
+\begin{thebibliography}{99}
+
+\bibitem{afnog_2018}
+AfNOG. (2018). \textit{Introduction to Cisco IOS}. Scalable Infrastructure Workshop. Recuperado de materiales de entrenamiento técnico de red.
+
+\bibitem{broadband_forum}
+Broadband Forum. (1998). \textit{ADSL and POTS Splitters Configurations and Context} (TR-007). The Broadband Forum Technical Reports.
+
+\bibitem{cisco_ios}
+Cisco Systems. (s.f.). \textit{Cisco IOS Configuration Fundamentals Command Reference}. Documentación oficial de Cisco. Recuperado de la base de conocimientos de jerarquía de comandos y enrutamiento estático de Cisco.
+
+\bibitem{ipcisco_routing}
+IPCisco. (s.f.). \textit{Link State vs Distance Vector Protocols}. Recuperado de artículos de estudio técnico y comparación algorítmica de protocolos de enrutamiento CCNA.
+
+\bibitem{kurose2020}
+Kurose, J. F., \& Ross, K. W. (2020). \textit{Computer networking: A top-down approach} (8th ed.). Pearson.
+
+\end{thebibliography}
+
+\end{document}

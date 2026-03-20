@@ -19,6 +19,7 @@ El proyecto está dividido en carpetas por cada práctica realizada. Cada una fu
 *  **[Practica 4](./Practica4)**: Topologías lógicas y la Capa 2 del modelo OSI. Diferencias entre hub y switch, método de acceso CSMA/CD, dominios de colisión, comunicación Half/Full Duplex y conexiones en cascada.
 *  **[Practica 5](./Practica5)**: Direccionamiento lógico y físico. Clasificación de direcciones IP, máscaras de subred, funciones de DNS/DHCP/Gateway, y comandos básicos de diagnóstico de red como el comando `ping`.
 *  **[Practica 6](./Practica6)**: Funciones de la Capa 3 del modelo OSI (Capa de red). Análisis de la trama Ethernet y el paquete IP, conceptos de encaminamiento y funcionamiento del protocolo ARP. Uso de herramientas de diagnóstico de red como `tcpdump` y trazado de rutas (Open Visual Trace Route).
+*  **[Practica 7](./Practica7)**: Encaminamiento y análisis de paquetes en routers Cisco. Incluye funciones de capa de red, tabla de encaminamiento, diferencias entre enrutamiento estático y dinámico, protocolos por vector-distancia y estado-enlace (RIP, EIGRP, OSPF, IS-IS), además de sintaxis de comandos IOS para rutas y acceso remoto.
 
 ###  ¿Qué hay dentro de cada carpeta?
 
