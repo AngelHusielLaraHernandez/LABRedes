@@ -1,0 +1,236 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[utf8]{inputenc} 
+\usepackage{amsmath}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage[citecolor=blue]{hyperref}       % Para enlaces en el documento
+\usepackage{fancyhdr}
+\usepackage{circuitikz}
+\usepackage{amssymb}
+\usepackage{animate}
+\usepackage{float}
+\usepackage{multirow}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage[a4paper, margin=1in]{geometry}
+\usepackage{gensymb}
+\usepackage{siunitx}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{listings}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows, positioning}
+
+% Ajuste de la altura del encabezado
+\setlength{\headheight}{76.27646pt}
+\addtolength{\topmargin}{-34.27646pt}
+
+\lstdefinestyle{mystyle}{
+    language=Matlab,
+    inputencoding=utf8,
+    backgroundcolor=\color{black!5},
+    commentstyle=\color{green!60!black},
+    keywordstyle=\color{blue},
+    numberstyle=\tiny\color{gray},
+    stringstyle=\color{purple},
+    basicstyle=\footnotesize\ttfamily,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showstringspaces=false,
+}
+\lstset{style=mystyle}
+
+\setlength{\parindent}{0pt}
+
+% Crear la portada manualmente
+\begin{document}
+
+% Desactivar la numeración de página para la portada
+\thispagestyle{empty}
+
+% Colocar las imágenes en las esquinas superiores
+\begin{minipage}[t]{0.4\textwidth}
+    \raggedright
+    \includegraphics[width=2cm]{image/der.png}
+\end{minipage}%
+\begin{minipage}[t]{0.5\textwidth}
+    \raggedleft
+    \includegraphics[width=2cm]{image/izq.png}
+\end{minipage}
+
+\vspace{1cm}
+
+\begin{center}
+    \Huge{\textbf{Previo 8}} \\
+    \vspace{0.5cm}
+    \LARGE{\textbf{TCP y UDP.}} \\
+    \vspace{0.5cm}
+    \Large{\textbf{Cuestionario Previo}} \\
+    \vspace{1cm}
+    \Large{\textbf{Universidad Nacional Autónoma de México.}}\\
+    \Large{\textbf{Facultad de Ingeniería.}}\\
+    \vspace{1cm}
+    \Large{Laboratorio de Redes de datos seguras.} \\
+    \vspace{0.5cm}
+    \LARGE{\textbf{Profesora:}}
+    \LARGE{\textit{MTRA. MARÍA EUGENIA BAUTISTA GONZÁLEZ.}}\\
+    \vspace{0.5cm}
+    \Large{\textbf{Grupo:} 08} \\
+    \vspace{0.5cm}
+    \LARGE{\textbf{Alumno:}}\\
+    \Large{320060829} \\
+    \vspace{3cm}
+    \Large{\textbf{Fecha de Entrega:}}\\
+    \vspace{0.5cm}
+    \large{{9 de Abril de 2026}}
+\end{center} 
+
+
+\newpage
+
+% Configuración del encabezado y pie de página
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\includegraphics[width=1.5cm]{image/der.png}}
+\fancyhead[R]{\includegraphics[width=1.5cm]{image/izq.png}}
+\fancyfoot[C]{\thepage}  % Coloca el número de página en el centro del pie de página
+
+% Línea horizontal en el pie de página
+\renewcommand{\footrulewidth}{0.4pt}  % Define el grosor de la línea en el pie de página
+
+% Empezar numeración de páginas desde 1 en la segunda página
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+%\maketitle
+\tableofcontents
+
+
+\newpage
+
+\section{¿Qué es la criptografía simétrica y la criptografía asimétrica, y cuáles son sus principales diferencias?}
+
+La criptografía es el pilar matemático que permite proteger la confidencialidad e integridad de la información. En este contexto, la criptografía simétrica, o de clave secreta, es un método en el que el emisor y el receptor utilizan exactamente la misma clave criptográfica tanto para cifrar como para descifrar el mensaje. Su ventaja principal es la extrema rapidez y eficiencia computacional, lo que la hace idónea para cifrar grandes volúmenes de datos. Sin embargo, su vulnerabilidad radica en el problema de la distribución: ambas partes deben acordar y compartir la clave previamente a través de un canal seguro antes de comunicarse \cite{stallings2017}.
+
+Por otro lado, la criptografía asimétrica, o de clave pública, soluciona el problema de la distribución empleando un par de claves matemáticamente relacionadas para cada usuario: una clave pública (que se comparte con todos) y una clave privada (que se mantiene en secreto). Si alguien quiere enviar un mensaje confidencial, lo cifra con la clave pública del receptor, y solo el receptor puede descifrarlo con su clave privada. Su principal desventaja es que los cálculos matemáticos requeridos son significativamente más lentos y consumen más recursos que los de la criptografía simétrica \cite{kurose2017}.
+
+Las diferencias principales radican en la cantidad de claves utilizadas (una en la simétrica, dos en la asimétrica), la velocidad de procesamiento (la simétrica es órdenes de magnitud más rápida) y su aplicación típica: la simétrica se usa para el cifrado masivo de datos en tránsito, mientras que la asimétrica se emplea primordialmente para el intercambio seguro de claves, la autenticación y la firma digital \cite{forouzan2015}.
+
+\section{¿Qué es un algoritmo de cifrado por bloques y un algoritmo de cifrado de flujo?}
+
+Un algoritmo de cifrado por bloques es un método criptográfico simétrico que divide el mensaje de texto plano en fragmentos o bloques de tamaño fijo (por ejemplo, de 64 o 128 bits) y aplica una transformación matemática a cada bloque completo de manera simultánea, utilizando la clave secreta. Si el mensaje final no es un múltiplo exacto del tamaño del bloque, se le añade información de relleno (padding). Algoritmos como AES y DES son los ejemplos más representativos de esta categoría, ofreciendo alta seguridad para el almacenamiento y transmisión de datos estructurados \cite{stallings2017}.
+
+En contraste, un algoritmo de cifrado de flujo (stream cipher) no divide la información en bloques fijos, sino que procesa el mensaje de texto plano continuamente, bit a bit o byte a byte. Para lograr esto, el algoritmo utiliza la clave secreta para generar un flujo pseudoaleatorio infinito de bits de clave (keystream), el cual se combina mediante una operación lógica XOR con los bits del mensaje original. Este enfoque es excepcionalmente rápido, requiere muy poca memoria y es ideal para comunicaciones en tiempo real, hardware con recursos limitados o transmisiones donde la longitud de los datos es desconocida de antemano. Ejemplos clásicos incluyen RC4 y ChaCha20 \cite{forouzan2015}.
+
+\section{¿Qué es el cifrado DES (Data Encryption Standard) y por qué se considera inseguro hoy en día?}
+
+El Estándar de Cifrado de Datos (DES, por sus siglas en inglés) fue un algoritmo de cifrado simétrico por bloques desarrollado en la década de 1970 por IBM y adoptado como estándar federal en los Estados Unidos. Operaba con bloques de datos de 64 bits y utilizaba una clave criptográfica de 56 bits (junto con 8 bits de paridad). Durante muchos años, DES fue el algoritmo de cifrado más utilizado en el mundo para transacciones financieras y comunicaciones gubernamentales \cite{stallings2017}.
+
+Hoy en día, DES se considera criptográficamente roto e inseguro exclusivamente debido a la reducida longitud de su clave de 56 bits. Aunque el diseño matemático de la red de Feistel que emplea no ha demostrado vulnerabilidades graves, una clave de 56 bits permite un espacio máximo de búsqueda de $2^{56}$ combinaciones posibles. Con el avance exponencial de la capacidad de procesamiento del hardware moderno, especialmente el uso de GPUs y hardware dedicado (ASICs), es posible probar todas las combinaciones mediante un ataque de fuerza bruta en cuestión de horas o incluso minutos. Por esta razón, el Instituto Nacional de Estándares y Tecnología (NIST) retiró formalmente el estándar DES, recomendando su sustitución por AES \cite{nist2001}.
+
+\section{Describa el algoritmo AES (Advanced Encryption Standard) y sus tamaños de clave.}
+
+El Estándar de Cifrado Avanzado (AES) es un algoritmo de criptografía simétrica por bloques adoptado por el NIST en 2001 tras un concurso público internacional para reemplazar al obsoleto DES. A diferencia de su predecesor, AES se basa en una red de sustitución-permutación, lo que lo hace altamente eficiente y seguro tanto en implementaciones de hardware como de software. Opera estructurando los datos en una matriz bidimensional (conocida como estado) y aplicando múltiples rondas de transformaciones matemáticas complejas que incluyen mezcla de columnas, desplazamiento de filas y sustitución de bytes \cite{nist2001}.
+
+AES procesa bloques de datos fijos de 128 bits y su seguridad se escala mediante el uso de tres tamaños de clave diferentes, cada uno con un número correspondiente de rondas de procesamiento:
+\begin{itemize}
+    \item \textbf{AES-128:} Utiliza una clave de 128 bits y requiere 10 rondas de procesamiento. Es el estándar comercial por defecto.
+    \item \textbf{AES-192:} Utiliza una clave de 192 bits y requiere 12 rondas.
+    \item \textbf{AES-256:} Utiliza una clave de 256 bits y requiere 14 rondas de procesamiento.
+\end{itemize}
+El nivel AES-256 es el exigido a nivel mundial para la protección de información clasificada como "Top Secret", ya que su espacio de claves ($2^{256}$) es tan inmenso que se considera invulnerable a cualquier ataque de fuerza bruta con la tecnología actual y previsible a corto plazo \cite{stallings2017}.
+
+\section{¿Qué es RSA y en qué problema matemático se basa su seguridad?}
+
+RSA (cuyas siglas provienen de los apellidos de sus creadores: Rivest, Shamir y Adleman) es el algoritmo pionero y más ampliamente implementado de criptografía asimétrica o de clave pública. Es fundamental en la infraestructura de Internet moderna, utilizándose para cifrar claves de sesión simétricas, establecer conexiones seguras en navegadores web (junto con TLS) y generar firmas digitales auténticas. RSA requiere que cada usuario genere un par de claves: una pública para el cifrado y una privada para el descifrado de los datos \cite{kurose2017}.
+
+La robustez y seguridad del algoritmo RSA no se basa en el secreto del método en sí, sino en la intratabilidad de un problema matemático específico: la factorización de números enteros extremadamente grandes. El algoritmo inicia seleccionando dos números primos inmensos y aleatorios. Estos dos números se multiplican para obtener un producto gigante (módulo), el cual se hace público y forma parte de la clave pública. Sin embargo, para deducir la clave privada y romper el cifrado, un atacante tendría que tomar ese número gigante y encontrar cuáles fueron los dos números primos originales que lo multiplicaron. Hasta la fecha, no existe un algoritmo computacional eficiente capaz de factorizar números de más de 2048 bits en un tiempo razonable, lo que garantiza la seguridad del sistema RSA \cite{forouzan2015}.
+
+\section{Explique qué es una Función Hash y cuáles son sus características principales.}
+
+Una Función Hash es un algoritmo matemático determinista y unidireccional que toma un bloque de datos de entrada de longitud arbitraria (como un documento de texto, una imagen o una contraseña) y lo comprime transformándolo en una cadena alfanumérica de tamaño fijo y predeterminado, conocida como "resumen de mensaje" o "digest". Estas funciones no cifran los datos, ya que no utilizan claves y el proceso no se puede revertir para obtener el archivo original a partir del resumen generado \cite{stallings2017}.
+
+Para que una Función Hash se considere criptográficamente segura y útil en redes de datos, debe poseer características matemáticas estrictas. Primero, debe ser unidireccional (pre-image resistance), lo que significa que es computacionalmente imposible deducir la entrada original teniendo solo el resumen hash. Segundo, debe tener una alta resistencia a colisiones (collision resistance), asegurando que sea inviable encontrar dos mensajes diferentes que produzcan exactamente el mismo resumen hash. Por último, debe exhibir un fuerte "efecto avalancha", donde el cambio de un solo bit en el documento original (como una coma o una letra) altere drásticamente al menos la mitad de los bits del resumen resultante, impidiendo predecir patrones \cite{ibm2023}.
+
+\section{¿Cuál es la diferencia entre SHA-1, SHA-2 y SHA-3?}
+
+La familia SHA (Secure Hash Algorithm) comprende algoritmos de resumen desarrollados por la Agencia de Seguridad Nacional de EE. UU. (NSA) y publicados por el NIST. SHA-1 fue un estándar dominante durante años, produciendo un resumen de 160 bits. Sin embargo, su estructura matemática demostró ser débil y, en 2017, investigadores lograron generar colisiones prácticas, por lo que SHA-1 está formalmente deprecado y prohibido para usos de seguridad modernos como certificados TLS o firmas digitales \cite{stallings2017}.
+
+SHA-2 no es un solo algoritmo, sino una familia de funciones que incluye variantes como SHA-256 y SHA-512 (produciendo resúmenes de 256 y 512 bits, respectivamente). Aunque comparte fundamentos estructurales con SHA-1, introduce operaciones y constantes matemáticas que la hacen significativamente más robusta contra los ataques descubiertos. Actualmente, SHA-256 es el estándar de oro de la industria, utilizado globalmente en blockchain, certificados web e integridad de software \cite{nist2015}.
+
+Por su parte, SHA-3 es el miembro más reciente de la familia y difiere radicalmente de sus predecesores. No fue diseñado por la NSA, sino elegido mediante un concurso público, basándose en la primitiva criptográfica Keccak y una arquitectura conocida como "función de esponja" (sponge construction). La principal diferencia radica en su diseño interno: SHA-3 no es vulnerable a los mismos ataques matemáticos (como la extensión de longitud) que teóricamente podrían comprometer la estructura de SHA-2 en el futuro, sirviendo como un respaldo robusto de nueva generación \cite{nist2015}.
+
+\section{Explique qué es una Firma Digital, sus objetivos de seguridad y qué papel juegan las funciones Hash en su creación.}
+
+Una Firma Digital es un esquema criptográfico asimétrico que se adjunta a un documento o mensaje electrónico para validar y certificar su procedencia en entornos digitales. Su implementación en redes de datos seguras cumple tres objetivos de seguridad fundamentales: la autenticación, que comprueba irrefutablemente la identidad del remitente; la integridad, que asegura matemáticamente que el contenido del archivo no ha sido alterado desde el momento en que fue firmado; y el no repudio, que impide que el creador de la firma niegue posteriormente la autoría del mensaje enviado, puesto que la firma está vinculada exclusivamente a su clave privada \cite{ibm2023}.
+
+Las funciones Hash juegan un papel vital en este proceso para optimizar recursos computacionales. En lugar de cifrar todo el documento asimétricamente (lo cual sería ineficiente), el sistema del emisor primero aplica una función Hash al archivo original para obtener un resumen corto y de tamaño fijo. Posteriormente, el emisor utiliza su clave privada para cifrar únicamente este resumen Hash; este "hash cifrado" constituye la firma digital. Cuando el receptor obtiene el documento, utiliza la clave pública del emisor para descifrar la firma y extraer el resumen original. Finalmente, el receptor vuelve a aplicar la misma función Hash al documento recibido y compara los resultados. Si coinciden perfectamente, se garantiza tanto la integridad como la autoría del documento \cite{kurose2017}.
+
+\section{¿Qué es un Certificado Digital y qué función cumple una Autoridad Certificadora (CA)?}
+
+Un Certificado Digital (típicamente estructurado bajo el estándar X.509) es un documento electrónico infalsificable que actúa como un pasaporte digital en las redes de datos. Su propósito principal es vincular de manera fehaciente una clave pública criptográfica con la identidad real de una entidad (como una persona, una empresa o un servidor web). El certificado contiene datos críticos como el nombre del propietario, el algoritmo utilizado, su clave pública, la fecha de caducidad y, lo más importante, la firma digital de la entidad que lo emitió \cite{forouzan2015}.
+
+La entidad responsable de emitir estos certificados es la Autoridad Certificadora (CA, por sus siglas en inglés). La función de una CA es fungir como un tercero imparcial y de absoluta confianza dentro de la Infraestructura de Clave Pública (PKI). Antes de emitir un certificado, la CA tiene la obligación estricta de investigar y verificar que el solicitante sea quien dice ser (por ejemplo, validando la propiedad de un dominio web). Una vez comprobada la identidad, la CA emite el certificado y lo firma digitalmente con su propia clave privada. Como los navegadores web y sistemas operativos ya tienen preinstaladas las claves públicas de las CAs más reconocidas, pueden verificar automáticamente que la firma es legítima, creando así un ecosistema global de confianza electrónica \cite{kurose2017}.
+
+\section{Describa el protocolo IPsec (Internet Protocol Security), sus componentes principales (AH, ESP) y los modos de operación.}
+
+IPsec es un conjunto o suite de protocolos de red desarrollado por el IETF diseñado para autenticar, cifrar y proteger paquetes de datos a nivel de la capa de red (Capa 3) del modelo OSI. A diferencia de protocolos superiores, IPsec puede asegurar todo el tráfico entre dos nodos, independientemente de la aplicación utilizada, lo que lo convierte en la piedra angular para la creación de Redes Privadas Virtuales (VPN) seguras a través de Internet \cite{cisco2021}.
+
+IPsec se apoya en dos componentes o protocolos primarios para el manejo de datos. El Encabezado de Autenticación (AH, Authentication Header) proporciona integridad de datos, autenticación del origen de los paquetes y protección contra repetición, pero no ofrece confidencialidad, ya que no cifra los datos. Por el contrario, la Carga Útil de Seguridad Encapsulada (ESP, Encapsulating Security Payload) es el núcleo operativo moderno, puesto que ofrece autenticación e integridad, pero además encripta la carga útil completa del paquete utilizando algoritmos como AES, brindando total confidencialidad \cite{stallings2017}.
+
+Para adaptarse a distintas topologías, IPsec opera en dos modos:
+\begin{itemize}
+    \item \textbf{Modo Transporte:} Solo cifra y autentica la carga útil del paquete IP, dejando el encabezado IP original intacto y expuesto. Se usa comúnmente para conexiones de extremo a extremo dentro de una red LAN segura.
+    \item \textbf{Modo Túnel:} Toma el paquete IP original completo y lo encapsula cifrado dentro de un nuevo paquete IP exterior. Es el estándar para las conexiones VPN entre enrutadores geográficamente separados, ocultando por completo las direcciones IP reales de la red interna \cite{ibm2023}.
+\end{itemize}
+
+\section{¿Qué es SSL/TLS, en qué capa del modelo OSI opera y para qué se utiliza principalmente?}
+
+Transport Layer Security (TLS) y su predecesor obsoleto, Secure Sockets Layer (SSL), son protocolos criptográficos diseñados para proporcionar comunicaciones seguras y cifradas a través de una red de computadoras. TLS establece un canal cifrado entre un cliente y un servidor, asegurando que los datos transmitidos permanezcan confidenciales, íntegros (no modificados en tránsito) y autenticando la identidad del servidor mediante el uso de certificados digitales \cite{kurose2017}.
+
+En relación con el modelo OSI, SSL/TLS opera de manera intermedia. Funciona justo por encima de la capa de Transporte (Capa 4, apoyándose normalmente en TCP para garantizar la entrega de paquetes) y justo por debajo de los protocolos de la capa de Aplicación (Capa 7, como HTTP o SMTP). En términos de arquitectura formal OSI, su función de cifrado y compresión de datos lo sitúa conceptualmente dentro de los deberes de la capa de Presentación (Capa 6), aunque en la práctica actúa como un envoltorio o socket seguro para la capa de aplicación subyacente \cite{forouzan2015}.
+
+Su principal utilización en el mundo moderno es proteger la navegación en la World Wide Web. Al integrar TLS con HTTP, se genera el protocolo HTTPS (HTTP Secure), el cual es el estándar obligatorio para proteger el intercambio de contraseñas, transacciones bancarias, comercio electrónico y cualquier tipo de comunicación web contra la interceptación por parte de terceros malintencionados (ataques Man-in-the-Middle) \cite{ibm2023}.
+
+\section{¿Qué es un Firewall, cómo se clasifica y cuál es la diferencia entre un filtrado de paquetes sin estado y uno de inspección de estado (Stateful)?}
+
+Un Firewall o cortafuegos es un sistema de seguridad que monitorea, evalúa y controla el flujo de tráfico de red entrante y saliente, estableciendo una barrera perimetral entre una red interna de confianza y redes externas potencialmente hostiles como Internet. Aplica un conjunto de reglas lógicas de seguridad (ACL) para bloquear o permitir paquetes, previniendo accesos no autorizados a la infraestructura privada \cite{kurose2017}.
+
+Los firewalls se clasifican en hardware (dispositivos dedicados que protegen toda la red), software (programas instalados en sistemas operativos individuales) y según la capa en la que operan: firewalls de capa de red, firewalls proxy de aplicación, o firewalls de próxima generación (NGFW) que incorporan prevención de intrusos y control de aplicaciones \cite{fortinet2023}.
+
+La diferencia fundamental en el filtrado radica en su consciencia del contexto. Un firewall sin estado (Stateless packet filtering) examina los paquetes IP y TCP/UDP de forma individual y aislada; solo verifica la dirección IP de origen, la de destino y los puertos, sin saber si el paquete pertenece a una conexión legítima ya establecida. Esto los hace rápidos pero propensos a ser evadidos mediante la falsificación de paquetes. Por el contrario, un firewall de inspección de estado (Stateful firewall) mantiene una tabla dinámica en memoria para rastrear el ciclo de vida completo de cada conexión establecida por los usuarios internos. Al ser consciente del estado de la sesión, permite automáticamente el retorno seguro del tráfico de respuesta solicitado (como una página web) sin necesidad de abrir reglas explícitas de entrada, brindando una seguridad sustancialmente superior \cite{stallings2017}.
+
+\newpage
+
+\begin{thebibliography}{9}
+
+    \bibitem{cisco2021}
+    Cisco Systems. (2021). \textit{Internet Protocol Security (IPsec) and Cryptography Core Principles}. Documentación técnica y arquitectura de red. Recuperado de la base de datos de conocimientos de Cisco Networking Academy.
+    
+    \bibitem{forouzan2015}
+    Forouzan, B. A. (2015). \textit{Data Communications and Networking} (5ta ed.). McGraw-Hill Education. Conceptos de redes, algoritmos de flujo y criptografía asimétrica.
+    
+    \bibitem{fortinet2023}
+    Fortinet. (2023). \textit{¿Qué es un Firewall de Inspección de Estado (Stateful Firewall)?}. Cyberglossary de Fortinet Security. Recuperado de recursos de arquitectura de seguridad de Fortinet.
+    
+    \bibitem{ibm2023}
+    IBM Corporation. (2023). \textit{Sistemas y Protocolos de Seguridad en Capa de Red: IPsec y Firmas Digitales}. IBM Documentation. Recuperado de la infraestructura de conocimiento de sistemas Z y redes seguras.
+    
+    \bibitem{kurose2017}
+    Kurose, J. F., \& Ross, K. W. (2017). \textit{Redes de Computadoras: Un enfoque descendente} (7ma ed.). Pearson Educación. Capítulos enfocados en Seguridad en Redes, TLS, Criptografía y Firewalls.
+    
+    \bibitem{nist2001}
+    National Institute of Standards and Technology (NIST). (2001). \textit{Advanced Encryption Standard (AES)}. Federal Information Processing Standards Publication 197. United States Department of Commerce.
+    
+    \bibitem{nist2015}
+    National Institute of Standards and Technology (NIST). (2015). \textit{SHA-3 Standard: Permutation-Based Hash and Extendable-Output Functions}. Federal Information Processing Standards Publication 202. United States Department of Commerce.
+    
+    \bibitem{stallings2017}
+    Stallings, W. (2017). \textit{Cryptography and Network Security: Principles and Practice} (7ma ed.). Pearson. Fundamentos de esquemas simétricos y asimétricos, resúmenes criptográficos Hash y algoritmos de bloque.
+
+\end{thebibliography}
+\end{document}
