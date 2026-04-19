@@ -1,0 +1,383 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[utf8]{inputenc} 
+\usepackage{amsmath}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage[citecolor=blue]{hyperref}       % Para enlaces en el documento
+\usepackage{fancyhdr}
+\usepackage{circuitikz}
+\usepackage{amssymb}
+\usepackage{animate}
+\usepackage{float}
+\usepackage{multirow}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage[a4paper, margin=1in]{geometry}
+\usepackage{gensymb}
+\usepackage{siunitx}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{listings}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows, positioning}
+
+% Ajuste de la altura del encabezado
+\setlength{\headheight}{76.27646pt}
+\addtolength{\topmargin}{-34.27646pt}
+
+\lstdefinestyle{mystyle}{
+    language=Matlab,
+    inputencoding=utf8,
+    backgroundcolor=\color{black!5},
+    commentstyle=\color{green!60!black},
+    keywordstyle=\color{blue},
+    numberstyle=\tiny\color{gray},
+    stringstyle=\color{purple},
+    basicstyle=\footnotesize\ttfamily,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showstringspaces=false,
+}
+\lstset{style=mystyle}
+
+\setlength{\parindent}{0pt}
+
+% Crear la portada manualmente
+\begin{document}
+
+% Desactivar la numeración de página para la portada
+\thispagestyle{empty}
+
+% Colocar las imágenes en las esquinas superiores
+\begin{minipage}[t]{0.4\textwidth}
+    \raggedright
+    \includegraphics[width=2cm]{image/der.png}
+\end{minipage}%
+\begin{minipage}[t]{0.5\textwidth}
+    \raggedleft
+    \includegraphics[width=2cm]{image/izq.png}
+\end{minipage}
+
+\vspace{1cm}
+
+\begin{center}
+    \Huge{\textbf{Previo 10}} \\
+    \vspace{0.5cm}
+    \LARGE{\textbf{Funciones de la capa de presentación}} \\
+    \vspace{0.5cm}
+    \Large{\textbf{Cuestionario Previo}} \\
+    \vspace{1cm}
+    \Large{\textbf{Universidad Nacional Autónoma de México.}}\\
+    \Large{\textbf{Facultad de Ingeniería.}}\\
+    \vspace{1cm}
+    \Large{Laboratorio de Redes de datos seguras.} \\
+    \vspace{0.5cm}
+    \LARGE{\textbf{Profesora:}}
+    \LARGE{\textit{MTRA. MARÍA EUGENIA BAUTISTA GONZÁLEZ.}}\\
+    \vspace{0.5cm}
+    \Large{\textbf{Grupo:} 08} \\
+    \vspace{0.5cm}
+    \LARGE{\textbf{Alumno:}}\\
+    \Large{320060829} \\
+    \vspace{3cm}
+    \Large{\textbf{Fecha de Entrega:}}\\
+    \vspace{0.5cm}
+    \large{{23 de Abril de 2026}}
+\end{center} 
+
+
+\newpage
+
+% Configuración del encabezado y pie de página
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\includegraphics[width=1.5cm]{image/der.png}}
+\fancyhead[R]{\includegraphics[width=1.5cm]{image/izq.png}}
+\fancyfoot[C]{\thepage}  % Coloca el número de página en el centro del pie de página
+
+% Línea horizontal en el pie de página
+\renewcommand{\footrulewidth}{0.4pt}  % Define el grosor de la línea en el pie de página
+
+% Empezar numeración de páginas desde 1 en la segunda página
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+%\maketitle
+\tableofcontents
+
+
+\newpage
+
+\section{¿Cuál es la capa 6 del modelo OSI? (Dé una descripción general)}
+
+El Modelo de Interconexión de Sistemas Abiertos (OSI, por sus siglas en inglés) es un marco conceptual estandarizado globalmente, desarrollado y publicado por la Organización Internacional de Normalización (ISO) en la década de 1980, con el propósito fundamental de guiar la interoperabilidad y el diseño de protocolos de comunicación en redes informáticas heterogéneas \cite{aws_osi}. Este marco divide la inmensa complejidad de la transmisión de datos a través del ciberespacio en siete capas lógicas de abstracción, apiladas jerárquicamente desde el hardware físico subyacente hasta las interfaces de software de usuario final. Dentro de esta meticulosa arquitectura arquitectónica, la Capa 6 corresponde a la Capa de Presentación (o \textit{Presentation Layer}), la cual ocupa una posición crítica e intermedia, situada exactamente por debajo de la Capa de Aplicación (Capa 7) y por encima de la Capa de Sesión (Capa 5) \cite{ibm_osi}.
+
+La Capa de Presentación se distingue del resto de las capas del modelo OSI por su enfoque exclusivo en la semántica y la sintaxis de la información transmitida, en lugar de preocuparse por la mecánica del enrutamiento físico o lógico de los paquetes a través de la red \cite{ionos_pres}. Mientras que las capas inferiores, como la Capa de Red o la Capa de Transporte, asumen la responsabilidad vital de garantizar que un flujo continuo de bits viaje desde una dirección IP de origen hasta una dirección IP de destino sin pérdida de integridad física, la Capa 6 asume la responsabilidad de garantizar que, una vez que esos bits llegan a su destino, posean un formato inteligible y coherente para el sistema receptor \cite{paloalto_l7}. 
+
+En esencia, la Capa 6 opera como el traductor universal de la red. En los albores de la informática moderna, la disparidad entre las arquitecturas de hardware era un obstáculo monumental; por ejemplo, los grandes ordenadores \textit{mainframe} de IBM utilizaban convenciones de codificación de caracteres radicalmente distintas a las de los ordenadores personales emergentes o los servidores UNIX \cite{ionos_pres}. Si un mainframe transmitía un documento de texto a un terminal diferente sin una etapa de traducción intermedia, el receptor interpretaría los datos como una cadena caótica de símbolos corruptos. La Capa de Presentación fue concebida conceptualmente para abstraer esta incompatibilidad, proporcionando servicios de traducción que enmascaran las diferencias estructurales de los datos \cite{fortinet_osi}.
+
+Para lograr esta estandarización, la Capa de Presentación opera mediante la definición de una \textit{sintaxis de transferencia abstracta}. Esta sintaxis permite que las aplicaciones se comuniquen negociando un formato común neutro para la transferencia de la red, independientemente de cómo cada máquina almacene internamente los datos en sus propios registros de memoria \cite{ionos_pres}. El estándar más prominente desarrollado bajo esta premisa es la Notación de Sintaxis Abstracta Uno (ASN.1), un lenguaje formal de descripción de datos respaldado por la ISO que permite representar estructuras complejas de manera independiente de la máquina \cite{prezi_pres}. 
+
+Además de la estandarización lingüística y estructural, la Capa de Presentación es el dominio conceptual donde convergen las operaciones algorítmicas de alteración del estado de los datos. Esta capa centraliza las funciones de compresión matemática para la optimización del ancho de banda y la aplicación de protocolos de criptografía para la seguridad y la confidencialidad de los canales \cite{ibm_osi_layer6}. Al descargar estas pesadas responsabilidades algorítmicas hacia una capa de red subyacente, los desarrolladores de software de la Capa 7 (Aplicación) se liberan de la necesidad de programar motores de cifrado y compresión propietarios dentro de cada aplicación individual, garantizando un ecosistema de red modular, altamente cohesivo y sistemáticamente seguro \cite{aws_osi}.
+
+\section{¿Cuáles son las funciones principales de la Capa de Presentación?}
+
+Las operaciones arquitectónicas delegadas a la Capa de Presentación se agrupan meticulosamente en tres pilares fundamentales que aseguran la eficiencia, la universalidad y la seguridad de las telecomunicaciones globales. Estas funciones actúan de manera interdependiente sobre la carga útil (o \textit{payload}) de los datos entregados por la Capa de Aplicación, manipulando y transformando los bytes antes de delegarlos a la Capa de Sesión para su transmisión coordinada \cite{ibm_osi_layer6, ionos_pres}.
+
+En primer lugar, la función más definitoria de esta capa es el \textbf{Formateo y Traducción de Datos}. Como se anticipó en la descripción general, las diferencias de arquitectura a nivel de procesador —como el orden de los bytes o el \textit{endianness} (Little-Endian frente a Big-Endian)— así como las divergencias en la codificación nativa del sistema operativo, requieren una normalización agresiva \cite{uazuay_pres}. La Capa de Presentación examina la estructura de datos exigida por la Capa de Aplicación (textos, enteros, números de punto flotante, objetos multimedia) y efectúa una conversión algorítmica hacia una sintaxis concreta de transferencia de red \cite{ionos_pres}. Esta operación abarca desde transformaciones simples, como la conversión de una base de datos codificada en el formato EBCDIC (utilizado en sistemas heredados y corporativos cerrados) al estándar global ASCII o Unicode UTF-8, hasta la \textbf{Serialización de Objetos}. En arquitecturas de programación complejas y orientadas a objetos, las aplicaciones necesitan transmitir instancias dinámicas en memoria. La Capa 6 se encarga de aplanar o serializar estos árboles de objetos en un flujo binario lineal y predecible, permitiendo su fácil tránsito por la red y garantizando que el receptor final disponga de las reglas algorítmicas precisas para des-serializar y reconstruir la estructura en su propia memoria volátil \cite{ionos_pres}.
+
+En segundo lugar, la capa es responsable de la \textbf{Compresión de Datos}. Con la proliferación de archivos multimedia de ultra alta resolución, bases de datos masivas (\textit{Big Data}) y aplicaciones en tiempo real, el ancho de banda de la red física se convierte en el recurso más crítico y limitado de la infraestructura de telecomunicaciones \cite{pure_comp}. La Capa de Presentación aplica algoritmos matemáticos intensivos para localizar, aislar y purgar la redundancia de los bits dentro del flujo de datos. Al comprimir los archivos de manera nativa en esta capa, las aplicaciones garantizan que el volumen neto del tráfico se reduzca a una mera fracción de su tamaño original \cite{ibm_osi_layer6}. Esta drástica minimización del peso del paquete no solo erradica la latencia temporal en las transferencias intercontinentales, sino que repercute holísticamente en la reducción de la sobrecarga de los enrutadores (\textit{routers}), minimiza la tasa de fragmentación de paquetes en la Capa de Red y contribuye a un descenso sustancial en la huella de carbono y los requerimientos de potencia eléctrica en los grandes centros de procesamiento de datos \cite{pure_comp, actian_comp}.
+
+El tercer pilar fundamental, y quizás el más vital en el ciberespacio contemporáneo, es el \textbf{Cifrado y Descifrado de Datos} \cite{ibm_osi_layer6, uazuay_pres}. La capa de presentación asume el mandato de salvaguardar la confidencialidad absoluta de la información que atraviesa el entorno de red público y eminentemente hostil. Antes de que los datos formateados y comprimidos sean introducidos en la infraestructura vulnerable de los enlaces y medios físicos (donde son susceptibles a intercepciones y ataques de intermediario), la Capa 6 aplica algoritmos criptográficos sumamente avanzados que transmutan la información en bloques caóticos e ilegibles \cite{trendmicro_osi, sentinel_enc}. El diseño conceptual exige que las complejas operaciones de intercambio de claves, la gestión asimétrica de la identidad, y el enmascaramiento simétrico del flujo ocurran estructuralmente aquí \cite{avast_tls}. De este modo, la seguridad no se agrega como una función secundaria de último minuto dentro de la aplicación del usuario, sino que se incorpora como un protocolo robusto y omnipresente a nivel de red, obligando al sistema receptor a revertir el proceso descifrando el flujo únicamente si cuenta con los esquemas de autorización matemáticos adecuados \cite{ibm_crypto}.
+
+\section{Mencione algunos formatos de sonido, imágenes, películas y texto}
+
+La implementación práctica de la traducción y estructuración de la Capa de Presentación se evidencia en la prolífica taxonomía de formatos de archivo digitales. Un formato de archivo constituye la arquitectura y organización interna de los metadatos y la carga útil de un objeto digital, dictando inexorablemente cómo deben codificarse, comprimirse e interpretarse los datos por el software de reproducción del destinatario \cite{wix_files, lenovo_formats}. La elección estratégica de un formato determina la eficiencia del almacenamiento local y la viabilidad de la transferencia a través de enlaces de red de capacidad variable \cite{capcut_audio}.
+
+Para ilustrar la variedad de esquemas estructurados manejados e interpretados a este nivel conceptual, se presenta la siguiente Tabla 1, la cual categoriza los formatos multimedia y de datos más representativos de la era digital contemporánea, detallando sus características algorítmicas primordiales:
+
+\begin{table}[H]
+\centering
+\caption{Formatos representativos de datos, audio, imagen y video gestionados a nivel de Presentación}
+\renewcommand{\arraystretch}{1.3}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}p{2.5cm}p{3cm}p{9.5cm}@{}}
+\toprule
+\textbf{Categoría} & \textbf{Formato} & \textbf{Descripción Técnica y Mecanismo Operativo} \\ \midrule
+\multirow{4}{*}{\textbf{Texto y Datos}} & \textbf{ASCII} & Estándar histórico de codificación de 7 bits que mapea 128 caracteres del alfabeto latino y señales de control, formando la base semántica de los protocolos de red \cite{ionos_pres}. \\
+ & \textbf{EBCDIC} & Arquitectura de codificación de caracteres de 8 bits implementada de forma nativa en sistemas \textit{mainframe} corporativos, que a menudo requiere traducción en la Capa 6 para interactuar con sistemas abiertos \cite{ionos_pres}. \\
+ & \textbf{DOCX} & Estructura orientada a documentos de procesamiento de textos, basada algorítmicamente en el estándar \textit{Office Open XML} y sujeta a compresión ZIP interna para mitigar el peso \cite{lenovo_formats}. \\
+ & \textbf{PDF} & Formato de Documento Portátil diseñado para la presentación inmutable de vectores y fuentes tipográficas, garantizando una representación visual absoluta independiente del dispositivo receptor \cite{lenovo_formats}. \\ \midrule
+\multirow{4}{*}{\textbf{Audio y Sonido}} & \textbf{DSD} & Direct Stream Digital; formato de fidelidad extrema, no comprimido, diseñado para la captura audiófila de alta resolución. Su excesivo tamaño lo hace ineficiente para el tránsito en redes móviles \cite{capcut_audio}. \\
+ & \textbf{FLAC} & Códec de audio libre sin pérdida (\textit{Lossless}). Preserva la integridad matemática exacta del máster original reduciendo el volumen espacial del archivo acústico \cite{capcut_audio}. \\
+ & \textbf{MP3} & Algoritmo con pérdida (\textit{Lossy}) basado en modelos de enmascaramiento psicoacústico, capaz de descartar frecuencias imperceptibles para reducir el peso hasta un 90\% \cite{wix_files, prezi_pres}. \\
+ & \textbf{MIDI} & Interfaz Digital de Instrumentos Musicales; no transmite ondas sonoras digitalizadas, sino un flujo de metadatos algorítmicos que instruye a los sintetizadores locales sobre cómo replicar la composición musical \cite{ionos_pres}. \\ \midrule
+\multirow{3}{*}{\textbf{Imágenes}} & \textbf{JPEG} & Estándar fotográfico dominante que emplea la Transformada Discreta del Coseno (DCT) en matrices de píxeles para aplicar compresión destructiva adaptada a las tolerancias del sistema psicovisual humano \cite{ionos_pres}. \\
+ & \textbf{GIF} & Formato idóneo para gráficos simples y bucles de animación; restringe rígidamente su espectro colorimétrico a una paleta indexada de 256 colores y aplica algoritmos sin pérdida \cite{ionos_pres}. \\
+ & \textbf{TIFF / PNG} & Formatos de imagen focalizados en el almacenamiento sin pérdida. TIFF domina los entornos de preimpresión por su altísima resolución, mientras que PNG domina la web por su soporte nativo para canales alfa (transparencia) \cite{ionos_pres}. \\ \midrule
+\multirow{3}{*}{\textbf{Cine y Video}} & \textbf{MP4} & Formato contenedor multimedia omnipresente. Generalmente encapsula pistas de video sometidas a los estrictos y eficientes algoritmos de predicción espacial de los códecs H.264 o H.265 (HEVC) \cite{ms_video, lenovo_formats}. \\
+ & \textbf{WMV} & Windows Media Video; una familia de códecs con altas tasas de compresión de video, optimizada nativamente para arquitecturas de reproducción bajo el ecosistema del sistema operativo Windows \cite{adpush_video, imagen_video}. \\
+ & \textbf{AVI} & \textit{Audio Video Interleave}; un marco de trabajo histórico y ampliamente tolerado, frecuentemente emparejado con algoritmos como DivX para habilitar visualización fluida de material de gran duración \cite{lenovo_formats, adpush_video}. \\ \bottomrule
+\end{tabular}%
+}
+\end{table}
+
+\section{¿Qué es la compresión de datos?}
+
+La compresión de datos constituye una disciplina crítica de la informática teórica y de la transmisión de redes, definiéndose metodológicamente como el proceso algorítmico destinado a reestructurar y recodificar una carga útil de información (\textit{payload}) de modo que requiera significativamente menos recursos espaciales de los que ocupaba en su forma cruda u original \cite{lenovo_comp, actian_comp}. Este procedimiento matemático reduce el volumen binario del archivo, optimizando drásticamente la huella de almacenamiento exigida en los discos físicos y, crucialmente en el ámbito de las redes, minimizando los requisitos de ancho de banda demandados para el tránsito de paquetes a través de los diversos enlaces de telecomunicaciones \cite{pure_comp}.
+
+La génesis de todos los protocolos de compresión emana de la Teoría de la Información establecida por el matemático Claude Shannon en la década de 1940. Según sus postulados, cualquier flujo de datos digital es el producto combinado de dos variables inherentes: la entropía y la redundancia \cite{wiki_comp}. La "entropía" representa la esencia absoluta e irreductible del mensaje; es la información genuinamente nueva, aleatoria e impredecible que no puede deducirse por métodos estadísticos. En marcada antítesis, la "redundancia" comprende todas las secuencias iterativas, los patrones previsibles de bytes y los vacíos estructurales que inflan innecesariamente el volumen lógico del archivo \cite{wiki_comp}. La compresión de datos actúa fundamentalmente como un mecanismo de filtrado que aísla y extirpa la redundancia temporal y espacial, preservando únicamente la entropía fundamental del mensaje para su viaje a través del modelo OSI. 
+
+En términos de implicaciones directas, la eficacia operativa de las infraestructuras de interconexión moderna está intrínsecamente ligada al grado de compresión aplicado en la Capa de Presentación \cite{ibm_osi_layer6}. Cuando un ruteador procesa y encamina paquetes de red fuertemente condensados, se producen tres efectos colaterales de inmenso valor:
+
+\begin{enumerate}
+    \item \textbf{Disminución de Latencia y Aceleración del Tránsito:} Con una carga fraccionada, el tiempo total de serialización y propagación a nivel de la Capa Física se contrae severamente. Las aplicaciones orientadas al usuario, incluyendo la navegación distribuida a través de Redes de Entrega de Contenido (CDN) y la transmisión de voz en tiempo real (VoIP), experimentan una fluidez superior gracias a una latencia prácticamente imperceptible \cite{actian_comp}.
+    \item \textbf{Gestión Financiera del Ancho de Banda:} Para los proveedores de telecomunicaciones y grandes conglomerados empresariales, los cargos operativos se facturan en proporción al volumen del flujo de red de capa 3. La codificación rigurosa en la capa 6 minimiza drásticamente la facturación de tránsito, evitando la necesidad de instalar múltiples infraestructuras de fibra óptica redundantes \cite{pure_comp, actian_comp}.
+    \item \textbf{Conservación Energética Integral:} El simple acto de comprimir bases de datos masivas tiene profundas repercusiones ecológicas. Menor volumen implica requerir una fracción del hardware de lectura y escritura en matrices de almacenamiento (tales como arreglos \textit{FlashArray}), lo que repercute directamente en un ahorro eléctrico sustancial en el enfriamiento y procesamiento continuo de los centros de datos masivos \cite{pure_comp}.
+\end{enumerate}
+
+\section{¿Qué es la compresión con pérdida de datos y qué es la compresión sin pérdida?}
+
+La clasificación de los esquemas de compresión implementados en las plataformas computacionales no se basa en el tipo de archivo objetivo, sino en la fidelidad matemática de la reconstrucción post-procesamiento. Estos dos pilares fundamentales se conocen en la disciplina algorítmica como compresión "sin pérdida" (\textit{lossless}) y compresión "con pérdida" (\textit{lossy}) \cite{lenovo_comp, bjc_comp}.
+
+La \textbf{compresión sin pérdida} engloba familias de algoritmos estadísticos reversibles diseñados con una premisa estricta: tras el proceso de descompresión en la máquina de destino, el archivo resultante debe ser una réplica perfecta, bit por bit, de la fuente originaria \cite{bjc_comp}. Esta metodología rechaza vehementemente el descarte de información y, en cambio, mapea la redundancia a través de un diccionario de codificación inteligente. Por ejemplo, en el esquema de Codificación de Longitud de Ejecución (\textit{Run-Length Encoding} o RLE), secuencias masivas e idénticas de píxeles o bytes se truncan en coordenadas cortas; un segmento de 60 píxeles blancos contiguos se registra simplemente como una sola indicación del color emparejada con el número 60, ahorrando vastos fragmentos de memoria binaria \cite{bjc_comp}. Alternativamente, técnicas más sofisticadas como la "Codificación Huffman" analizan un documento y construyen un árbol de probabilidades, asignando secuencias binarias cortas a los caracteres más frecuentes y reservando códigos largos para los símbolos raros \cite{lenovo_comp}. Dado su carácter irreversible e inmaculado, los algoritmos sin pérdida —como ZIP, GZIP, Lempel-Ziv y FLAC— son imperativos e insustituibles en la transmisión de documentos médicos, archivos ejecutables, hojas de cálculo financieras y códigos fuente, dominios donde la alteración minúscula de un solo bit desencadenaría el colapso absoluto de la estructura del sistema y su funcionalidad en las capas superiores del modelo OSI \cite{lenovo_comp, actian_comp}. Sin embargo, este rigor metodológico sufre de un cuello de botella estricto regido por la entropía real del sistema, alcanzando un muro arquitectónico que raramente permite relaciones de compresión superiores a un 2:1 o 3:1 \cite{esri_lossless}.
+
+En contraste visceral, la \textbf{compresión con pérdida} opera bajo la renuncia consciente de la integridad matemática absoluta en favor de exprimir el tamaño de archivo a proporciones asombrosamente exiguas, como 10:1 o incluso 100:1 \cite{bjc_comp}. Esta metodología está concebida exclusivamente para conjuntos de datos que serán consumidos sensorialmente por el ser humano, es decir, fotografías, películas y composiciones acústicas. En lugar de buscar redundancia en cadenas de ceros y unos, los algoritmos con pérdida explotan de forma agresiva las severas limitaciones fisiológicas y neurológicas del sistema psicovisual y psicoacústico del ser humano \cite{wix_files}. 
+
+En la compresión de audio (ej., MP3, AAC), la técnica central es el "enmascaramiento auditivo". Si el algoritmo detecta un sonido estridente de percusión, erradicará permanentemente y de manera proactiva los múltiples matices sutiles de alta frecuencia que se producen de forma paralela en ese instante temporal de milisegundos, dado que el córtex cerebral es inherentemente incapaz de percibir sonidos débiles solapados por frecuencias fuertes \cite{wix_files}. En la gestión fotográfica (ej., JPEG), el espectro se somete a la Transformada Discreta del Coseno (DCT), la cual aísla los componentes de frecuencia cromática de la imagen, degradando agresivamente la exactitud del color en áreas complejas, pero preservando las directrices de la luminosidad (el aspecto en el que el ojo humano es infinitamente más sensible) \cite{esri_lossless, cornell_lossy}. El producto final descomprimido contendrá "artefactos" colaterales o difuminaciones en zonas de altísimo contraste de detalle que no existían originalmente; sin embargo, este sacrificio imperceptible es el tributo que las redes modernas pagan para permitir que bibliotecas enteras de multimedia en ultra alta definición puedan fluir orgánicamente a través del ciberespacio congestionado \cite{cornell_lossy, bjc_comp}.
+
+\section{¿Qué es criptografía?}
+
+Etimológicamente derivada de los vocablos griegos \textit{kryptós} ("oculto") y \textit{graphein} ("escribir"), la criptografía constituye la disciplina de la ciencia matemática y la computación especializada en salvaguardar la información contra la intromisión, la censura y la vigilancia no autorizada \cite{ibm_crypto_use}. Aunque sus cimientos se remontan a tácticas de ocultación manuales arcaicas implementadas en los despachos diplomáticos de la antigüedad y los engranes mecánicos de la máquina Enigma durante los conflictos bélicos del siglo XX, la criptografía de la era digital ha evolucionado en una robusta rama del álgebra abstracta, asumiendo la monumental responsabilidad de erigir los muros defensivos invisibles sobre los que reposa toda la infraestructura financiera, gubernamental y corporativa del internet moderno \cite{ibm_crypto_use, sentinel_enc}. 
+
+En el ecosistema estratificado del modelo OSI y la arquitectura de la familia de protocolos TCP/IP, la criptografía se manifiesta principalmente como el servicio defensivo central alojado a nivel de la Capa de Presentación o en interfaces superiores (Capa 6/7) \cite{ibm_osi_layer6}. Su operación se define formalmente como el proceso algorítmico mediante el cual un mensaje estructurado y legible (conocido teóricamente como "texto plano") es introducido a través de una compleja ecuación matemática dependiente de una clave alfanumérica única. Este crisol computacional altera los bytes de forma aparentemente caótica, vomitando una amalgama de datos entrópicos completamente indescifrables, catalogados como "texto cifrado" \cite{sentinel_enc, ibm_crypto_use}. Un atacante externo, un agente gubernamental espía, o un operador ilegítimo interceptando de forma subrepticia la transmisión en los ruteadores troncales de fibra óptica o en un entorno inalámbrico, obtendría únicamente este ruido blanco estructurado \cite{sentinel_enc}. Sin la posesión estricta de la clave criptográfica correspondiente que faculta la operación algebraica de reversión y descifrado, la tarea de retro-ingeniería para extraer el contenido original demandaría cantidades abismales de poder de cómputo y eones de procesamiento inútil \cite{ibm_crypto_use, sentinel_enc}.
+
+Más allá de la mera función del secreto (Confidencialidad), los algoritmos modernos de la criptografía abarcan directrices de seguridad críticas para mantener la triada fundamental de protección de los flujos de red: la "Integridad", garantizando mediante firmas y dispersiones matemáticas (\textit{hashing}) que un paquete interceptado no ha sufrido modificaciones letales o alteraciones maliciosas a manos de un atacante durante su trayecto por la red; y la "Autenticación/No repudio", validando sin el menor asomo de duda la identidad soberana de la parte emisora, mitigando suplantaciones de servidores críticos y garantizando la confiabilidad absoluta en las transacciones digitales \cite{redes_crypto, aws_ssl}.
+
+\section{Describa en qué consiste la criptografía simétrica}
+
+La criptografía simétrica (ocasionalmente referida en la literatura bajo la denominación de cifrado de clave secreta) representa la familia más veloz, antigua y fundamental de los métodos de blindaje criptográfico operables en el ciberespacio \cite{keyfactor_sym, ibm_crypto_types}. En esta arquitectura algorítmica, se implementa una condición de uniformidad absoluta: una y exactamente la misma clave criptográfica (una larga cadena seudoaleatoria de bits) es utilizada imperativamente por la entidad emisora del paquete para ejecutar la ecuación matemática que revuelve y cifra el texto, y por la entidad receptora para ejecutar la operación analítica inversa que reconstruye y descifra el mensaje originario \cite{redes_crypto, ibm_crypto_types}.
+
+Este flujo simétrico goza de una supremacía innegable en términos de eficiencia bruta de la Unidad Central de Procesamiento (CPU). Debido a que las operaciones matemáticas involucradas abarcan tareas ligeras a nivel de hardware —como permutaciones, sustituciones simples y transformaciones lineales (operaciones lógicas XOR)— los algoritmos simétricos tienen el potencial de ingerir volúmenes masivos de bases de datos de varios gigabytes y someterlos al cifrado a una velocidad vertiginosa sin generar estrés de cómputo en el sistema ni inducir la temida latencia de red \cite{keyfactor_sym, encrypt_sym}. Es por este motivo que los clústeres de servidores confían dogmáticamente en las herramientas simétricas para resguardar la masiva carga de información "en reposo" almacenada en sus cabinas de discos físicos, y para encapsular los inmensos volúmenes continuos de la "transferencia masiva" de video cifrado y operaciones bancarias de tráfico "en tránsito" \cite{keyfactor_sym, ibm_crypto_types}.
+
+Sin embargo, a pesar de su rapidez y eficiencia inherentes, el eslabón débil y el talón de Aquiles letal de esta arquitectura de seguridad radica en la logística subyacente de la "distribución de claves" \cite{encrypt_sym}. Puesto que ambas partes requieren estar sincronizadas y equipadas con la misma contraseña para iniciar una conversación encriptada, dicha clave secreta maestra debe de alguna manera ser acordada y remitida desde un usuario al otro previamente. Si este canal de transmisión preliminar está comprometido, cualquier ciberdelincuente que intercepte y copie la clave secreta única en la red asumirá un control absoluto para descifrar de manera retroactiva toda la telemetría resguardada, socavando por completo el sistema defensivo perimetral \cite{keyfactor_sym, encrypt_sym}.
+
+Los algoritmos de cifrado simétrico que operan en los conductos contemporáneos se segregan estructuralmente en dos filosofías de funcionamiento \cite{ibm_crypto_types}:
+\begin{itemize}
+    \item \textbf{Cifrado por Bloques (Block Ciphers):} El texto base no se engulle enteramente, sino que se trocea sistemáticamente en segmentos rígidos y de tamaño uniforme (por ejemplo, ladrillos constantes de 128 o 256 bits). El motor de cifrado ingiere bloque por bloque, acoplando cada trozo a la clave para moldear la salida \cite{ibm_crypto_types}. Es vital la elección del "modo de funcionamiento" en esta arquitectura. Un modo primitivo como ECB (\textit{Electronic Codebook}) encripta bloques con patrones visualmente detectables, mientras que arquitecturas modernas integran bucles de retroalimentación secuenciales como el Modo Galois/Counter (GCM), que aseguran una caotización total de la carga útil \cite{keyfactor_sym}.
+    \item \textbf{Cifrado de Flujo (Stream Ciphers):} En entornos donde la latencia de memoria o acumular un bloque extenso no es factible (como en arquitecturas de transmisión de audio continuo o hardware de sensores), el motor de cifrado tritura el flujo de forma bit a bit, integrando en tiempo real una corriente aparentemente infinita de ruido pseudoaleatorio emanado de la clave maestra original sobre el flujo de texto directo, lo que resulta en un flujo constante e interrumpido \cite{ibm_crypto_types, keyfactor_sym}.
+\end{itemize}
+
+\section{Describa en qué consiste la criptografía asimétrica}
+
+Como respuesta evolutiva inmediata a las críticas fisuras en la transmisión segura que plagaban las logísticas de distribución de claves de las redes simétricas convencionales, los criptógrafos pioneros en la década de 1970 gestaron una revolución en la filosofía matemática que alteraría irremediablemente las comunicaciones, instituyendo los paradigmas de la criptografía asimétrica (popular y acertadamente referida como criptografía de clave pública) \cite{ibm_crypto_use, redes_crypto}.
+
+A diferencia del candado uniforme anterior, la estructura asimétrica no despliega una sola llave, sino que bifurca la autoridad matemática implementando un emparejamiento indisoluble y asimétrico que consta de dos claves diferentes pero entrelazadas a nivel algebráico \cite{redes_crypto, aws_ssl}. La primera mitad de esta pareja se denomina "Clave Pública". Como su título denota, esta matriz digital se comparte de manera intencionada y transparente a lo largo y ancho de todo el universo público en línea, visible para cualquier servidor, usuario o adversario malicioso. La segunda pieza, catalogada como "Clave Privada", es sometida al aislamiento y resguardada meticulosamente bajo las estrictas bóvedas de hardware o perfiles de seguridad internos, oculta herméticamente de la mirada global \cite{redes_crypto, aws_ssl}. 
+
+La majestuosidad y fortaleza de esta asimetría es puramente direccional: cualquier conjunto de información o paquete de datos originado por un remitente y cifrado enérgicamente mediante el empleo de la Clave Pública de un destinatario es empujado hacia una fosa matemática irresoluble, de donde solamente la Clave Privada ligada de ese destinatario posee el teorema analítico preciso para lograr su inversión y posterior liberación legible de vuelta a un estado crudo de texto abierto \cite{aws_ssl}. 
+
+La asimetría confiere su inmunidad invulnerable sobre lo que la informática define como problemas de las "funciones trampa" (Trapdoor Functions): construcciones algebraicas inmensas que las computadoras transitan hacia una dirección a la velocidad del destello electrónico, pero cuya inversión analítica engulle un tiempo exponencial, superando fácilmente billones de años con las capacidades cibernéticas presentes \cite{keyfactor_sym, ibm_crypto_use}. Por desgracia, el costo transaccional de sostener la integridad de estos imponentes cálculos algebraicos engendra un peso sustancial y una agónica degradación en la agilidad de los procesadores \cite{encrypt_sym}. La lentitud imperiosa inherente al método asimétrico ocasiona que resulte inviable procesar o blindar bibliotecas masivas de carga corporativa pesada utilizando puramente este protocolo; por consiguiente, el uso táctico de las redes en este ámbito asimétrico se margina para ejecutar tres directrices vitales y exclusivas que sientan las raíces de todo el esquema \cite{keyfactor_sym, encrypt_sym}:
+
+\begin{enumerate}
+    \item \textbf{Cifrado de Llaves Simétricas (Key Exchange):} En vez de empacar el archivo, el emisor emplea la clave pública asimétrica del receptor meramente para encapsular un código simétrico diminuto. De este modo, la contraseña simétrica frágil viaja a un refugio indetectable sin peligro a interceptación \cite{redes_crypto, ibm_crypto_use}.
+    \item \textbf{Autenticación Digital Irrefutable:} Si el orden de encriptación revierte y la bóveda emisora sella una porción de código minúsculo operando su propia Clave Privada confidencial, cualquier ente público al recibirlo logrará abrir dicho paquete empelando la Clave Pública del sujeto origen. Este hito corrobora indudablemente, e inhibe repudios posteriores, la verdadera procedencia del mensaje \cite{redes_crypto, ibm_crypto_use}.
+    \item \textbf{Establecimiento de Infraestructura Segura (PKI):} Cimentación en bóvedas de confianza que faculta emitir certificados TLS autoritativos de las páginas web y las firmas notariales vitales \cite{keyfactor_sym, aws_ssl}.
+\end{enumerate}
+
+\section{Menciona algunos algoritmos de cifrado}
+
+El espectro arquitectónico sobre el cual las distintas redes protegen su perímetro y su transporte cuenta con formidables motores algorítmicos. Las selecciones criptográficas han madurado y descartado herramientas anticuadas en base a sus debilidades documentadas ante el avance secular del poder computacional y las metodologías del criptoanálisis exhaustivo. 
+
+Para exponer claramente el abanico estandarizado en la ciberseguridad, a continuación se desglosan en la Tabla 2 las primitivas y sistemas criptográficos predominantes integrados activamente en las políticas de redes seguras, clasificados categóricamente según su arquitectura inherente \cite{keyfactor_sym, redes_crypto, encrypt_sym, ibm_crypto_types}:
+
+\begin{table}[H]
+\centering
+\caption{Taxonomía de Algoritmos Criptográficos en Redes Modernas}
+\renewcommand{\arraystretch}{1.4}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}p{3cm}p{3cm}p{8.5cm}@{}}
+\toprule
+\textbf{Categoría de Cifrado} & \textbf{Algoritmo Específico} & \textbf{Estructura Matemática y Aplicación Contemporánea} \\ \midrule
+\multirow{2}{*}{\textbf{Sistemática Simétrica}} & \textbf{AES (Advanced Encryption Standard)} & Algoritmo de cifrado por bloques irrompible seleccionado y avalado por el NIST (Instituto Nacional de Estándares y Tecnología de EE.UU.). Opera en iteraciones fijas de matrices algorítmicas con rangos variables (de 10 rondas para claves AES-128, escalando a 14 rondas de disuasión bajo configuraciones AES-256). Actúa como el núcleo del estándar del transporte global y la protección en la nube \cite{keyfactor_sym, redes_crypto}. \\
+ & \textbf{ChaCha20} & Herramienta excepcional de cifrado de flujo (\textit{Stream Cipher}) que inyecta su matriz secreta a través de 20 rondas inquebrantables. Al eludir los cuellos de botella presentes en los bloques, es significativamente rápido en plataformas de software de gamas medias sin aceleradores perimetrales específicos. Ha sido intensamente adoptado por Google en telecomunicaciones móviles como el núcleo de protección HTTPS \cite{redes_crypto, keyfactor_sym}. \\ \midrule
+\multirow{3}{*}{\textbf{Sistemática Asimétrica (Clave Pública)}} & \textbf{RSA (Rivest-Shamir-Adleman)} & Pilastra de la identificación de interconexión moderna originada en la década de los setenta. Su solidez arquitectónica inexpugnable reside exlusivamente en la monstruosa complejidad temporal envuelta en la "factorización inversa" de números primos excepcionalmente grandes y compuestos. Obliga al uso de claves obesas y pesadas, escalonadas habitualmente desde los 2048 hasta 4096 bits para resistir el acoso contemporáneo computacional \cite{ibm_crypto_types, redes_crypto}. \\
+ & \textbf{ECC (Elliptic Curve Cryptography)} & Desplaza la arcaica aritmética de las proporciones enteras de RSA reemplazándola por intrincados postulados basados en logaritmos discretos trazados sobre el perímetro vectorial de Curvas Elípticas finitas. Su magistral eficiencia algebráica emite una resistencia invulnerable y equivalente usando huellas minúsculas espaciales; una llave compacta ECC de 256 bits forja paredes protectoras indistinguibles de una bóveda gigantesca de 3072 bits RSA. Se prioriza obligatoriamente en el ámbito IoT y de smartphones ligeros \cite{keyfactor_sym, ibm_crypto_types}. \\
+ & \textbf{Diffie-Hellman (DH)} & Paradigma algorítmico asimétrico no implementado para confinar archivos enormes ni rubricar validaciones, pero esculpido enteramente como la tubería maestra del "Intercambio Táctico Seguro" donde las entidades pactan sobre un canal hostil las contraseñas simétricas ocultas sin el riesgo logístico originario \cite{redes_crypto, encrypt_sym}. \\ \midrule
+\multirow{1}{*}{\textbf{Futuro Cuántico (PQC)}} & \textbf{Algoritmos de Vanguardia (Dilithium, Falcon)} & El acoso persistente de inminentes ordenadores cuánticos (con arquitecturas matemáticas de qubits orientadas al Algoritmo destructivo de Shor) presagia el desplome total de RSA o ECC. Redes previsoras estandarizan algoritmos inmunes a la disolución cuántica denominados "Post-Cuánticos", orquestando mecanismos inmunes de "Cripto-Agilidad" de sustitución futura recomendada para el año 2035 \cite{keyfactor_sym}. \\ \bottomrule
+\end{tabular}%
+}
+\end{table}
+
+\section{¿De qué forma interactúa la capa 6 con sus capas aledañas (capa 5 y 7)?}
+
+El análisis aislado de una capa en el modelo OSI omite la intrincada coreografía colaborativa que debe ejecutarse incesantemente entre sus estructuras lógicas. La eficacia funcional de la Capa de Presentación (Capa 6) depende inherentemente de una comunión fluida, bidireccional y sumamente sincronizada con sus capas fronterizas adyacentes inmediatas: la Capa de Aplicación (Capa 7), anidada estructuralmente en la cúspide por encima de ella, y la Capa de Sesión (Capa 5), subyacente de manera logística en la base de su transferencia \cite{ibm_osi_layer6, fortinet_osi}. La intersección operativa de estas tres capas constituye la esencia táctica semántica del modelo OSI \cite{aws_osi}.
+
+\subsection*{Sinergia Descendente: De la Aplicación a la Presentación}
+
+La travesía algorítmica y la encapsulación inicial nacen invariablemente en la Capa 7. La Capa de Aplicación sirve como el umbral o ventana de comunicación inmediata hacia los usuarios o los procesos dinámicos subyacentes, implementando robustas familias de protocolos (como HTTP para la navegación hipertextual, SMTP para directrices de correo electrónico y utilidades SSH o DNS) para ordenar un traslado lógico de las telecomunicaciones \cite{ibm_osi_layer6, paloalto_l7}. Sin embargo, las interfaces incrustadas en este dominio se concentran exclusivamente en el \textit{propósito}, o el mandato de "qué" se enviará de una aplicación remota a otra, operando totalmente ciegos a las variabilidades y abstracciones sintácticas propias de la CPU o la arquitectura subyacente de la red \cite{ibm_osi_layer6}.
+
+La Capa 7 inyecta y despacha el volumen amorfo crudo, la unidad o "payload" nativo hacia los brazos lógicos inferiores de la Capa de Presentación \cite{fortinet_osi}. En el preciso instante de la intercepción, la Capa 6 orquesta sus herramientas transformadoras, procesando, encriptando o comprimiendo las estructuras abstractas (utilizando normativas como ASN.1 y algoritmos de condensación Lempel-Ziv o AES) para forjar un paquete inexpugnable, universalmente legible o altamente comprimido \cite{ionos_pres}. Aquí yace el pináculo de la relación: la Capa 7 provee la semántica o el verdadero "significado" esencial de los datos, mientras que la Capa 6 se confina a amoldar rígidamente su "sintaxis", encapsulando el paquete de forma que las anomalías del origen se invisibilicen por completo a lo largo del abismo hostil subyacente \cite{ibm_osi_layer6, ionos_pres}.
+
+\subsection*{Sinergia Ascendente y Táctica Operativa: De la Presentación a la Sesión}
+
+Una vez que el paquete de red asimiló correctamente las codificaciones, la compresión o los densos blindajes criptográficos asimétricos, los flujos resultantes descienden y se derraman ordenadamente en el campo operativo de la Capa de Sesión (Capa 5). Esta interacción es profundamente logística y temporal, no semántica \cite{ionos_sesion}. 
+
+Mientras que la capa 6 empaqueta el ladrillo, la Capa 5 actúa rigurosamente como el "Controlador de Tránsito Dialogal" de las fronteras limítrofes entre los dispositivos terminales remotos \cite{ionos_sesion}. Tras interceptar los datos seguros que caen en cascada provenientes de la Presentación, la capa de Sesión estipula metódicamente cómo, cuándo, por cuánto tiempo y en qué orden rotativo dichas cargas serán expelidas a las trincheras físicas \cite{ionos_sesion}. Emplea directrices que marcan las telecomunicaciones en arquitecturas \textit{Simplex}, \textit{Half-Duplex} (paso del token intermitente) o secuencias robustas simultáneas \textit{Full-Duplex} \cite{ionos_sesion}. Más importante aún para las monumentales o prolongadas cargas multimedia generadas por la Capa de Presentación, la Capa 5 incrusta en su trayectoria los denominados "puntos de sincronización menores y mayores" \cite{ionos_sesion}. Esta interrelación es crucial: si un voluminoso flujo de video codificado en MPEG-4 en la capa de presentación (Capa 6) se ve violentamente amputado por problemas severos de conectividad en el eslabón troncal de red inferior (por ej. problemas del enlace físico Capa 1 y 2), los mecanismos lógicos de la Capa 5 interceden. Sin que la presentación deba malgastar horas en volver a exprimir su pesada compresión desde el ápice inicial de la transacción de la sesión temporal, la capa 5 habilita que la transmisión simplemente resucite a partir de la marca sincronizada mayor previamente guardada en el tiempo \cite{ionos_sesion}.
+
+\subsection*{Manifestación Integral de la Interacción: El "Handshake" Híbrido Criptográfico}
+
+El ejemplo paradigmático y empírico más evidente que denota de forma simultánea e inmediata las profundas interacciones que sostienen en comunión la Aplicación (7), la Presentación (6) y la Sesión (5) no se ilustra mejor que dentro del corazón latiente y crítico del Ciberespacio contemporáneo de seguridad, manifiesto en la intrincada operación del apretón de manos de seguridad y privacidad denominado Protocolo TLS (\textit{Transport Layer Security} o el antiguo protocolo de legado y obsoleto SSL) que blinda el estándar de internet hipertextual encriptado HTTPS \cite{avast_tls, aws_ssl}. 
+
+En un escenario pragmático, cuando una Capa de Aplicación de un navegador (7) exige a un hipervisor remoto bancario una conexión cifrada \cite{cloudflare_ssl}, la interacción fluye a las interfaces inferiores. La Capa de Sesión (5) asume inmediatamente el mando inicial estableciendo el túnel lógicamente persistente con la infraestructura servidora remota. De inmediato, se invoca incondicionalmente y transfiere el poder hacia las competencias y encriptaciones que atañen directamente a la Capa 6, enviando los protocolos de un mensaje público denominado "\textit{Client Hello}" seguidos por interacciones públicas de un "\textit{Server Hello}" y una ráfaga bidireccional donde los certificados avalados con pesada encriptación de identidad asimétrica pública (RSA/ECC) se difunden \cite{avast_tls, aws_ssl}. 
+
+La Capa 6 (o el equivalente funcional en los protocolos unificados de TCP/IP, los cuales funden históricamente las divisiones estratificadas abstractas 5, 6 y 7 impuestas por el sistema teórico de OSI en un solo paraguas funcional agrupado que denominan como la capa de Aplicación general en la web \cite{ibm_osi_layer6, paloalto_l7}) emplea activamente estas llaves inexpugnables públicas para ofuscar firmemente un "secreto táctico prematuro" matemático y unívoco \cite{avast_tls, aws_ssl}. Los procesos de desencriptación remotos, de nuevo en el área de protección 6 asimétrica del receptor local, se ejecutan consumiendo intensos recursos aritméticos de procesadores, decodificando este secreto con ayuda de su llave local y solitaria oculta, erigiendo como fin único la destilación forzada y compartida de una llavín unívoco e irrompible de tipo "Simétrico". Posteriormente, durante la longevidad íntegra persistida por la Capa de Sesión (5), la Capa 6 relega totalmente el uso de la lenta arquitectura asimétrica en pro del uso acelerado de primitivas simétricas ultra eficientes como lo son las variables en bloque del protocolo AES \cite{aws_ssl, avast_tls}. Es esta danza armónica sincronizada —donde una red dialoga a nivel aplicación y formato de red, enhebra e inicia enlaces permanentes a nivel temporal y luego los sofoca intermitentemente de blindaje y compresión— el epítome incuestionable del diseño escalonado modular de red delineado en OSI.
+
+
+\begin{thebibliography}{99}
+
+\bibitem{aws_osi} 
+AWS. (s.f.). \textit{¿Qué es el modelo OSI?}. Recuperado de \url{https://aws.amazon.com/es/what-is/osi-model/}
+
+\bibitem{ibm_osi}
+IBM. (s.f.). \textit{El modelo de Interconexión de Sistemas Abiertos (OSI)}. Recuperado de \url{https://www.ibm.com/es-es/think/topics/osi-model}
+
+\bibitem{ionos_pres}
+IONOS. (2023). \textit{Capa de presentación: funciones de la sexta capa}. IONOS Digital Guide. Recuperado de \url{https://www.ionos.com/es-us/digitalguide/servidores/know-how/capa-de-presentacion/}
+
+\bibitem{paloalto_l7}
+Palo Alto Networks. (s.f.). \textit{¿Qué es la capa 7?}. Cyberpedia. Recuperado de \url{https://www.paloaltonetworks.es/cyberpedia/what-is-layer-7}
+
+\bibitem{fortinet_osi}
+Fortinet. (s.f.). \textit{El modelo de Interconexión de Sistemas Abiertos (OSI)}. Cyberglossary. Recuperado de \url{https://www.fortinet.com/lat/resources/cyberglossary/osi-model}
+
+\bibitem{prezi_pres}
+Prezi. (s.f.). \textit{Capa de presentación}. Recuperado de \url{https://prezi.com/xdtwg4uhhz1v/capa-de-presentacion/}
+
+\bibitem{ibm_osi_layer6}
+IBM. (s.f.). \textit{El modelo de Interconexión de Sistemas Abiertos (OSI) en México}. Recuperado de \url{https://www.ibm.com/mx-es/think/topics/osi-model}
+
+\bibitem{uazuay_pres}
+Universidad del Azuay. (s.f.). \textit{Capa de Presentación}. Teleprocesos. Recuperado de \url{https://www.uazuay.edu.ec/sistemas/teleprocesos/capa_presentacion}
+
+\bibitem{pure_comp}
+Pure Storage. (s.f.). \textit{¿Qué es la compresión de datos?}. Knowledge Base. Recuperado de \url{https://www.purestorage.com/la/knowledge/what-is-data-compression.html}
+
+\bibitem{actian_comp}
+Actian. (s.f.). \textit{Compresión de datos}. Recuperado de \url{https://www.actian.com/es/data-compression/}
+
+\bibitem{trendmicro_osi}
+Trend Micro. (2025). \textit{¿Qué es el Modelo OSI?}. Recuperado de \url{https://www.trendmicro.com/es_es/what-is/it-security/osi-model.html}
+
+\bibitem{sentinel_enc}
+SentinelOne. (s.f.). \textit{What is Encryption?}. Cybersecurity 101. Recuperado de \url{https://www.sentinelone.com/es/cybersecurity-101/cybersecurity/what-is-encryption/}
+
+\bibitem{avast_tls}
+Avast. (s.f.). \textit{Transport Layer Security (TLS)}. Recuperado de \url{https://www.avast.com/es-es/c-what-is-transport-layer-security}
+
+\bibitem{ibm_crypto}
+IBM. (s.f.). \textit{¿Qué es la criptografía?}. Think Topics. Recuperado de \url{https://www.ibm.com/es-es/think/topics/cryptography}
+
+\bibitem{wix_files}
+Wix. (2024). \textit{Los diferentes tipos de archivos y formatos: guía práctica}. Recuperado de \url{https://es.wix.com/blog/tipos-de-archivos-y-como-utilizarlos}
+
+\bibitem{lenovo_formats}
+Lenovo. (s.f.). \textit{Formatos de archivo}. Glosario. Recuperado de \url{https://www.lenovo.com/es/es/glossary/file-format/}
+
+\bibitem{capcut_audio}
+CapCut. (s.f.). \textit{Best audio file formats}. Recuperado de \url{https://www.capcut.com/es-es/resource/best-audio-file-formats}
+
+\bibitem{ms_video}
+Microsoft. (s.f.). \textit{Extensiones de nombre de archivo comunes en Windows}. Support. Recuperado de \url{https://support.microsoft.com/es-es/windows/extensiones-de-nombre-de-archivo-comunes-en-windows-da4a4430-8e76-89c5-59f7-1cdbbc75cb01}
+
+\bibitem{adpush_video}
+AdPushup. (s.f.). \textit{Best video file format for publishers}. Blog. Recuperado de \url{https://www.adpushup.com/es/blog/best-video-file-format-for-publishers/}
+
+\bibitem{imagen_video}
+Guarino, A. (2016). \textit{Formatos de imagen, audio y video}. Imagen y Nuevos Medios 5 Arte. Recuperado de \url{http://imagenynuevosmedios5arte.blogspot.com/2016/06/formatos-de-imagen-audio-y-video.html}
+
+\bibitem{lenovo_comp}
+Lenovo. (s.f.). \textit{Descubre Cómo Comprimir Datos}. Glosario. Recuperado de \url{https://www.lenovo.com/mx/es/glosario/comprimido/}
+
+\bibitem{wiki_comp}
+Wikipedia. (s.f.). \textit{Compresión de datos}. Recuperado de la base de conocimiento abierta. (Utilizado únicamente con propósitos históricos y de contexto entrópico).
+
+\bibitem{bjc_comp}
+BJC. (s.f.). \textit{Compresión}. Representation and Compression. Recuperado de \url{https://bjc.edc.org/bjc-r/cur/programming/4-internet/4-representation-compression/6-compression.es.html?topic=nyc_bjc%2F4-internet.es.topic&course=bjc4nyc.es.html}
+
+\bibitem{esri_lossless}
+Esri. (s.f.). \textit{Definición de Compresión Sin Pérdida De Información}. Diccionario SIG. Recuperado de \url{https://support.esri.com/es-es/gis-dictionary/lossless-compression}
+
+\bibitem{cornell_lossy}
+Cornell University Library. (2003). \textit{Introducción a la compresión}. Preservation Tutorial. Recuperado de \url{http://preservationtutorial.library.cornell.edu/tutorial-spanish/intro/intro-07.html}
+
+\bibitem{ibm_crypto_use}
+IBM. (s.f.). \textit{Casos de uso de la criptografía}. Think Topics. Recuperado de \url{https://www.ibm.com/es-es/think/topics/cryptography-use-cases}
+
+\bibitem{redes_crypto}
+RedesZone. (2025). \textit{Todo sobre criptografía: Algoritmos de clave simétrica y asimétrica}. Recuperado de \url{https://www.redeszone.net/tutoriales/seguridad/criptografia-algoritmos-clave-simetrica-asimetrica/}
+
+\bibitem{aws_ssl}
+AWS. (s.f.). \textit{¿Qué es un certificado SSL/TLS?}. Recuperado de \url{https://aws.amazon.com/es/what-is/ssl-certificate/}
+
+\bibitem{keyfactor_sym}
+Keyfactor. (2026). \textit{Tipos de algoritmos de cifrado y Cifrado simétrico frente a cifrado asimétrico}. Education Center. Recuperado de \url{https://www.keyfactor.com/es/education-center/types-of-encryption-algorithms/}
+
+\bibitem{ibm_crypto_types}
+IBM. (s.f.). \textit{Los 3 tipos principales de criptografía}. Think Topics. Recuperado de \url{https://www.ibm.com/es-es/think/topics/cryptography-types}
+
+\bibitem{encrypt_sym}
+Encryption Consulting. (2021). \textit{Cifrado simétrico frente a asimétrico: ¿Cuál es más seguro?}. Centro Educativo. Recuperado de \url{https://www.encryptionconsulting.com/es/centro-educativo/cifrado-simetrico-vs.-asimetrico/}
+
+\bibitem{ionos_sesion}
+IONOS. (2023). \textit{Capa de sesión: el quinto nivel del modelo OSI}. IONOS Digital Guide. Recuperado de \url{https://www.ionos.com/es-us/digitalguide/servidores/know-how/capa-de-sesion/}
+
+\bibitem{cloudflare_ssl}
+Cloudflare. (s.f.). \textit{Seguridad CDN SSL/TLS}. Learning. Recuperado de \url{https://www.cloudflare.com/es-la/learning/cdn/cdn-ssl-tls-security/}
+
+\end{thebibliography}
+
+\end{document}
