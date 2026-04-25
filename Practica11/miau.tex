@@ -1,0 +1,235 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[utf8]{inputenc} 
+\usepackage{amsmath}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage[citecolor=blue]{hyperref}       % Para enlaces en el documento
+\usepackage{fancyhdr}
+\usepackage{circuitikz}
+\usepackage{amssymb}
+\usepackage{animate}
+\usepackage{float}
+\usepackage{multirow}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage[a4paper, margin=1in]{geometry}
+\usepackage{gensymb}
+\usepackage{siunitx}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{listings}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows, positioning}
+
+% Ajuste de la altura del encabezado
+\setlength{\headheight}{76.27646pt}
+\addtolength{\topmargin}{-34.27646pt}
+
+\lstdefinestyle{mystyle}{
+    language=Matlab,
+    inputencoding=utf8,
+    backgroundcolor=\color{black!5},
+    commentstyle=\color{green!60!black},
+    keywordstyle=\color{blue},
+    numberstyle=\tiny\color{gray},
+    stringstyle=\color{purple},
+    basicstyle=\footnotesize\ttfamily,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showstringspaces=false,
+}
+\lstset{style=mystyle}
+
+\setlength{\parindent}{0pt}
+
+% Crear la portada manualmente
+\begin{document}
+
+% Desactivar la numeración de página para la portada
+\thispagestyle{empty}
+
+% Colocar las imágenes en las esquinas superiores
+\begin{minipage}[t]{0.4\textwidth}
+    \raggedright
+    \includegraphics[width=2cm]{image/der.png}
+\end{minipage}%
+\begin{minipage}[t]{0.5\textwidth}
+    \raggedleft
+    \includegraphics[width=2cm]{image/izq.png}
+\end{minipage}
+
+\vspace{1cm}
+
+\begin{center}
+    \Huge{\textbf{Previo 11}} \\
+    \vspace{0.5cm}
+    \LARGE{\textbf{Servidor DHCP y Protocolos de Arranque}} \\
+    \vspace{0.5cm}
+    \Large{\textbf{Cuestionario Previo}} \\
+    \vspace{1cm}
+    \Large{\textbf{Universidad Nacional Autónoma de México.}}\\
+    \Large{\textbf{Facultad de Ingeniería.}}\\
+    \vspace{1cm}
+    \Large{Laboratorio de Redes de datos seguras.} \\
+    \vspace{0.5cm}
+    \LARGE{\textbf{Profesora:}}
+    \LARGE{\textit{MTRA. MARÍA EUGENIA BAUTISTA GONZÁLEZ.}}\\
+    \vspace{0.5cm}
+    \Large{\textbf{Grupo:} 08} \\
+    \vspace{0.5cm}
+    \LARGE{\textbf{Alumno:}}\\
+    \Large{320060829} \\
+    \vspace{3cm}
+    \Large{\textbf{Fecha de Entrega:}}\\
+    \vspace{0.5cm}
+    \large{{30 de abril de 2026}}
+\end{center} 
+
+
+\newpage
+
+% Configuración del encabezado y pie de página
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\includegraphics[width=1.5cm]{image/der.png}}
+\fancyhead[R]{\includegraphics[width=1.5cm]{image/izq.png}}
+\fancyfoot[C]{\thepage}  % Coloca el número de página en el centro del pie de página
+
+% Línea horizontal en el pie de página
+\renewcommand{\footrulewidth}{0.4pt}  % Define el grosor de la línea en el pie de página
+
+% Empezar numeración de páginas desde 1 en la segunda página
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+%\maketitle
+\tableofcontents
+
+
+\newpage
+
+\section{Investigue los pasos que se llevan a cabo para el establecimiento de la sesión entre un servidor DHCP y una máquina cliente.}
+
+El proceso de establecimiento de sesión en el Protocolo de Configuración Dinámica de Host (DHCP, por sus siglas en inglés) representa uno de los mecanismos fundamentales en las redes TCP/IP modernas para la automatización del direccionamiento lógico. Este procedimiento, formalizado exhaustivamente en el estándar RFC 2131 de la Internet Engineering Task Force (IETF), se articula a través de una arquitectura cliente-servidor transaccional que utiliza el Protocolo de Datagramas de Usuario (UDP) en la capa de transporte \cite{rfc2131, microsoft_dhcp}. El proceso completo de negociación, validación y asignación de parámetros de red se conoce universalmente en la industria bajo el acrónimo DORA, derivado de las cuatro fases críticas que lo componen: Discover (Descubrimiento), Offer (Oferta), Request (Solicitud) y Acknowledge (Reconocimiento). La fiabilidad de este modelo de cuatro vías garantiza no solo que los clientes obtengan una configuración válida sin intervención administrativa, sino que previene colisiones en dominios de difusión densamente poblados.
+
+La secuencia transaccional comienza de manera ineludible cuando un equipo cliente se conecta por primera vez a un segmento de red local o restablece su interfaz de hardware. En este instante inicial, el dispositivo se encuentra en un estado denominado INIT, caracterizado por una carencia total de contexto de red; es decir, no posee dirección IP, máscara de subred, ni conocimiento sobre las puertas de enlace o los resolvedores de dominio \cite{serviciosgs_dhcp}. Ante esta ausencia de identidad en la capa de red, el cliente se ve obligado a iniciar la primera fase del proceso DORA: la emisión del mensaje DHCPDISCOVER. Para lograr comunicarse, la pila TCP/IP del cliente construye un datagrama UDP dirigido al puerto 67, el cual está estandarizado para la escucha de los servidores DHCP. Debido a que el cliente no conoce qué subred habita, la dirección IP de origen en la cabecera del paquete se establece en $0.0.0.0$ (indicando una dirección no especificada), y la dirección IP de destino se define como $255.255.255.255$, que representa una dirección de difusión global limitada a la subred física \cite{microsoft_dhcp}. En la capa de enlace de datos, la trama Ethernet utiliza la dirección MAC de destino de difusión ($FF:FF:FF:FF:FF:FF$). Dentro de la carga útil del mensaje DHCPDISCOVER, el cliente inserta su propia dirección física (MAC) en un campo designado y genera un número aleatorio de 32 bits llamado identificador de transacción (XID). Este XID es de suma importancia, ya que servirá como llave criptográfica rudimentaria para emparejar todas las comunicaciones futuras de esta sesión, evitando que las respuestas destinadas a un dispositivo sean procesadas accidentalmente por otro cliente en estado INIT \cite{rfc2131}.
+
+Una vez que el mensaje DHCPDISCOVER viaja a través del dominio de colisión y de difusión, es inspeccionado por todos los nodos locales. Los equipos cliente lo descartan, pero cualquier servidor DHCP operativo o agente de retransmisión (DHCP Relay Agent) captura el datagrama para su procesamiento. Esto da inicio a la segunda fase: DHCPOFFER. El servidor DHCP, al recibir la petición, extrae la dirección MAC del cliente y consulta sus directivas de asignación y bases de datos locales para determinar qué conjunto de direcciones IP (pool) es el adecuado. Si existe disponibilidad, el servidor selecciona una dirección IP y la reserva de forma temporal e interna, para asegurar que no sea ofrecida concurrentemente a otra petición paralela. Como buena práctica y mecanismo de red segura, los servidores avanzados realizan un sondeo previo mediante peticiones ICMP Echo Request (Ping) a la dirección seleccionada; si obtienen respuesta, marcan la dirección como en conflicto y buscan otra, previniendo así un solapamiento en la capa 3. Tras confirmar la viabilidad de la dirección, el servidor construye el paquete DHCPOFFER \cite{microsoft_dhcp}. En este mensaje, el servidor detalla la dirección IP ofrecida en el campo \textit{yiaddr} (Your IP Address), anexa el tiempo de concesión propuesto, y mediante el uso de campos opcionales extendidos (especificados en el RFC 2132), incluye información suplementaria vital como la máscara de subred (Opción 1), la puerta de enlace predeterminada (Opción 3) y los servidores DNS (Opción 6) \cite{rfc2131}. El servidor emite este paquete hacia la red, utilizando su propia dirección IP como origen y, en la mayoría de implementaciones originarias, enviándolo en modo de difusión ($255.255.255.255$) debido a que el cliente aún carece de la pila IP activada para procesar tráfico unicast.
+
+La red transita entonces hacia la tercera fase: DHCPREQUEST. En topologías corporativas resilientes o altamente disponibles, es habitual y recomendado el despliegue de múltiples servidores DHCP dentro del mismo segmento para garantizar la continuidad del negocio frente a fallas de hardware. Consecuentemente, el cliente en estado SELECTING puede recibir una pluralidad de mensajes DHCPOFFER procedentes de servidores dispares. El cliente debe evaluar las ofertas recibidas durante una breve ventana temporal; comúnmente, la lógica de decisión implementada en los sistemas operativos prefiere y selecciona el primer mensaje DHCPOFFER válido que arriba a su interfaz de red, o en su defecto, aquel que brinde el tiempo de arrendamiento más prolongado \cite{juniper_dhcp_routing}. Para consolidar su elección, el cliente formula el paquete DHCPREQUEST. A pesar de haber entablado una comunicación bidireccional preliminar, este paquete debe emitirse mandatoriamente mediante difusión global ($255.255.255.255$) \cite{microsoft_dhcp}. La naturaleza de difusión (broadcast) en esta fase no es accidental, sino que responde a un diseño estricto y elegante delineado en el RFC 2131: al enviar el DHCPREQUEST a toda la red, el cliente incluye una opción específica (Opción 54, Server Identifier) que detalla la dirección IP del servidor DHCP cuya oferta ha sido elegida. Esta acción cumple una doble funcionalidad; por un lado, notifica de forma explícita al servidor seleccionado que su contrato ha sido aceptado y, simultáneamente, informa de manera implícita a los demás servidores participantes que sus ofertas han sido declinadas \cite{rfc2131, microsoft_dhcp}. Los servidores rechazados, al inspeccionar la Opción 54 y notar que no coincide con sus propias interfaces, liberan instantáneamente las reservas temporales que habían impuesto sobre las direcciones IP ofrecidas, optimizando la utilización del bloque de direcciones.
+
+Finalmente, la sesión concluye con la cuarta y última fase: DHCPACK (Acknowledgement o Reconocimiento). El servidor DHCP seleccionado, habiendo recibido el DHCPREQUEST confirmatorio, verifica que la dirección IP requerida sigue estando disponible y es válida bajo el contexto topológico actual. Satisfecha esta comprobación, el servidor consolida la transacción en su almacenamiento permanente, vinculando la dirección IP a la dirección MAC del cliente junto con la marca de tiempo exacta que denota el vencimiento del alquiler. Posteriormente, despacha el mensaje definitivo DHCPACK hacia el cliente \cite{rfc2131, microsoft_dhcp}. Este paquete contiene el dictamen final de toda la configuración, encapsulando cada parámetro negociado y las especificaciones exactas de los temporizadores de renovación. En el instante en que el cliente recepciona el DHCPACK, procesa la configuración y transiciona exitosamente al estado BOUND (Asociado) \cite{serviciosgs_dhcp}. 
+
+Como corolario indispensable desde la perspectiva de redes de datos seguras, el cliente no aplica los parámetros ciegamente. La implementación exige que el cliente emita un paquete de resolución de direcciones gratuito (Gratuitous ARP) en su segmento local, inquiriendo si algún dispositivo ya posee la dirección IP recién asignada. Si el cliente recibe una respuesta a este ARP, infiere la existencia de un conflicto en la red, rechazando la asignación del servidor mediante un mensaje DHCPDECLINE y reiniciando el proceso DORA completo \cite{rfc2131}. De forma recíproca, si el servidor, durante la fase DHCPREQUEST, determina que la petición es inválida (por ejemplo, si el cliente se ha movido físicamente a otra subred e intenta requerir su dirección antigua), el servidor abortará la transacción enviando un mensaje DHCPNAK (Negative Acknowledge), forzando también al cliente a reiniciar la negociación de cero \cite{rfc2131, microsoft_dhcp}.
+
+\newpage
+
+\section{Investigue las características de funcionamiento del protocolo BOOTP.}
+
+El Protocolo de Arranque, ampliamente reconocido por su acrónimo BOOTP (Bootstrap Protocol), representa un hito fundamental en la historia y el desarrollo arquitectónico de la conectividad en redes IP. Para comprender en profundidad sus características operativas y su trascendencia, es perentorio examinar el contexto tecnológico de la década de 1980. En aquella época, los entornos académicos y corporativos dependían de terminales y estaciones de trabajo sin disco duro (diskless workstations). Estos sistemas, al carecer de almacenamiento no volátil permanente, poseían la imperativa necesidad de obtener toda su configuración de red, así como el archivo de la imagen del sistema operativo, de manera remota y dinámica en cada ciclo de encendido \cite{ionos_bootp}. BOOTP fue concebido conjuntamente por la Universidad de Stanford y Sun Microsystems, y publicado oficialmente por la Internet Engineering Task Force (IETF) bajo el estándar RFC 951 en septiembre de 1985, con el propósito expreso de solventar el denominado problema del ``huevo y la gallina'': cómo puede una máquina integrarse funcionalmente a una red si no posee los medios internos para saber quién es ni dónde se encuentran sus recursos fundamentales \cite{rfc951, ionos_bootp}.
+
+Previo a la aparición de BOOTP, el estándar predominante para la resolución de direccionamiento dinámico era el Reverse Address Resolution Protocol (RARP), estipulado en el RFC 903. RARP, sin embargo, estaba afligido por una severa restricción estructural: operaba exclusivamente en la capa de enlace de datos (Capa 2 del modelo OSI) utilizando un tipo de trama Ethernet específico \cite{ionos_bootp}. Dado que las tramas MAC no son enrutables, los servidores RARP debían residir físicamente en cada segmento de red local o subred, lo que multiplicaba el coste de hardware y la complejidad administrativa en redes empresariales segmentadas. BOOTP resolvió esta barrera arquitectónica fundamentando su mecanismo en la capa de transporte y red, específicamente encapsulando sus mensajes dentro de datagramas del User Datagram Protocol (UDP) e IP \cite{ionos_bootp, rfc951}. BOOTP estandarizó el uso de dos puertos fijos: el puerto UDP 67, donde el servidor se mantiene en estado de escucha pasiva aguardando peticiones de terminales, y el puerto UDP 68, empleado por el cliente para la recepción asíncrona de las contestaciones del servidor. El uso de UDP, en lugar de TCP, fue una elección de diseño deliberada para mitigar la carga de procesamiento computacional y evitar la complejidad inherente de los tres pasos de conexión orientada, considerando las extremas limitaciones de recursos en la memoria de solo lectura (PROM) de las estaciones sin disco \cite{rfc951, ionos_bootp}.
+
+El paradigma funcional de BOOTP se erige sobre un intercambio de transacciones centralizado y estrictamente gestionado de dos fases, el cual inicia un cliente enviando un mensaje tipo BOOTREQUEST. Debido al desconocimiento endémico del cliente respecto a la topología y su propia IP, el datagrama debe emitirse mediante difusión local utilizando la dirección destino $255.255.255.255$ \cite{ionos_bootp}. Un mensaje BOOTP estándar se compone de una estructura de longitud fija o acotada de típicamente 300 bytes. Las características distintivas de su cabecera incluyen campos meticulosamente diseñados: el campo de operación (\textit{op}) que diferencia peticiones de respuestas; identificadores de transacción (\textit{xid}) que operan como semillas matemáticas para correlacionar los datagramas en topologías colisionadas; y un robusto set de campos de direccionamiento que agrupan la IP asignada al cliente (\textit{yiaddr}), la IP del propio servidor de provisión (\textit{siaddr}), y crucialmente, la IP de la puerta de enlace o agente de retransmisión (\textit{giaddr}) \cite{ionos_bootp, rfc951}. Además, BOOTP incorporó campos explícitos de 64 y 128 bytes destinados a proporcionar el nombre del host servidor (\textit{sname}) y el nombre del archivo de arranque a descargar (\textit{file}), respectivamente. La resolución concluía con la entrega de esta carga útil mediante el mensaje BOOTREPLY; tras procesarlo, el cliente transitaba hacia una fase secundaria utilizando el Protocolo de Transferencia de Archivos Trivial (TFTP) para extraer del servidor los binarios del sistema operativo y comenzar la ejecución en memoria RAM \cite{rfc951}.
+
+Desde el prisma del diseño de redes de datos seguras y escalables, la característica más vanguardista y disruptiva de BOOTP fue la formalización del concepto de los Agentes de Retransmisión (Relay Agents), una noción que posteriormente fue fortalecida en las actualizaciones técnicas contenidas en el RFC 1542 \cite{rfc1542}. El funcionamiento a través de enrutadores permitió a las organizaciones consolidar la infraestructura. Cuando un enrutador compatible con BOOTP recibía una difusión de BOOTREQUEST en una de sus interfaces de red local, en lugar de descartar la difusión según las reglas convencionales de IP, interceptaba el paquete, insertaba la dirección IP de su propia interfaz en el campo \textit{giaddr}, y lo reenviaba mediante unidifusión (unicast) hacia un servidor BOOTP centralizado alojado en otro segmento geográfico o virtual de la compañía \cite{rfc1542}. El servidor, al inspeccionar el campo \textit{giaddr}, era capaz de deducir algorítmicamente a qué subred pertenecía el cliente solicitante y extraía una dirección IP coherente con ese espacio topológico. La respuesta BOOTREPLY seguía el trayecto inverso hasta el agente de retransmisión, quien se encargaba de inyectarla de vuelta en la subred de origen. Esta mecánica desterró la necesidad de mantener servidores locales desperdigados y redujo la superficie de ataque, concentrando las políticas de direccionamiento en un núcleo unificado.
+
+No obstante sus virtudes de enrutamiento y estandarización, las características de funcionamiento de BOOTP adolecían de limitaciones severas que provocaron su eventual obsolescencia y dictaron su transición hacia DHCP. La principal deficiencia de BOOTP radicaba en su naturaleza de asignación estrictamente estática y manual \cite{lightyear_bootp_dhcp, geeksforgeeks_bootp_dhcp}. La arquitectura del protocolo obligaba a los ingenieros y administradores de red a mantener una tabla o base de datos de texto plano en el servidor, donde debían asociar manualmente de antemano la dirección MAC de cada hardware con una dirección IP unívoca \cite{ionos_bootp, lightyear_bootp_dhcp}. BOOTP no poseía ningún mecanismo inherente para comprender el concepto de \textit{temporalidad} o \textit{arrendamiento}; una vez que se entregaba una configuración, se asumía que el cliente retendría esa IP de manera perpetua \cite{ionos_bootp, geeksforgeeks_bootp_dhcp}. En redes donde el volumen de nodos era estable e inamovible, como en ecosistemas de automatización industrial cerrados, este paradigma era confiable y libre de sobrecarga computacional \cite{imd_bootp_dhcp}. Sin embargo, con el advenimiento incesante de las computadoras portátiles, los trabajadores itinerantes y las redes inalámbricas dinámicas, el modelo estático de BOOTP colapsó por su ineficiencia y propensión a agotar prematuramente los rangos de subred disponibles. En este contexto insostenible de administración continua, la estructura de paquetes de BOOTP sirvió de molde directo para el desarrollo de DHCP, el cual reutilizó la mensajería UDP y la arquitectura de \textit{Relay Agents}, pero implementó automatización algorítmica y expiración programada de direcciones a través del enriquecido campo de Opciones del Fabricante (\textit{vendor extensions}) \cite{rfc2131, lightyear_bootp_dhcp}.
+
+\newpage
+
+\section{Investigue las características de los diferentes modos de asignación de direcciones de un servidor DHCP.}
+
+El Protocolo de Configuración Dinámica de Host (DHCP) ha consolidado su supremacía como el estándar de facto en las infraestructuras de comunicaciones contemporáneas debido a su inherente flexibilidad operativa. A diferencia de sus predecesores, que se encontraban anclados en rigurosos modelos estáticos, la especificación de DHCP estructurada en el RFC 2131 estipula y proporciona soporte arquitectónico para tres mecanismos diferenciados de asignación de direcciones IP \cite{rfc2131, tcpipguide_dhcp, cisco_dhcp}. Estos modos —la asignación manual, la asignación automática y la asignación dinámica— se encuentran integrados simbióticamente en los demonios de red de nivel corporativo, permitiendo a los ingenieros de red diseñar topologías híbridas. Esta versatilidad es primordial en entornos de redes seguras, puesto que otorga a los administradores la potestad de aplicar políticas granulares, equilibrando de forma óptima las necesidades de control de acceso predecible, la disminución de la carga administrativa y la maximización en la utilización de los recursos limitados de direcciones de Capa 3 \cite{cisco_dhcp}.
+
+\subsection*{Asignación Manual (Static Allocation / Reservas)}
+La asignación manual, también referenciada exhaustivamente en la literatura técnica como DHCP estático, vinculación MAC-IP, o reservas de direcciones, representa el método más estricto y autoritativo de los tres mecanismos \cite{tcpipguide_dhcp, cisco_dhcp, paloalto_dhcp}. Bajo este paradigma, la intervención y el dictamen directo del administrador de la red son prerrequisitos operacionales ineludibles. El proceso requiere que el personal técnico acceda a la configuración del servidor DHCP e introduzca una regla explícita en la base de datos que mapee una dirección física de control de acceso al medio (la dirección MAC contenida en el campo \textit{chaddr} del cliente) a una dirección IP singular e inmutable dentro de la subred \cite{rfc2131, paloalto_dhcp}. Cuando el cliente en cuestión ejecuta la secuencia DORA, el servidor coteja la dirección MAC de origen y, al encontrar la coincidencia preconfigurada, le otorga indefectiblemente la dirección reservada.
+
+Desde la perspectiva de las características funcionales, la asignación manual despoja a DHCP de sus propiedades de concesión rotativa, transformándolo esencialmente en un mecanismo de entrega parametrizada y centralizada comparable a los esquemas BOOTP tradicionales. Sin embargo, su utilidad es indiscutible y crítica en infraestructuras seguras. Se emplea de forma imperativa en dispositivos de red cuyas identidades lógicas no deben variar bajo ninguna circunstancia, tales como servidores de bases de datos, controladores de dominio, servidores de aplicaciones de misión crítica, equipos de enrutamiento y pasarelas de seguridad (Firewalls), así como periféricos compartidos \cite{ionos_dhcp_config, akamai_dhcp}. Esta asignación garantiza la integridad topológica indispensable para la aplicación de listas de control de acceso (ACLs) perimetrales, reglas de redireccionamiento de puertos de traducción de direcciones de red (NAT/PAT) y el correcto funcionamiento del ecosistema del Sistema de Nombres de Dominio (DNS), donde un cambio esporádico de IP resultaría en interrupciones de servicio catastróficas. La desventaja subyacente reside en el elevado costo administrativo asociado: cualquier alteración o modernización de hardware —como la sustitución de una tarjeta de interfaz de red en un servidor averiado— demanda una reconfiguración imperativa y manual en el núcleo del servidor DHCP para restablecer la conectividad \cite{lightyear_bootp_dhcp}.
+
+\subsection*{Asignación Automática}
+El modo de asignación automática emerge como un estadio intermedio y un puente lógico entre el rigor de la asignación manual y la volatilidad del aprovisionamiento dinámico. Según la definición normativa en los RFC del IETF, la asignación automática ocurre cuando un servidor DHCP provee permanentemente una dirección IP a un cliente solicitante, eligiéndola autónomamente desde un bloque (pool) previamente definido por la gerencia de red \cite{rfc2131, cisco_dhcp, paloalto_dhcp}. La diferenciación cardinal respecto a la asignación dinámica es la absoluta carencia de expiración o caducidad en el tiempo de arrendamiento. Una vez que el cliente completa el ciclo inicial de negociación DHCP, el servidor inscribe la vinculación MAC-IP en su almacenamiento local y dictamina que el dispositivo poseerá el derecho a explotar dicha dirección de red perpetuamente, o hasta que ocurra una intervención administrativa manual que fuerce la revocación.
+
+Las características de la asignación automática revelan una solución elegante para entornos empresariales o redes de acceso altamente inamovibles, donde no existe una rotación continua de personal ni visitas eventuales que conecten y desconecten hardware intermitentemente \cite{ionos_dhcp_config}. Por ejemplo, en una planta corporativa donde los equipos de escritorio (workstations) del personal permanente permanecen en la misma ubicación durante años, el uso de asignación automática suprime drásticamente el tráfico residual de control asociado a las continuas renovaciones de concesiones (mensajes DHCPREQUEST y DHCPACK), lo que optimiza microscópicamente el ancho de banda en segmentos masivos. Además, aporta un nivel de trazabilidad valioso en auditorías forenses, puesto que las tablas del servidor retienen historiales constantes que asocian sin ambigüedad una máquina con una IP prolongada en el tiempo \cite{rfc2131, wikipedia_dhcp}. No obstante, la vulnerabilidad de este modo estriba en la potencial consunción progresiva del espacio de subred: si los dispositivos son reemplazados, retirados del servicio o trasladados a otras dependencias sin depurar el servidor, las direcciones asignadas automáticamente permanecerán confiscadas y cautivas en la base de datos, llevando con celeridad al agotamiento del pool de direcciones disponibles y originando estados de inoperatividad generalizada en el segmento afectado.
+
+\subsection*{Asignación Dinámica}
+La asignación dinámica constituye el motor principal y la innovación más disruptiva introducida por la IETF en la creación del protocolo DHCP. En este modo de operación, el servidor extrae y proporciona una dirección IP de su acervo disponible, pero somete dicha asignación a un contrato de arrendamiento (lease) estrictamente finito en el dominio del tiempo \cite{rfc2131, tcpipguide_dhcp, cisco_dhcp}. El cliente está legalmente autorizado a nivel de red para vehicular tráfico utilizando los parámetros otorgados única y exclusivamente durante el lapso de concesión delimitado por el servidor \cite{cisco_dhcp}. A fin de conservar la viabilidad de la conexión, el cliente es responsable de implementar la lógica estandarizada de renovación periódica; de no hacerlo, la dirección se considera expirada, y el servidor recuperará el recurso lógico reciclándolo instantáneamente en su almacén de disponibilidad para ofertarlo a cualquier otro terminal emergente \cite{rfc2131, manageengine_dhcp_lease}.
+
+Las características de este mecanismo dotan a las arquitecturas modernas de una elasticidad y automatización de proporciones críticas. Su adopción es obligatoria e innegociable en infraestructuras donde la población de nodos es numéricamente superior al total de direcciones IP disponibles o en contextos caracterizados por una itinerancia agresiva, como puntos de acceso inalámbrico públicos, universidades, ecosistemas de Bring Your Own Device (BYOD) y proveedores de servicios de Internet (ISPs) comerciales \cite{godaddy_dhcp, ionos_dhcp_config}. La asignación dinámica mitiga el fenómeno del agotamiento del espacio IPv4, dado que garantiza probabilísticamente que solo los dispositivos genuinamente activos y presentes retengan y ocupen recursos \cite{akamai_dhcp, ionos_dhcp_config}. El administrador configura parámetros globales ajustando la duración de las concesiones según las métricas de rotación local; una cafetería puede parametrizar concesiones dinámicas de sesenta minutos, mientras que un departamento corporativo puede extenderlas a ocho días. En el ámbito de las redes seguras, este modo suscita retos operativos adicionales, requiriendo implementaciones estrictas de contramedidas como la Indagación de DHCP (DHCP Snooping) en los conmutadores L2. El objetivo de estas contramedidas es prevenir vectores de ataque sofisticados, tal como la Inanición de DHCP (Starvation), donde actores maliciosos inundan el sistema con identidades MAC espurias para consumir maliciosamente las reservas dinámicas y desencadenar denegaciones de servicio a escala de segmento \cite{akamai_dhcp}.
+
+\newpage
+
+\section{Explique el concepto de "concesión"}
+
+El concepto de "concesión", referido intrínsecamente en la literatura especializada y en los estándares internacionales de telecomunicaciones bajo su terminología anglosajona \textit{lease} o \textit{lease time}, constituye la piedra angular metodológica que habilita el funcionamiento dinámico y la administración automatizada de los recursos de Protocolo de Internet (IP). Definido axiomáticamente a través del RFC 2131 promulgado por la IETF, una concesión DHCP representa un contrato temporal y vinculante de tenencia mediante el cual una entidad de red (el servidor DHCP) delega los derechos exclusivos de uso sobre un parámetro lógico específico (una dirección IP y su subred anexa) a una entidad demandante (el cliente DHCP), subordinado a una expiración temporal precisa y preconfigurada \cite{rfc2131, manageengine_dhcp_lease, serviciosgs_dhcp}. 
+
+A diferencia de los modelos topológicos precursores y estacionarios como BOOTP, en los cuales la adquisición de la conectividad se interpretaba como una posesión perpetua del dispositivo físico \cite{geeksforgeeks_bootp_dhcp, lightyear_bootp_dhcp}, el paradigma de la concesión DHCP exige que los sistemas operativos de los clientes traten a la dirección de red como un recurso transitorio, perecedero y en alquiler \cite{rfc2131, godaddy_dhcp}. La naturaleza temporal del contrato de concesión tiene por meta cardinal prevenir el agotamiento estructural del espacio de direccionamiento IP disponible. Si una organización posee una red configurada con una máscara de subred de 24 bits, limitando el volumen teórico a 254 direcciones útiles, pero es visitada por un millar de ordenadores o terminales itinerantes a lo largo del mes operativo, la carencia del mecanismo de concesiones conllevaría la ocupación vitalicia de los recursos lógicos tras la conexión inicial de cada usuario, paralizando el segmento irreversiblemente en poco tiempo \cite{manageengine_dhcp_lease}. La instrumentación del ciclo de la concesión previene proactivamente este colapso, garantizando la recuperación, reciclaje y redistribución continua de las direcciones ociosas tan pronto como las sesiones terminales se desvinculen o abandonen la cobertura de la red inalámbrica \cite{manageengine_dhcp_lease, serviciosgs_dhcp}.
+
+La anatomía operativa de la concesión se encuentra delineada por un régimen temporal sumamente estricto y regido matemáticamente por tres temporizadores jerárquicos: $T_1$, $T_2$ y $T_3$. Cuando un cliente culmina exitosamente el proceso de descubrimiento DORA y acusa recibo del paquete terminal DHCPACK provisto por el servidor, absorbe la configuración provista e internaliza un tiempo basal $T_0$, que denota el reloj cero de su contrato \cite{serviciosgs_dhcp}. Desde esta génesis cronológica, se calculan las subsecuentes fases del ciclo de vida de la concesión, orquestando una máquina de estados del cliente robusta y dotada de tolerancia a fallos.
+
+\begin{itemize}
+    \item \textbf{Temporizador de Duración de Alquiler ($T_3$):} Representa la fecha y hora absolutas de caducidad y término definitivo del contrato. Este valor lo parametriza el administrador en el servidor DHCP y se transfiere al cliente encapsulado como una opción formal dentro del datagrama DHCPACK. Si el cronómetro interno del sistema cliente alcanza el valor $T_0 + T_3$ sin que hayan operado renovaciones exitosas intermedias, las normativas RFC obligan draconianamente al dispositivo a purgar su tabla de enrutamiento y finalizar unilateralmente todas sus comunicaciones originadas en dicha interfaz IP \cite{serviciosgs_dhcp, rfc2131}. Una expiración de $T_3$ destierra al cliente, forzándolo a regresar inmediatamente al estado germinal INIT e induciéndolo a invocar nuevamente la transmisión global DHCPDISCOVER en busca de socorro topológico.
+    
+    \item \textbf{Temporizador de Renovación ($T_1$):} Para evadir perturbaciones en la continuidad de las aplicaciones de capa superior generadas por la revocación imprevista de direcciones, el protocolo previene el vencimiento a través del temporizador de renovación. Histórica y convencionalmente ajustado a la mitad exacta de la duración absoluta del arrendamiento ($0.5 \times T_3$), este reloj determina el umbral en que el cliente toma la iniciativa diplomática \cite{serviciosgs_dhcp, juniper_dhcp_lease_times, rfc2131}. Al arribar el umbral $T_0 + T_1$, la entidad cliente ejecuta una transición desde la fase operativa BOUND a un estado proactivo denominado RENEWING \cite{serviciosgs_dhcp, rfc2131}. En esta etapa el dispositivo construye un paquete unicast DHCPREQUEST altamente dirigido y segmentado de forma exclusiva hacia la dirección IP del servidor DHCP que gestó originariamente el alquiler. Al emplear tráfico punto a punto (unicast), DHCP elude congestionar inútilmente el segmento de difusión (broadcast) con tráfico periférico de conservación. Si el servidor primario acusa recibo y constata la legalidad topológica del contrato, responde emitiendo un nuevo DHCPACK, reiniciando y sincronizando con frescura los tres relojes a tiempo cero y retornando al cliente al estado BOUND estabilizado \cite{serviciosgs_dhcp, rfc2131}.
+    
+    \item \textbf{Temporizador de Reenganche o Revinculación ($T_2$):} Desempeña el rol de un mecanismo crítico de contingencia y resiliencia corporativa. En caso de siniestro, congestión o inoperatividad transitoria del servidor DHCP original durante el lapso de renovación $T_1$, el cliente preserva la conectividad y no perturba las tareas en ejecución. No obstante, al alcanzar el umbral $T_2$ —normalmente estipulado normativamente en el 87.5\% de la temporalidad máxima ($0.875 \times T_3$)— el cliente deduce formalmente la caída permanente del servidor gestor primario e instaura un estado de emergencia protocolar conocido como REBINDING \cite{serviciosgs_dhcp, juniper_dhcp_lease_times, rfc2131}. Bajo el esquema de revinculación, el cliente abandona los intentos de unidifusión y despacha desesperadamente solicitudes DHCPREQUEST mediante difusión global a toda la subred \cite{serviciosgs_dhcp}. El propósito es alertar y contactar a cualquier servidor DHCP homólogo, de respaldo o secundario habilitado para proporcionar alta disponibilidad (como en clusters Failover). Si un servidor con los atributos pertinentes captura el socorro, adoptará y refrendará la concesión enviando el DHCPACK regenerador. A falta de asistencia, el cronómetro derivará fatalmente hacia $T_3$, ejecutando la amputación de la interfaz de red \cite{serviciosgs_dhcp, rfc2131}.
+\end{itemize}
+
+El administrador del sistema modula la gestión de las concesiones ponderando un balance complejo dictaminado por los patrones demográficos de la red \cite{manageengine_dhcp_lease}. Un servidor que oficia en la topología alámbrica de un laboratorio universitario, hospedando ordenadores fijos con mínima rotación, se favorece configurando concesiones longevas (por ejemplo, ocho jornadas), moderando el procesamiento continuo del servidor. En contraste agudo, una red inalámbrica para huéspedes en centros de convenciones, sometida a conexiones fugaces, requiere obligatoriamente concesiones cortas (por ejemplo, treinta a sesenta minutos), asegurando el rescate acelerado y la liberación incesante de las direcciones IPs a medida que los teléfonos inteligentes de la multitud transitan geográficamente fuera del recinto \cite{redeszone_dhcp_lease, godaddy_dhcp}. Adicionalmente, los dispositivos cliente pueden precipitar la interrupción del reloj $T_3$ a voluntad. Durante rutinas de apagado civilizadas y armónicas, los demonios de red informan proactivamente de su retiro expidiendo un mensaje unicast DHCPRELEASE hacia el servidor, suprimiendo la obligación del equipo central de aguardar inútilmente a que transcurra el tiempo de la concesión inerte, optimizando colosalmente la salubridad y suficiencia de la red \cite{rfc2131, serviciosgs_dhcp}.
+
+\newpage
+
+\begin{thebibliography}{9}
+    
+    % IETF RFCs (Fundamentos técnicos y estandarizaciones)
+    \bibitem{rfc951} Croft, W. y Gilmore, J. (1985). \textit{Bootstrap Protocol (BOOTP)} (RFC 951). Internet Engineering Task Force. Recuperado de \url{https://www.rfc-editor.org/rfc/rfc951}
+    
+    \bibitem{rfc1542} Wimer, W. (1993). \textit{Clarifications and Extensions for the Bootstrap Protocol} (RFC 1542). Internet Engineering Task Force. Recuperado de \url{https://www.rfc-editor.org/rfc/rfc1542}
+    
+    \bibitem{rfc2131} Droms, R. (1997). \textit{Dynamic Host Configuration Protocol} (RFC 2131). Internet Engineering Task Force. Recuperado de \url{https://datatracker.ietf.org/doc/html/rfc2131}
+    
+    % Microsoft Learn y Servicios (Configuración y Arquitectura)
+    \bibitem{microsoft_dhcp} Microsoft. (2025). \textit{Conceptos básicos de DHCP (Protocolo de configuración dinámica de host)}. Microsoft Learn. Recuperado de \url{https://learn.microsoft.com/es-es/windows-server/troubleshoot/dynamic-host-configuration-protocol-basics}
+    
+    \bibitem{serviciosgs_dhcp} Servicios GS (Docs). (2017). \textit{¿Cómo funciona el servidor DHCP? - Documentación de Servicios de red e internet}. Recuperado de \url{https://serviciosgs.readthedocs.io/es/latest/dhcp/dhcp.html}
+    
+    % IONOS (Guías detalladas de BOOTP y DHCP)
+    \bibitem{ionos_bootp} IONOS Editorial. (2019). \textit{BOOTP: Todas las claves del protocolo de arranque}. IONOS Digital Guide. Recuperado de \url{https://www.ionos.es/digitalguide/servidores/know-how/bootstrap-protocol/}
+    
+    \bibitem{ionos_dhcp_config} IONOS Editorial. (2019). \textit{Qué es el DHCP y cómo funciona}. IONOS Digital Guide. Recuperado de \url{https://www.ionos.com/es-us/digitalguide/servidores/configuracion/que-es-el-dhcp-y-como-funciona/}
+    
+    % Cisco y Juniper (Aspectos enterprise y temporizadores)
+    \bibitem{cisco_dhcp} Cisco Systems. (2023). \textit{DHCP Configuration Guide: DHCP Overview and IP Address Allocation Mechanisms}. Recuperado de \url{https://www.cisco.com/c/en/us/td/docs/ios-xml/ios/ipaddr_dhcp/configuration/15-mt/dhcp-15-mt-book/dhcp-overview.html}
+    
+    \bibitem{juniper_dhcp_lease_times} Juniper Networks. (2025). \textit{DHCP Lease Times and Timers Overview}. TechLibrary. Recuperado de \url{https://www.juniper.net/documentation/mx/es/software/junos/subscriber-mgmt-sessions/topics/topic-map/dhcp-lease-times.html}
+    
+    \bibitem{juniper_dhcp_routing} Juniper Networks. (2025). \textit{DHCP for Routing Devices Overview}. TechLibrary. Recuperado de \url{https://www.juniper.net/documentation/mx/es/software/junos/dhcp/topics/topic-map/dhcp-for-routing-devices.html}
+
+    % Otros Proveedores (Seguridad y Funcionalidad comparada)
+    \bibitem{paloalto_dhcp} Palo Alto Networks. (2025). \textit{DHCP Address Allocation Methods}. PAN-OS Administrator's Guide. Recuperado de \url{https://docs.paloaltonetworks.com/pan-os/11-0/pan-os-networking-admin/dhcp/dhcp-addressing/dhcp-address-allocation-methods}
+
+    \bibitem{akamai_dhcp} Akamai Technologies. (2025). \textit{¿Qué es DHCP? Glosario de Seguridad de la Infraestructura}. Recuperado de \url{https://www.akamai.com/es/glossary/what-is-dhcp}
+
+    \bibitem{godaddy_dhcp} GoDaddy Content Team. (2025). \textit{Qué es DHCP y cómo gestiona direcciones IP}. GoDaddy Latam. Recuperado de \url{https://www.godaddy.com/resources/latam/tecnologia/dhcp-que-es}
+
+    \bibitem{manageengine_dhcp_lease} ManageEngine (OpUtils). (2025). \textit{Lease time DHCP | Tiempo de concesión DHCP}. Recuperado de \url{https://www.manageengine.com/latam/oputils/tech-topics/lease-time-dhcp.html}
+
+    \bibitem{lightyear_bootp_dhcp} Lightyear. (2025). \textit{BOOTP vs DHCP: Differences for Enterprise Networks}. Recuperado de \url{https://lightyear.ai/tips/bootp-versus-dhcp}
+    
+    \bibitem{geeksforgeeks_bootp_dhcp} GeeksforGeeks. (2024). \textit{Difference between BOOTP and DHCP}. Computer Networks Tutorial. Recuperado de \url{https://www.geeksforgeeks.org/computer-networks/difference-between-bootp-and-dhcp/}
+    
+    \bibitem{imd_bootp_dhcp} Industrial Monitor Direct. (2025). \textit{BOOTP and DHCP for Industrial Network Configuration Protocols: Implementation and Best Practices}. Knowledgebase. Recuperado de \url{https://industrialmonitordirect.com/es/blogs/knowledgebase/bootp-and-dhcp-for-industrial-network-configuration-protocols-implementation-and-best-practices}
+    
+    \bibitem{tcpipguide_dhcp} Kozierok, C. M. (2005). \textit{The TCP/IP Guide: DHCP Address Assignment and Allocation Mechanisms}. Recuperado de \url{http://www.tcpipguide.com/free/t_DHCPAddressAssignmentandAllocationMechanisms.htm}
+
+    \bibitem{redeszone_dhcp_lease} RedesZone. (2025). \textit{Qué es el tiempo de concesión DHCP y cómo modificarlo en el router}. Recuperado de \url{https://www.redeszone.net/tutoriales/redes-cable/modificar-tiempo-concesion-dhcp-router/}
+
+    \bibitem{wikipedia_dhcp} Wikimedia Foundation. (2025). \textit{Dynamic Host Configuration Protocol}. Wikipedia, The Free Encyclopedia. \textit{}. Recuperado de \url{https://en.wikipedia.org/wiki/Dynamic_Host_Configuration_Protocol}
+
+\end{thebibliography}
+
+\end{document}
